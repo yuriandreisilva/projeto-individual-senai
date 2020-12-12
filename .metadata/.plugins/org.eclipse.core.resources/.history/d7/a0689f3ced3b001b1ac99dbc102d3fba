@@ -1,0 +1,26 @@
+package br.com.aluno.aplicacao;
+
+import java.util.Date;
+
+import br.com.salaarcoiris.jdbc.JDBCAlunoDAO;
+import br.com.salaarcoiris.modelo.Aluno;
+
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		JDBCAlunoDAO alunoDao = new JDBCAlunoDAO();
+		
+		Aluno aluno = new Aluno();
+		
+		aluno.setIdAluno(123);
+		aluno.setCpfAluno(100260559);
+		aluno.setNomeAluno("Filisbino");
+		aluno.setNascAluno(new Date());
+		aluno.setEmail("teste@teste.com");
+		aluno.setSenha("senhateste");
+		aluno.setTelefone("3463-7332");
+		
+		alunoDao.save(aluno);
+	}
+}

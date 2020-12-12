@@ -1,0 +1,9 @@
+1607716643487	Rename package 'br.com.aluno.factory'
+1607716712087	Rename package 'br.com.salaarcoiris.connection'
+1607716867489	Rename package 'br.com.salaarcoiris.bd.Conexao'
+1607716898551	Rename type 'ConnectionFactory'
+1607716934297	Rename package 'br.com.aluno.model'
+1607717004523	Rename package 'br.com.aluno.dao'
+1607717026479	Rename type 'AlunoDAO'
+1607717073144	Rename compilation unit 'Aluno.Rest.java'
+1607717567578	Delete element

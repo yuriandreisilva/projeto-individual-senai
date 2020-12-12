@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+C:\Users\Yuri Andrei da Silva\Documents\Senai\ProjetoIndividual\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+505642490.index
+27311597.index
+1170060897.index
+894897485.index
+1136874257.index
+2989430277.index
