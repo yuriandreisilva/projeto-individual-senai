@@ -1,16 +1,3 @@
-:root{
-	--cor_detalhes: #050542;
-	--cor_fundo: #333;
-	--letra_padrao: "Montserrant", sans-serif;
-}
-
-body {
-  font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
-  background: var(--cor_fundo);
-  color: #fff;
-  box-sizing: border-box
-  
-}
 
 form {
 	margin-top: 5px;
@@ -89,7 +76,7 @@ select {
 }
 
 
-.flex-outer li button {
+.flex-outer li button, a {
   margin-left: auto;
   padding: 8px 16px;
   border: none;
@@ -101,7 +88,7 @@ select {
   
 }
 
-.corpo button[type="submit"]{
+.corpo button[type="submit"], a[type="submit"]{
     background-color: transparent;
     color: white;
     display: block;
@@ -120,7 +107,7 @@ select {
     
 }
 
-.corpo button[type="submit"]:hover{
+.corpo a:hover, button[type="submit"]:hover{
     background-color: #050542;
     color: #ffffff;
     transition: 1s;
