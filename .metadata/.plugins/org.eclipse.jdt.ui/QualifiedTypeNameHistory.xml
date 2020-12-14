@@ -10,4 +10,5 @@
 <fullyQualifiedTypeName name="br.com.aluno.model.Aluno"/>
 <fullyQualifiedTypeName name="java.sql.Date"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="br.com.salaarcoiris.modelo.Responsavel"/>
 </qualifiedTypeNameHistroy>

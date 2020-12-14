@@ -4,16 +4,16 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="button"/>
+		<item key="selection" value="linkSair"/>
 		<list key="findhistory">
-			<item value="button"/>
-			<item value="checkbox"/>
-			<item value="getTele"/>
-			<item value="filter"/>
-			<item value="selecao"/>
+			<item value="linksair"/>
+			<item value="link"/>
+			<item value="-300"/>
+			<item value="#333"/>
+			<item value="Aluno"/>
+			<item value="radio"/>
 			<item value="input"/>
-			<item value="-radius"/>
-			<item value="li"/>
+			<item value="button"/>
 		</list>
 		<list key="replacehistory">
 		</list>
