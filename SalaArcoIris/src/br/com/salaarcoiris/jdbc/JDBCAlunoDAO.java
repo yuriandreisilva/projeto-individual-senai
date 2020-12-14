@@ -15,8 +15,6 @@ import java.sql.ResultSet;
 import br.com.salaarcoiris.jdbcinterface.AlunoDAO;
 import br.com.salaarcoiris.modelo.Aluno;
 
-
-
 public class JDBCAlunoDAO implements AlunoDAO{
 	
 private Connection conexao;
@@ -26,8 +24,8 @@ private Connection conexao;
 	}
 	
 	public boolean inserir (Aluno aluno) {
-		String comando = " INSERT INTO aluno (cpfAluno, nomeAluno, data_nasc, email, senha, responsavel_idresponsavel) "
-				+ "values (?,?,?,?,?,?);";
+		String comando = " INSERT INTO aluno (cpfAluno, nomeAluno, data_nasc, email, responsavel_idresponsavel) "
+				+ "values (?,?,?,?,?);";
 				
 				PreparedStatement p;
 				
@@ -39,8 +37,7 @@ private Connection conexao;
 					p.setString(2, aluno.getNomeAluno());
 					p.setString(3, aluno.getNascAluno());
 					p.setString(4, aluno.getEmail());
-					p.setString(5, aluno.getSenha());
-					p.setInt(6, 1);
+					p.setInt(5, aluno.getIdResp());
 					
 					p.execute();
 					

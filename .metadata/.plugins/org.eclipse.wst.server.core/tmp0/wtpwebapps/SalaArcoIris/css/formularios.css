@@ -1,7 +1,8 @@
 
 form {
 	margin-top: 5px;
-	float: center;	
+	float: center;
+		
 }
 
 .container {
@@ -76,7 +77,7 @@ select {
 }
 
 
-.flex-outer li button, a {
+.flex-outer li button, .botaoSalvar {
   margin-left: auto;
   padding: 8px 16px;
   border: none;
@@ -86,23 +87,27 @@ select {
   letter-spacing: .09em;
   border-radius: 25px;
   
+    
+  
 }
 
-.corpo button[type="submit"], a[type="submit"]{
+.corpo button[type="submit"], .botaoSalvar{
     background-color: transparent;
     color: white;
     display: block;
+    text-align: center;
+    vertical-align: middle;
     box-sizing: content-box;
     border: 2px solid #050542;
     border-radius: 25px;
-    width: 25%;
-    height: 40px;
+    width: 20%;
+    height: 30px;
     padding: 2px 5px;
     font-size: 16pt;
     transition: .2s;
     outline: none;
     background-color: transparent;
-    text-indent: 10px;
+    
     float: right;
     
 }
@@ -112,9 +117,19 @@ select {
     color: #ffffff;
     transition: 1s;
     
+    
 }
 
 .flex-inner li {
   width: 100px;
   
+}
+
+input[type="radio"]{
+	display:inline-block;
+	width:18px;
+    height:18px;
+    margin:-2px 10px 0 0;
+    
+    
 }

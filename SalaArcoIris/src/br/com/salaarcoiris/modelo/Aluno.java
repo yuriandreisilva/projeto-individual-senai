@@ -1,12 +1,15 @@
 package br.com.salaarcoiris.modelo;
 
 import java.util.Date;
+import java.io.Serializable;
 
-public class Aluno {
+public class Aluno implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private int idAluno, idResp;
 	private int cpfAluno;
-	private String nomeAluno, nomeResp;
-	private String nascAluno, nascResp;
+	private String nomeAluno;
+	private String nascAluno;
 	private String email;
 	private String senha;
 	
@@ -35,24 +38,14 @@ public class Aluno {
 	public void setNomeAluno(String nomeAluno) {
 		this.nomeAluno = nomeAluno;
 	}
-	public String getNomeResp() {
-		return nomeResp;
-	}
-	public void setNomeResp(String nomeResp) {
-		this.nomeResp = nomeResp;
-	}
+	
 	public String getNascAluno() {
 		return nascAluno;
 	}
 	public void setNascAluno(String nascAluno) {
 		this.nascAluno = nascAluno;
 	}
-	public String getNascResp() {
-		return nascResp;
-	}
-	public void setNascResp(String nascResp) {
-		this.nascResp = nascResp;
-	}
+	
 	public String getEmail() {
 		return email;
 	}
