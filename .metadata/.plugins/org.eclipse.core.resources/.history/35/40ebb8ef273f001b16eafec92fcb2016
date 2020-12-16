@@ -1,0 +1,109 @@
+package br.com.salaarcoiris.jdbc;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.JsonObject;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import br.com.salaarcoiris.jdbcinterface.AlunoDAO;
+import br.com.salaarcoiris.modelo.Aluno;
+
+public class JDBCAlunoDAO implements AlunoDAO{
+
+	private Connection conexao;
+
+	public JDBCAlunoDAO(Connection conexao) {
+		this.conexao = conexao;
+	}
+
+	public boolean inserir (Aluno aluno) {
+		String comando = " INSERT INTO aluno (cpfAluno, nomeAluno, data_nasc, email, responsavel_idresponsavel) "
+				+ "values (?,?,?,?,?);";
+
+		PreparedStatement p;
+
+		try {
+
+			p = this.conexao.prepareStatement(comando);
+
+			p.setInt(1, aluno.getCpfAluno());
+			p.setString(2, aluno.getNomeAluno());
+			p.setString(3, aluno.getNascAluno());
+			p.setString(4, aluno.getEmail());
+			p.setInt(5, aluno.getIdResp());
+
+			p.execute();
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public List<JsonObject>buscar(String nome){
+		String comando = "SELECT * "+
+				"FROM aluno ";
+		if (nome != "") {
+			comando += "WHERE aluno.nomeAluno LIKE '%"+ nome + "%' "; 
+		}
+		comando += "ORDER BY aluno.nomeAluno ASC";		
+		List<JsonObject> listaAlunos = new ArrayList<JsonObject>();
+		JsonObject aluno = null;
+
+		try {
+
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+
+			while(rs.next()) {
+
+				int id = rs.getInt("idaluno");
+				int cpfAluno = rs.getInt("cpfAluno");
+				String nomeAluno = rs.getString("nomeAluno");
+				String data_nasc = rs.getString("data_nasc");
+				String email = rs.getString("email");
+				int idResponsavel = rs.getInt("responsavel_idresponsavel");
+				
+
+
+				aluno = new JsonObject();
+				aluno.addProperty("idaluno", id);				
+				aluno.addProperty("cpfAluno", cpfAluno);
+				aluno.addProperty("nomeAluno", nomeAluno);
+				aluno.addProperty("data_nasc", data_nasc);
+				aluno.addProperty("email", email);
+				aluno.addProperty("idResponsavel", idResponsavel);
+
+				listaAlunos.add(aluno);
+			}
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaAlunos;
+	}
+	
+	// DELETE - aluno
+	
+	public boolean deletar(int idaluno) {
+		String comando = "DELETE FROM aluno WHERE idaluno = ?";
+		PreparedStatement p;
+		try {
+			p=this.conexao.prepareStatement(comando);
+			p.setInt(1, idaluno);
+			p.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+}

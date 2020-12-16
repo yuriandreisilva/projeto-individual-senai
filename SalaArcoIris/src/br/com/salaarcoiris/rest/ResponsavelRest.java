@@ -23,6 +23,7 @@ import br.com.salaarcoiris.jdbc.JDBCResponsavelDAO;
 import br.com.salaarcoiris.modelo.Responsavel;
 
 
+
 @Path("responsavel")
 public class ResponsavelRest extends UtilRest{
 	@POST
@@ -41,12 +42,34 @@ public class ResponsavelRest extends UtilRest{
 			if(retorno) {
 				msg = "Responsavel cadastrado com sucesso!";
 			}else {
-				msg = "Erro ao cadastrar aluno.";
+				msg = "Erro ao cadastrar responsável.";
 			}
 			
 			conec.fecharConexao();
 			
 			return this.buildResponse(msg);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	@GET
+	@Path("/checkIdR")
+	@Produces(MediaType.APPLICATION_JSON)
+
+	public Response checkIdR(@QueryParam("idResponsavel")int idResponsavel) {
+		try {
+			Responsavel responsavel= new Responsavel();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCResponsavelDAO jdbcResponsavel = new JDBCResponsavelDAO (conexao);
+
+			responsavel = jdbcResponsavel.checkIdR(idResponsavel);
+
+			conec.fecharConexao();
+			return this.buildResponse(responsavel);
+
 		}catch(Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());

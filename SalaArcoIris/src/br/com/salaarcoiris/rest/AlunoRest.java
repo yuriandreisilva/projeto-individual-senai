@@ -52,4 +52,100 @@ public class AlunoRest extends UtilRest{
 			return this.buildErrorResponse(e.getMessage());
 		}
 	}
+	
+	@GET
+	@Path("/buscar")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscar(@QueryParam("valorBusca") String  nome) {
+		try {
+			List<JsonObject> listaAlunos = new ArrayList<JsonObject>();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO (conexao);
+			listaAlunos = jdbcAluno.buscar(nome);
+			conec.fecharConexao();
+			
+			String json = new Gson().toJson(listaAlunos);
+			return this.buildResponse(json);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}				
+	}
+	
+	@DELETE
+	@Path("/excluir/{idAluno}")
+	@Consumes("application/*")
+	public Response excluirA(@PathParam("idAluno") int idAluno) {
+		try {
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO (conexao);
+			
+			boolean retorno = jdbcAluno.deletar(idAluno);
+			
+			String msg = "";
+			if(retorno) {
+				msg="Aluno exclu�do com sucesso!";
+			}else {
+				msg="Erro ao excluir Aluno!";
+			}
+			
+			conec.fecharConexao();
+			
+			return this.buildResponse(msg);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}			
+	}
+	
+	@GET
+	@Path("/checkIdA")
+	@Produces(MediaType.APPLICATION_JSON)
+
+	public Response checkIdA(@QueryParam("idAluno")int idAluno) {
+		try {
+			Aluno aluno= new Aluno();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO (conexao);
+
+			aluno = jdbcAluno.checkIdA(idAluno);
+
+			conec.fecharConexao();
+			return this.buildResponse(aluno);
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	@PUT
+	@Path("/alterarA")
+	@Consumes("application/*")
+	public Response alterarA(String alunoParam) {
+		try {
+			Aluno aluno = new Gson().fromJson(alunoParam, Aluno.class);
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO (conexao);
+
+			boolean retorno = jdbcAluno.alterarA(aluno);
+
+			String msg="";
+			if (retorno) {
+				msg = "Cadastro alterado com sucesso!";
+			}else {
+				msg = "Erro ao alterar cadastro";
+			}
+			conec.fecharConexao();
+			return this.buildResponse(msg);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
 }

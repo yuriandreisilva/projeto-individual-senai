@@ -4,16 +4,16 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="linkSair"/>
+		<item key="selection" value="aluno"/>
 		<list key="findhistory">
-			<item value="linksair"/>
-			<item value="link"/>
-			<item value="-300"/>
-			<item value="#333"/>
-			<item value="Aluno"/>
-			<item value="radio"/>
-			<item value="input"/>
-			<item value="button"/>
+			<item value="idAluno"/>
+			<item value="LIBSA"/>
+			<item value="editar"/>
+			<item value="alterarA"/>
+			<item value="idaluno"/>
+			<item value="delete"/>
+			<item value="LIBS"/>
+			<item value="libsa"/>
 		</list>
 		<list key="replacehistory">
 		</list>
