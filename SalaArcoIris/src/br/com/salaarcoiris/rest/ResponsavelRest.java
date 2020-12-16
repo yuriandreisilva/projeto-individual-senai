@@ -27,16 +27,16 @@ import br.com.salaarcoiris.modelo.Responsavel;
 @Path("responsavel")
 public class ResponsavelRest extends UtilRest{
 	@POST
-	@Path("/inserir")
+	@Path("/inserirR")
 	@Consumes("application/*")
-	public Response inserir(String responsavelParam) {
+	public Response inserirR(String responsavelParam) {
 		try {
 			Responsavel responsavel = new Gson().fromJson(responsavelParam, Responsavel.class);
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
 			
 			JDBCResponsavelDAO jdbcResponsavel = new JDBCResponsavelDAO(conexao);
-			boolean retorno  = jdbcResponsavel.inserir(responsavel);
+			boolean retorno  = jdbcResponsavel.inserirR(responsavel);
 			String msg="";
 			
 			if(retorno) {

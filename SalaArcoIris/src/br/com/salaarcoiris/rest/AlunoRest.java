@@ -26,16 +26,16 @@ import br.com.salaarcoiris.modelo.Aluno;
 @Path("aluno")
 public class AlunoRest extends UtilRest{
 	@POST
-	@Path("/inserir")
+	@Path("/inserirA")
 	@Consumes("application/*")
-	public Response inserir(String alunoParam) {
+	public Response inserirA(String alunoParam) {
 		try {
 			Aluno aluno = new Gson().fromJson(alunoParam, Aluno.class);
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
 			
 			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO(conexao);
-			boolean retorno  = jdbcAluno.inserir(aluno);
+			boolean retorno  = jdbcAluno.inserirA(aluno);
 			String msg="";
 			
 			if(retorno) {
@@ -54,16 +54,16 @@ public class AlunoRest extends UtilRest{
 	}
 	
 	@GET
-	@Path("/buscar")
+	@Path("/buscarA")
 	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscar(@QueryParam("valorBusca") String  nome) {
+	public Response buscarA(@QueryParam("valorBusca") String  nome) {
 		try {
 			List<JsonObject> listaAlunos = new ArrayList<JsonObject>();
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
 			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO (conexao);
-			listaAlunos = jdbcAluno.buscar(nome);
+			listaAlunos = jdbcAluno.buscarA(nome);
 			conec.fecharConexao();
 			
 			String json = new Gson().toJson(listaAlunos);
@@ -83,7 +83,7 @@ public class AlunoRest extends UtilRest{
 			Connection conexao = conec.abrirConexao();
 			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO (conexao);
 			
-			boolean retorno = jdbcAluno.deletar(idAluno);
+			boolean retorno = jdbcAluno.deletarA(idAluno);
 			
 			String msg = "";
 			if(retorno) {

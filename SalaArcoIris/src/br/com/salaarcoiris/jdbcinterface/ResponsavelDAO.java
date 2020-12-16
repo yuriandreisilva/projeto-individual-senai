@@ -7,7 +7,7 @@ import br.com.salaarcoiris.modelo.Aluno;
 import br.com.salaarcoiris.modelo.Responsavel;
 
 public interface ResponsavelDAO {
-	public boolean inserir (Responsavel responsavel);
+	public boolean inserirR(Responsavel responsavel);
 	public Responsavel checkIdR(int idResponsavel);
 	
 }

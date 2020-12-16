@@ -43,7 +43,7 @@ $(document).ready (function(){
 
 		$.ajax({
 			type: "POST",
-			url: SALAARCOIRIS.PATH + "aluno/inserir",
+			url: SALAARCOIRIS.PATH + "aluno/inserirA",
 			data:JSON.stringify(aluno),
 			success:function(msg){
 				console.log(msg);
@@ -69,7 +69,7 @@ $(document).ready (function(){
 
 			$.ajax({
 				type: "POST",
-				url: SALAARCOIRIS.PATH + "responsavel/inserir",
+				url: SALAARCOIRIS.PATH + "responsavel/inserirR",
 				data:JSON.stringify(responsavel),
 				success:function(msg){
 					console.log(msg);
@@ -100,8 +100,7 @@ $(document).ready (function(){
 			},
 			error: function(info){
 				var a="Erro ao consultar os cadastros de aluno: "+info.status+" - "+info.statusText;
-				var b = a.replace(/'/g, '');
-				Swal.fire(b);
+				var b = a.replace(/'/g, '');				
 			}
 		});
 
@@ -131,7 +130,7 @@ $(document).ready (function(){
 					"<a onclick=\"SALAARCOIRIS.aluno.alterarA('"+listaDeAlunos[i].idAluno+"')\"> <img src='css/img/edit.png' alt='Editar'></a>" +
 					"</td>"+
 					"<td>"+
-					"<a onclick=\"SALAARCOIRIS.aluno.deleteA('"+listaDeAlunos[i].idAluno+"')\"><img src='css/img/delete.png' alt='Apagar'></a>" +
+					"<a onclick=\"SALAARCOIRIS.aluno.deletarA('"+listaDeAlunos[i].idAluno+"')\"><img src='css/img/delete.png' alt='Apagar'></a>" +
 					"</td>"+
 					"</tr>";
 
@@ -149,7 +148,7 @@ $(document).ready (function(){
 
 	SALAARCOIRIS.aluno.buscarAluno();
 
-	SALAARCOIRIS.aluno.deleteA = function(idAluno){
+	SALAARCOIRIS.aluno.deletarA = function(idAluno){
 		
 		$.ajax({
 			type:"DELETE",

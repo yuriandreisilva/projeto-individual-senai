@@ -24,7 +24,7 @@ private Connection conexao;
 		this.conexao = conexao;
 	}
 	
-	public boolean inserir (Responsavel responsavel) {
+	public boolean inserirR (Responsavel responsavel) {
 		String comando = " INSERT INTO responsavel (idResposavel, nomeResp, dataNasc) "
 				+ "values (?,?,?);";
 				

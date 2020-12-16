@@ -23,8 +23,8 @@ public class JDBCAlunoDAO implements AlunoDAO{
 		this.conexao = conexao;
 	}
 
-	public boolean inserir (Aluno aluno) {
-		String comando = " INSERT INTO aluno (cpfAluno, nomeAluno, dataNasc, email, responsavel_idresponsavel) "
+	public boolean inserirA (Aluno aluno) {
+		String comando = " INSERT INTO aluno (cpfAluno, nomeAluno, dataNasc, email, idResponsavel) "
 				+ "values (?,?,?,?,?);";
 
 		PreparedStatement p;
@@ -48,7 +48,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 		return true;
 	}
 	
-	public List<JsonObject>buscar(String nome){
+	public List<JsonObject>buscarA(String nome){
 		String comando = "SELECT * "+
 				"FROM aluno ";
 		if (nome != "") {
@@ -70,7 +70,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				String nomeAluno = rs.getString("nomeAluno");
 				String dataNasc = rs.getString("dataNasc");
 				String email = rs.getString("email");
-				int idResponsavel = rs.getInt("responsavel_idresponsavel");
+				int idResponsavel = rs.getInt("idResponsavel");
 				
 				aluno = new JsonObject();
 				aluno.addProperty("idAluno", id);				
@@ -91,7 +91,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 	
 	// DELETE - aluno
 	
-	public boolean deletar(int idAluno) {
+	public boolean deletarA(int idAluno) {
 		String comando = "DELETE FROM aluno WHERE idAluno = ?";
 		PreparedStatement p;
 		try {
@@ -121,7 +121,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				String nomeAluno = rs.getString("nomeAluno");
 				String dataNasc = rs.getString("dataNasc");
 				String email = rs.getString("email");
-				int idResponsavel = rs.getInt("responsavel_idresponsavel");
+				int idResponsavel = rs.getInt("idResponsavel");
 //				String nomeResp = rs.getString("nomeResp");
 //				String dataNascResp = rs.getString("dataNasc");
 				

@@ -4,16 +4,16 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="aluno"/>
+		<item key="selection" value="inserir"/>
 		<list key="findhistory">
-			<item value="idAluno"/>
-			<item value="LIBSA"/>
-			<item value="editar"/>
-			<item value="alterarA"/>
-			<item value="idaluno"/>
+			<item value="inserir"/>
+			<item value="checkidR"/>
+			<item value="idResp"/>
+			<item value="buscarAluno"/>
 			<item value="delete"/>
-			<item value="LIBS"/>
-			<item value="libsa"/>
+			<item value="alterar"/>
+			<item value="responsavel_idre"/>
+			<item value="idAluno"/>
 		</list>
 		<list key="replacehistory">
 		</list>
