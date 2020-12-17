@@ -23,7 +23,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 		this.conexao = conexao;
 	}
 
-	public boolean inserirA (Aluno aluno) {
+	public boolean inserirA(Aluno aluno) {
 		String comando = " INSERT INTO aluno (cpfAluno, nomeAluno, dataNasc, email, idResponsavel) "
 				+ "values (?,?,?,?,?);";
 
@@ -65,7 +65,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 			while(rs.next()) {
 
-				int id = rs.getInt("idaluno");
+				int id = rs.getInt("idAluno");
 				int cpfAluno = rs.getInt("cpfAluno");
 				String nomeAluno = rs.getString("nomeAluno");
 				String dataNasc = rs.getString("dataNasc");
@@ -157,7 +157,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				p.setString(2, aluno.getNomeAluno());
 				p.setString(3, aluno.getNascAluno());
 				p.setString(4, aluno.getEmail());
-				p.setInt(5, aluno.getIdResp());
+				p.setInt(5, aluno.getIdAluno());
 
 				p.executeUpdate();
 

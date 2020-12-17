@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import br.com.salaarcoiris.jdbcinterface.ResponsavelDAO;
-import br.com.salaarcoiris.modelo.Aluno;
 import br.com.salaarcoiris.modelo.Responsavel;
 
 public class JDBCResponsavelDAO implements ResponsavelDAO{
@@ -25,7 +24,7 @@ private Connection conexao;
 	}
 	
 	public boolean inserirR (Responsavel responsavel) {
-		String comando = " INSERT INTO responsavel (idResposavel, nomeResp, dataNasc) "
+		String comando = " INSERT INTO responsavel (idResponsavel, nomeResp, dataNasc) "
 				+ "values (?,?,?);";
 				
 				PreparedStatement p;
@@ -62,9 +61,11 @@ private Connection conexao;
 				String nomeResp = rs.getString("nomeResp");
 				String nascResp = rs.getString("dataNasc");
 				
-				responsavel.setIdResp(idResp);
+				
 				responsavel.setNomeResp(nomeResp);
 				responsavel.setNascResp(nascResp);
+				
+				responsavel.setIdResp(idResp);
 						
 
 			}

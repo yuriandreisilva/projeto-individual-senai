@@ -28,21 +28,21 @@
 	      <label for="nome">
 	      Nome Completo
 	      </label>
-	      <input type="text" id="nome" name="nomeAluno" placeholder="Digite o nome completo">
+	      <input type="text" id="nome" name="nomeAluno" placeholder="Digite o nome completo" value="teste">
 	    </li>
 	    <li>
 	      <label for="cpf">
 	      CPF
 	      </label>
-	      <input type="number" id="cpf" name="cpfAluno" placeholder="Digite o CPF">
+	      <input type="number" id="cpf" name="cpfAluno" placeholder="Digite o CPF" value="100">
 	    </li>
 	    <li>
 	      <label for="email">Email</label>
-	      <input type="email" id="email" name="email" placeholder="Digite o e-mail">
+	      <input type="email" id="email" name="email" placeholder="Digite o e-mail" value="email@gmail.com">
 	    </li>
 	    <li>
 		 	<label for="data">Data nascimento</label>
-	    	<input id="datepicker" type="date" name="nascAluno" ><br>
+	    	<input id="datepicker" type="date" name="nascAluno" value="1990-07-01"><br>
 	   	</li>
 	   		
 			   	<li>
@@ -60,16 +60,16 @@
 			      <label for="nome">
 			      Nome Completo Responsável
 			      </label>
-			      <input type="text" class="input-responsaveis" name="nomeResponsavel" disabled placeholder="Digite o nome completo do responsável">
+			      <input type="text" class="input-responsaveis" name="nomeResponsavel" disabled placeholder="Digite o nome completo do responsável" value="resp">
 			    </li>  
 			      
 			    <li>
 				 	<label for="data">Data nascimento</label>
-			    	<input class="input-responsaveis" name="nascResponsavel" disabled type="date"><br>
+			    	<input class="input-responsaveis" name="nascResponsavel" disabled type="date" value="1990-06-01"><br>
 			   	</li>
 			    <li>
-			    <!-- <a class="botaoSalvar" type="button" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</a> -->	
-			    <button type="submit" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</button>
+			    <a class="botaoSalvar" type="button" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</a>	
+			    <!-- <button type="submit" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</button> -->
 			    </li>
 	  	</ul>
 	</form>

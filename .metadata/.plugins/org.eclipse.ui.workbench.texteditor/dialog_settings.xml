@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="casesensitive" value="false"/>
+		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="inserir"/>
+		<item key="selection" value="console.log"/>
 		<list key="findhistory">
-			<item value="inserir"/>
-			<item value="checkidR"/>
-			<item value="idResp"/>
+			<item value="id01"/>
+			<item value="buscar"/>
 			<item value="buscarAluno"/>
-			<item value="delete"/>
+			<item value="exibirEditA"/>
+			<item value="buscarA"/>
+			<item value="alterarA"/>
+			<item value="exibirResp"/>
 			<item value="alterar"/>
-			<item value="responsavel_idre"/>
-			<item value="idAluno"/>
 		</list>
 		<list key="replacehistory">
 		</list>

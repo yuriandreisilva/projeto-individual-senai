@@ -1,6 +1,5 @@
 package br.com.salaarcoiris.modelo;
 
-import java.util.Date;
 import java.io.Serializable;
 
 public class Responsavel implements Serializable {

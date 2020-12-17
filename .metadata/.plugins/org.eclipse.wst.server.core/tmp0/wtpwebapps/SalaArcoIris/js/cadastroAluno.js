@@ -39,8 +39,6 @@ $(document).ready (function(){
 
 		aluno.idResp = codigoResp;
 
-		console.log(aluno);
-
 		$.ajax({
 			type: "POST",
 			url: SALAARCOIRIS.PATH + "aluno/inserirA",
@@ -88,7 +86,7 @@ $(document).ready (function(){
 		var valorBusca = $("#buscaAluno").val();
 		$.ajax({
 			type: "GET",
-			url: SALAARCOIRIS.PATH + "aluno/buscar",
+			url: SALAARCOIRIS.PATH + "aluno/buscarA",
 			data: "valorBusca="+valorBusca,
 			success: function(dados){
 
@@ -127,10 +125,10 @@ $(document).ready (function(){
 					"<td>"+listaDeAlunos[i].dataNasc+"</td>"+
 					"<td>"+listaDeAlunos[i].email+"</td>"+					
 					"<td>"+
-					"<a onclick=\"SALAARCOIRIS.aluno.alterarA('"+listaDeAlunos[i].idAluno+"')\"> <img src='css/img/edit.png' alt='Editar'></a>" +
+					"<a onclick=\"SALAARCOIRIS.aluno.exibirEditA('"+listaDeAlunos[i].idAluno+"')\">Editar</a>" +
 					"</td>"+
 					"<td>"+
-					"<a onclick=\"SALAARCOIRIS.aluno.deletarA('"+listaDeAlunos[i].idAluno+"')\"><img src='css/img/delete.png' alt='Apagar'></a>" +
+					"<a onclick=\"SALAARCOIRIS.aluno.deletarA('"+listaDeAlunos[i].idAluno+"')\">Apagar</a>" +
 					"</td>"+
 					"</tr>";
 
@@ -155,7 +153,6 @@ $(document).ready (function(){
 			url: SALAARCOIRIS.PATH +"aluno/excluir/"+idAluno,
 			success: function(msg){
 				SALAARCOIRIS.aluno.buscarAluno();
-				console.log(msg);
 			},
 			error: function(info){
 				console.log("Erro ao excluir livro: " + info.status + " - " + info.statusText);
@@ -163,7 +160,7 @@ $(document).ready (function(){
 		});
 	}
 	
-	SALAARCOIRIS.aluno.alterarA = function(idAluno){
+	SALAARCOIRIS.aluno.exibirEditA = function(idAluno){
 		document.getElementById('id01').style.display='block';
 		
 		$.ajax({
@@ -180,11 +177,9 @@ $(document).ready (function(){
 				if (!aluno.idResp==0){
 					var id = aluno.idResp;
 					
-					SALAARCOIRIS.aluno.alterarResp(id);
+					SALAARCOIRIS.aluno.exibirEditResp(id);
 				}
 				
-				
-				console.log(aluno);
 			},
 			error: function(info){
 				console.log("Erro ao buscar cadastro para responsável: "+info.status+" - "+info.statusText);
@@ -192,16 +187,17 @@ $(document).ready (function(){
 
 		});	
 	}
-	SALAARCOIRIS.aluno.alterarResp = function(id){
+	SALAARCOIRIS.aluno.exibirEditResp = function(id){
 		console.log(id);
 		
 		$.ajax({
 			type:"GET",
 			url: SALAARCOIRIS.PATH +"responsavel/checkIdR",
-			data: "id="+id,
+			data: "idResponsavel="+id,
 			success: function(responsavel){
 				console.log(responsavel);
-				
+				document.frmEditaAluno.nomeResponsavel.value = responsavel.nomeResp;
+				document.frmEditaAluno.nascResponsavel.value = responsavel.nascResp;
 			},
 			error: function(info){
 				console.log("Erro ao buscar cadastro para responsável: "+info.status+" - "+info.statusText);
@@ -209,4 +205,44 @@ $(document).ready (function(){
 
 		});	
 	}
+	SALAARCOIRIS.aluno.alterarA= function(id){
+		
+		var aluno = new Object();
+		
+		aluno.idAluno = document.frmEditaAluno.idAluno.value;
+		aluno.idResp = document.frmEditaAluno.idResp.value;
+		console.log(aluno.idResp);
+		aluno.nomeAluno = document.frmEditaAluno.nome.value;
+		aluno.cpfAluno = document.frmEditaAluno.cpf.value;
+		aluno.email = document.frmEditaAluno.email.value;
+		aluno.nascAluno = document.frmEditaAluno.datepicker.value;
+		
+		$.ajax({
+			type:"PUT",
+			url: SALAARCOIRIS.PATH + "aluno/alterarA",
+			data:JSON.stringify(aluno),
+			success: function(msg){
+				SALAARCOIRIS.aluno.buscarAluno();
+//				$("#modalEditaAluno").dialog("close");
+				console.log("entrou");
+				
+				if (!aluno.idResponsavel==0){
+					var id = aluno.idResponsavel;
+					
+					SALAARCOIRIS.aluno.alterarResp(id);
+				}
+				
+				
+			},
+			error: function(info){
+				console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
+			}
+		});
+	}
+	
+	SALAARCOIRIS.aluno.alterarResp= function(id){
+		console.log("teste2: " + id);
+	}
+	
+	
 });
