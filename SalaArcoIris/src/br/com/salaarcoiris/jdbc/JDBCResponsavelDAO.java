@@ -74,4 +74,23 @@ private Connection conexao;
 		}
 		return responsavel;
 	}
+	public boolean alterarR(Responsavel responsavel) {		
+		String comando = "UPDATE responsavel "
+				+ "SET nomeResponsavel=?, dataNasc=? "
+				+ " WHERE idResponsavel=?";
+		PreparedStatement p;
+		try {
+			
+			p = this.conexao.prepareStatement(comando);
+			p.setString(1, responsavel.getNomeResp());
+			p.setString(2, responsavel.getNascResp());
+
+			p.executeUpdate();
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 }

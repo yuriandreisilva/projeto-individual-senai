@@ -8,5 +8,6 @@ import br.com.salaarcoiris.modelo.Responsavel;
 public interface ResponsavelDAO {
 	public boolean inserirR(Responsavel responsavel);
 	public Responsavel checkIdR(int idResponsavel);
+	public boolean alterarR(Responsavel responsavel);
 	
 }

@@ -75,4 +75,30 @@ public class ResponsavelRest extends UtilRest{
 			return this.buildErrorResponse(e.getMessage());
 		}
 	}
+	
+	@PUT
+	@Path("/alterarR")
+	@Consumes("application/*")
+	public Response alterarR(String responsavelParam) {
+		try {
+			Responsavel responsavel = new Gson().fromJson(responsavelParam, Responsavel.class);
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCResponsavelDAO jdbcResponsavel = new JDBCResponsavelDAO (conexao);
+
+			boolean retorno = jdbcResponsavel.alterarR(responsavel);
+
+			String msg="";
+			if (retorno) {
+				msg = "Cadastro alterado com sucesso!";
+			}else {
+				msg = "Erro ao alterar cadastro";
+			}
+			conec.fecharConexao();
+			return this.buildResponse(msg);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
 }

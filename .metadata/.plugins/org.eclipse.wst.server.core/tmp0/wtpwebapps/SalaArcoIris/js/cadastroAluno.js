@@ -26,6 +26,7 @@ $(document).ready (function(){
 		var codigoResp = 0;
 
 		var aluno = new Object();
+		
 		aluno.nomeAluno = document.frmAluno.nome.value;
 		aluno.cpfAluno = document.frmAluno.cpf.value;
 		aluno.email = document.frmAluno.email.value;
@@ -84,12 +85,12 @@ $(document).ready (function(){
 
 	SALAARCOIRIS.aluno.buscarAluno = function(){
 		var valorBusca = $("#buscaAluno").val();
+		
 		$.ajax({
 			type: "GET",
 			url: SALAARCOIRIS.PATH + "aluno/buscarA",
 			data: "valorBusca="+valorBusca,
 			success: function(dados){
-
 				dados = JSON.parse(dados);
 				$("#listaAlunos").html(SALAARCOIRIS.aluno.exibir(dados));
 			},
@@ -166,6 +167,7 @@ $(document).ready (function(){
 			data: "idAluno="+idAluno,
 			success: function(aluno){
 				document.frmEditaAluno.idAluno.value = aluno.idAluno;
+				document.frmEditaAluno.idResponsavel.value = aluno.idResp;
 				document.frmEditaAluno.nomeAluno.value = aluno.nomeAluno;
 				document.frmEditaAluno.cpfAluno.value = aluno.cpfAluno;
 				document.frmEditaAluno.email.value = aluno.email;
@@ -205,6 +207,7 @@ $(document).ready (function(){
 			url: SALAARCOIRIS.PATH +"responsavel/checkIdR",
 			data: "idResponsavel="+id,
 			success: function(responsavel){
+//				document.frmEditaAluno.idResponsavel.value = responsavel.idResponsavel;
 				document.frmEditaAluno.nomeResponsavel.value = responsavel.nomeResp;
 				document.frmEditaAluno.nascResponsavel.value = responsavel.nascResp;
 			},
@@ -217,7 +220,7 @@ $(document).ready (function(){
 	SALAARCOIRIS.aluno.alterarA= function(){
 		
 		var aluno = new Object();
-		
+		console.log(aluno)
 		aluno.idAluno = document.frmEditaAluno.idAluno.value;
 		aluno.idResponsavel = document.frmEditaAluno.idResponsavel.value;
 		aluno.nomeAluno = document.frmEditaAluno.nome.value;
@@ -233,8 +236,9 @@ $(document).ready (function(){
 				SALAARCOIRIS.aluno.buscarAluno();
 				
 				console.log("Aluno alterado com sucesso!")
+				console.log(aluno.idResponsavel)
 				
-				if (!aluno.idResponsavel==0){
+				if (aluno.idResponsavel>0){
 					var id = aluno.idResponsavel;
 					
 					SALAARCOIRIS.aluno.alterarResp(id);
@@ -248,7 +252,27 @@ $(document).ready (function(){
 	}
 	
 	SALAARCOIRIS.aluno.alterarResp= function(id){
-		console.log("teste2: " + id);
+		
+		var responsavel = new Object();
+		
+		responsavel.idResponsavel = document.frmEditaAluno.idResponsavel.value;
+		responsavel.nomeResp = document.frmEditaAluno.nomeResponsavel.value;
+		responsavel.nascResp = document.frmEditaAluno.nascResponsavel.value;
+		
+		$.ajax({
+			type:"PUT",
+			url: SALAARCOIRIS.PATH + "responsavel/alterarR",
+			data:JSON.stringify(responsavel),
+			success: function(msg){
+				SALAARCOIRIS.aluno.buscarAluno();
+				
+				console.log("Responsável alterado com sucesso!")
+				
+			},
+			error: function(info){
+				console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
+			}
+		});
 	}
 	
 	
