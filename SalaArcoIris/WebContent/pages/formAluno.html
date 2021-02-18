@@ -1,0 +1,70 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../js/pagesFixed.js"></script>
+
+<div class="head">    
+    <!-- importa head -->
+</div>
+
+<header>
+    <!-- importa header -->
+</header>
+<body>    
+
+<main>
+    <div class="container">
+        <form class="mt-4" method="POST">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="nomeAluno">Nome</label>
+                    <input name="nomeAluno" type="text" class="form-control" id="inputNome" placeholder="Nome completo">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="cpf">CPF</label>
+                    <input name="cpf" type="text" class="form-control" id="cpf" placeholder="000.000.000-00">
+                </div>
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="email@provedor.com">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="senha">Senha</label>
+                        <input name="senha" type="password" class="form-control" id="inputSenha" placeholder="***************">
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label for="nascimento">Nascimento</label>
+                        <input name="nascimento" type="date" class="form-control" id="inputNascimento">
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="1" id="checkResp" name="checkResponsavel" required>
+                        <label class="form-check-label" for="checkResp" name="checkResponsavel">
+                                Possui responsável?
+                        </label>
+                    </div>
+                </div>
+                <hr>
+                <fieldset disabled>
+                    <div class="form-group">
+                        <label for="nomeResp">Responsável</label>
+                        <input name="nomeResp" type="text" class="form-control" id="inputNomeResponsavel" placeholder="Nome completo" onlyread>
+                    </div>
+                    <div class="form-group">
+                        <label for="nascimentoResp">Nascimento</label>
+                        <input name="nascimentoResp" type="date" class="form-control" id="inputNascimentoResp" >
+                    </div>
+                </fieldset>
+                <a type="button" href="listaAlunos.html" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+
+            </div>
+        </form>
+    </div>
+</main>
+
+
+<footer>
+  <!-- importa footer que importa scripts + bootstrap -->
+</footer>
+</body>
+</html
