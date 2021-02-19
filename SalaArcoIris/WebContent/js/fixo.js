@@ -1,13 +1,14 @@
+console.log('entrando')
 $(document).ready(function(){
-	$(".head").load("fixed/head.html")
+	$(".head").load("../fixo/head.html")
 });
 
 $(document).ready(function(){
-	$("header").load("fixed/header.html")
+	$("header").load("../fixo/header.html")
 });
 
 $(document).ready(function(){
-	$("footer").load("fixed/footer.html")
+	$("footer").load("../fixo/footer.html")
 });
 
 $(document).ready(function(){
