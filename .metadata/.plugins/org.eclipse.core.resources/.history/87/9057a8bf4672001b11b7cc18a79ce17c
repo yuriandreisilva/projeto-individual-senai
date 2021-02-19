@@ -1,0 +1,19 @@
+<!DOCTYPE html> 
+<html lang="pt-br">
+	<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Sala Arco Iris - Biblioteca">
+	<meta name="keywords" content="Livros">
+	<meta name="author" content="Yuri Andrei da Silva">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> Aluno - Sala Arco Íris</title>
+</head>
+
+<div id="container">
+	<div class="text-center">
+		<a class="navbar-brand" href="home.html">
+			<img src="/imgs/logo2.png" width="100" height="80" class="rounded" alt="">
+		</a>
+	</div>
+</div>
+

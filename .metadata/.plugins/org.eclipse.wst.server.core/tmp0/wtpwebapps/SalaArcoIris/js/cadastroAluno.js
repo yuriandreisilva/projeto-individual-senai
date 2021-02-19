@@ -4,10 +4,10 @@ function verifica(){
 	console.log(input);
 
 	if(input == "2" ){ 
-		document.querySelectorAll('.input-responsaveis').forEach(input => input.disabled = false);
+		document.querySelectorAll('.input-responsaveis').forEach(fieldset => fieldset.disabled = false);
 
 	}else{
-		document.querySelectorAll('.input-responsaveis').forEach(input => input.disabled = true);
+		document.querySelectorAll('.input-responsaveis').forEach(fieldset => fieldset.disabled = true);
 	}  	
 };
 
