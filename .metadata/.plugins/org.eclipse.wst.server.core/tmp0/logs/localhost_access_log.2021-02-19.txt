@@ -280,3 +280,4 @@
 0:0:0:0:0:0:0:1 - - [19/Feb/2021:22:37:51 -0200] "GET /SalaArcoIris/rest/aluno/buscarA?valorBusca= HTTP/1.1" 200 936
 0:0:0:0:0:0:0:1 - - [19/Feb/2021:22:44:00 -0200] "GET /SalaArcoIris/rest/aluno/buscarA?valorBusca= HTTP/1.1" 200 936
 0:0:0:0:0:0:0:1 - - [19/Feb/2021:22:44:06 -0200] "GET /SalaArcoIris/rest/aluno/buscarA?valorBusca= HTTP/1.1" 200 936
+0:0:0:0:0:0:0:1 - - [19/Feb/2021:23:00:56 -0200] "GET /SalaArcoIris/pages/aluno/home.html HTTP/1.1" 404 782
