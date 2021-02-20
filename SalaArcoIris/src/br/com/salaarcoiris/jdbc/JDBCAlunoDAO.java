@@ -33,7 +33,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 			p = this.conexao.prepareStatement(comando);
 
-			p.setInt(1, aluno.getCpfAluno());
+			p.setString(1, aluno.getCpfAluno());
 			p.setString(2, aluno.getNomeAluno());
 			p.setString(3, aluno.getNascAluno());
 			p.setString(4, aluno.getEmail());
@@ -49,6 +49,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 	}
 	
 	public List<JsonObject>buscarA(String nome){
+		System.out.println(nome);
 		String comando = "SELECT * "+
 				"FROM aluno ";
 		if (nome != "") {
@@ -66,7 +67,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			while(rs.next()) {
 
 				int id = rs.getInt("idAluno");
-				int cpfAluno = rs.getInt("cpfAluno");
+				String cpfAluno = rs.getString("cpfAluno");
 				String nomeAluno = rs.getString("nomeAluno");
 				String dataNasc = rs.getString("dataNasc");
 				String email = rs.getString("email");
@@ -117,7 +118,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			ResultSet rs = p.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("idAluno");
-				int cpfAluno = rs.getInt("cpfAluno");
+				String cpfAluno = rs.getString("cpfAluno");
 				String nomeAluno = rs.getString("nomeAluno");
 				String dataNasc = rs.getString("dataNasc");
 				String email = rs.getString("email");
@@ -153,7 +154,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				
 				p = this.conexao.prepareStatement(comando);
 								
-				p.setInt(1, aluno.getCpfAluno());
+				p.setString(1, aluno.getCpfAluno());
 				p.setString(2, aluno.getNomeAluno());
 				p.setString(3, aluno.getNascAluno());
 				p.setString(4, aluno.getEmail());

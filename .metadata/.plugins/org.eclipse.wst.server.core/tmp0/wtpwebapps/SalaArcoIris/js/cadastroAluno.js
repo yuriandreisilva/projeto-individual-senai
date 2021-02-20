@@ -27,10 +27,10 @@ $(document).ready (function(){
 
 		var aluno = new Object();
 		
-		aluno.nomeAluno = document.frmAluno.nome.value;
-		aluno.cpfAluno = document.frmAluno.cpf.value;
+		aluno.nomeAluno = document.frmAluno.nomeAluno.value;
+		aluno.cpfAluno = document.frmAluno.cpfAluno.value;
 		aluno.email = document.frmAluno.email.value;
-		aluno.nascAluno = document.frmAluno.datepicker.value;
+		aluno.nascAluno = document.frmAluno.nascAluno.value;
 		//
 
 		if (document.frmAluno.selecao.value == 2){
@@ -74,7 +74,7 @@ $(document).ready (function(){
 					console.log(msg);
 				},
 				error:function(info){
-					console.log("Erro ao cadastrar um novo aluno: "+ info.status + " - "+ info.statusText);	
+					console.log("Erro ao cadastrar um novo aluno com responsável: "+ info.status + " - "+ info.statusText);	
 				}
 			});
 		}
@@ -93,6 +93,7 @@ $(document).ready (function(){
 			success: function(dados){
 				dados = JSON.parse(dados);
 				$("#listaAlunos").html(SALAARCOIRIS.aluno.exibir(dados));
+				
 			},
 			error: function(info){
 				var a="Erro ao consultar os cadastros de aluno: "+info.status+" - "+info.statusText;
@@ -103,39 +104,35 @@ $(document).ready (function(){
 		SALAARCOIRIS.aluno.exibir = function(listaDeAlunos){
 			var tabela = 
 				"<br>"+
-				"<table style='margin:auto;'>"+
-				"<tr>"+	
-				"<th> Nome</th>"+
-				"<th> CPF</th>"+				
-				"<th> Data nascimento</th>"+
-				"<th> E-mail</th>"+
-				"<th class='acoes'>Editar</th>"+
-				"<th class='acoes'>Apagar</th>"+
-				"</tr>";
+				"<table class='table'>"+
+					"<thead>"+
+						"<tr>"+	
+							"<th scope='col'> Nome</th>"+
+							"<th scope='col'> CPF</th>"+
+							"<th scope='col'>Editar</th>"+
+							"<th scope='col'>Apagar</th>"+
+						"</tr>"+
+					"</thead>"+
+					"<tbody>";
 
 			if(listaDeAlunos != undefined && listaDeAlunos.length >0){
 
-
+				
 				for(var i=0; i<listaDeAlunos.length; i++){
 					tabela+="<tr>"+
-					"<td>"+listaDeAlunos[i].nomeAluno+"</td>"+
-					"<td>"+listaDeAlunos[i].cpfAluno+"</td>"+
-					"<td>"+listaDeAlunos[i].dataNasc+"</td>"+
-					"<td>"+listaDeAlunos[i].email+"</td>"+					
-					"<td>"+
-					"<a onclick=\"SALAARCOIRIS.aluno.exibirEditA('"+listaDeAlunos[i].idAluno+"')\">Editar</a>" +
-					"</td>"+
-					"<td>"+
-					"<a onclick=\"SALAARCOIRIS.aluno.deletarA('"+listaDeAlunos[i].idAluno+"')\">Apagar</a>" +
-					"</td>"+
+						"<th scope='row'>"+listaDeAlunos[i].nomeAluno+"</th>"+
+						"<td>"+listaDeAlunos[i].cpfAluno+"</td>"+					
+						"<td>"+"<a class='btn btn-warning' onclick=\"SALAARCOIRIS.aluno.exibirEditA('"+listaDeAlunos[i].idAluno+"')\">Editar</a>" +"</td>"+
+						"<td>"+"<a class='btn btn-danger' onclick=\"SALAARCOIRIS.aluno.deletarA('"+listaDeAlunos[i].idAluno+"')\">Apagar</a>" +"</td>"+
 					"</tr>";
 
 				}
 
 			}else if (listaDeAlunos == ""){
-				tabela += "<tr><td colspan='6'>Nenhum registro encontrado</td></tr>";
+				tabela += "<tr scope='row'><td colspan='6'>Nenhum registro encontrado</td></tr>";
 			}
-			tabela +="</table>";
+			tabela +="</tbody" +
+					"</table>";
 			return tabela;
 
 			$("#listaAlunos").html(tabela);

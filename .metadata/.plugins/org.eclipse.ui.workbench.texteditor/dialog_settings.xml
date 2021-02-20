@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="dados"/>
+		<item key="selection" value="cpf"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="cpf"/>
+			<item value="Int"/>
+			<item value="nomeAluno"/>
+			<item value="cadastrarResponsavel"/>
+			<item value="datepicker"/>
+			<item value="nome"/>
 			<item value="dados"/>
 			<item value="AlterarA"/>
-			<item value="aluno"/>
-			<item value="buscarA"/>
-			<item value="exibir"/>
-			<item value="busca"/>
-			<item value="jquery"/>
-			<item value="buscaAluno"/>
 		</list>
 		<list key="replacehistory">
 		</list>

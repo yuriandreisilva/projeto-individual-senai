@@ -1,0 +1,23 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../js/fixo.js"></script>
+
+<div class="head">    
+    <!-- importa head -->
+</div>
+
+<header>
+    <!-- importa header -->
+</header>
+<body>    
+
+<main>
+    <!-- PRINCIPAL -->
+</main>
+
+
+<footer>
+	<script src="cadastroAluno.js"></script>
+  <!-- importa footer que importa scripts + bootstrap -->
+</footer>
+</body>
+</html>

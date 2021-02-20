@@ -29,6 +29,7 @@ public class AlunoRest extends UtilRest{
 	@Path("/inserirA")
 	@Consumes("application/*")
 	public Response inserirA(String alunoParam) {
+		//System.out.println(alunoParam);
 		try {
 			Aluno aluno = new Gson().fromJson(alunoParam, Aluno.class);
 			Conexao conec = new Conexao();

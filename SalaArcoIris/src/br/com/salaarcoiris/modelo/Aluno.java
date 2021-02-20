@@ -7,7 +7,7 @@ public class Aluno implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int idAluno, idResp;
-	private int cpfAluno;
+	private String cpfAluno;
 	private String nomeAluno;
 	private String nascAluno;
 	private String email;
@@ -40,10 +40,10 @@ public class Aluno implements Serializable {
 	public void setIdResp(int idResp) {
 		this.idResp = idResp;
 	}
-	public int getCpfAluno() {
+	public String getCpfAluno() {
 		return cpfAluno;
 	}
-	public void setCpfAluno(int cpfAluno) {
+	public void setCpfAluno(String cpfAluno) {
 		this.cpfAluno = cpfAluno;
 	}
 	public String getNomeAluno() {
