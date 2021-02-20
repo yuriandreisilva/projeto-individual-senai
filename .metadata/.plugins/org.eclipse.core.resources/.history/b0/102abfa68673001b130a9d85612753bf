@@ -1,4 +1,4 @@
-console.log('carregando páginas fixas')
+console.log('entrando páginas fixas')
 $(document).ready(function(){
 	$(".head").load("../fixo/head.html")
 });

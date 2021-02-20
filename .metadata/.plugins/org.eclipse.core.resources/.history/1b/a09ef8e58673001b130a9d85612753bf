@@ -164,6 +164,7 @@ $(document).ready (function(){
 			url: SALAARCOIRIS.PATH +"aluno/checkIdA",
 			data: "idAluno="+idAluno,
 			success: function(aluno){
+				cosole.log(aluno);
 				document.frmEditaAluno.idAluno.value = aluno.idAluno;
 				document.frmEditaAluno.idResponsavel.value = aluno.idResp;
 				document.frmEditaAluno.nomeAluno.value = aluno.nomeAluno;

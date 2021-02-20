@@ -53,7 +53,6 @@
 							<label for="senha">Senha</label>
 							<input name="senha" type="password" class="form-control" id="inputSenha" >
 						</div>
-					</div>
 					<div class="form-group">
 							<label for="nascAluno">Nascimento</label>
 							<input name="nascAluno" type="date" class="form-control" id="inputNascimento">
@@ -80,7 +79,6 @@
 					</fieldset>
 					<a type="button" href="listar.html" class="btn btn-secondary">Cancelar</a>
 					<a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</a>
-	
 				</div>
 			</form>
 		</div>

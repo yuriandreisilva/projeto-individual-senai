@@ -156,8 +156,9 @@ $(document).ready (function(){
 	}
 	
 	SALAARCOIRIS.aluno.exibirEditA = function(idAluno){
-		document.getElementById('id01').style.display='block';
 		
+		document.getElementById('id01').style.display='block';
+		console.log(idAluno);
 		$.ajax({
 			type:"GET",
 			url: SALAARCOIRIS.PATH +"aluno/checkIdA",
@@ -223,7 +224,7 @@ $(document).ready (function(){
 		aluno.nomeAluno = document.frmEditaAluno.nome.value;
 		aluno.cpfAluno = document.frmEditaAluno.cpf.value;
 		aluno.email = document.frmEditaAluno.email.value;
-		aluno.nascAluno = document.frmEditaAluno.datepicker.value;
+		aluno.nascAluno = document.frmEditaAluno.nascAluno.value;
 		
 		$.ajax({
 			type:"PUT",

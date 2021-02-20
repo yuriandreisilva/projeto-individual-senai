@@ -1,4 +1,4 @@
-console.log('entrando')
+console.log('carregando páginas fixas')
 $(document).ready(function(){
 	$(".head").load("../fixo/head.html")
 });
@@ -11,16 +11,6 @@ $(document).ready(function(){
 	$("footer").load("../fixo/footer.html")
 });
 
-$(document).ready(function(){
-	// 	$("#check").change(function() {
-	// 		if(this.checked) {
-	// 		   $(".corpo").addClass("corpo-menor");
-	// 		}else{
-	// 		   $(".corpo").removeClass("corpo-menor");
-	// 		}
-	// 	});
-	// });
-})
 
 
 

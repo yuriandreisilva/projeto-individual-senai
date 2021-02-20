@@ -158,7 +158,7 @@ $(document).ready (function(){
 	SALAARCOIRIS.aluno.exibirEditA = function(idAluno){
 		
 		document.getElementById('id01').style.display='block';
-		console.log(idAluno);
+		
 		$.ajax({
 			type:"GET",
 			url: SALAARCOIRIS.PATH +"aluno/checkIdA",
