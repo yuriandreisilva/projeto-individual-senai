@@ -1,11 +1,10 @@
-function verifica(){
+function verificarSelectResponsavel(){
 	var input = document.getElementById('selecao').value;
 
 	console.log(input);
 
 	if(input == "2" ){ 
 		document.querySelectorAll('.input-responsaveis').forEach(fieldset => fieldset.disabled = false);
-
 	}else{
 		document.querySelectorAll('.input-responsaveis').forEach(fieldset => fieldset.disabled = true);
 	}  	
@@ -47,12 +46,13 @@ $(document).ready (function(){
 			success:function(msg){
 				console.log(msg);
 				SALAARCOIRIS.aluno.cadastrarResponsavel();
+				window.location.href = "listar.html";
 			},
 			error:function(info){
 				console.log("Erro ao cadastrar um novo aluno: "+ info.status + " - "+ info.statusText);	
 			}
 		});	
-		window.location.href = "listar.html";
+		
 
 	}
 
@@ -160,7 +160,6 @@ $(document).ready (function(){
 	SALAARCOIRIS.aluno.exibirEditA = function(idAluno){
 		
 		document.getElementById('id01').style.display='block';
-		
 		$.ajax({
 			type:"GET",
 			url: SALAARCOIRIS.PATH +"aluno/checkIdA",
@@ -190,6 +189,8 @@ $(document).ready (function(){
 				if (aluno.idResp>0){
 					var id = aluno.idResp;
 					SALAARCOIRIS.aluno.exibirEditResp(id);
+				}else{
+					document.frmEditaAluno.selecao.value = 3;
 				}
 				
 			},
@@ -208,6 +209,8 @@ $(document).ready (function(){
 			data: "idResponsavel="+id,
 			success: function(responsavel){
 //				document.frmEditaAluno.idResponsavel.value = responsavel.idResponsavel;
+				document.frmEditaAluno.selecao.value = 2;
+				verificarSelectResponsavel();
 				document.frmEditaAluno.nomeResponsavel.value = responsavel.nomeResp;
 				document.frmEditaAluno.nascResponsavel.value = responsavel.nascResp;
 			},

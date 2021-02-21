@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="exibirEditA"/>
+		<item key="selection" value="verifica"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="verifica"/>
 			<item value="exibirEditA"/>
+			<item value="cadastrar"/>
+			<item value="input"/>
+			<item value="selecao"/>
+			<item value="exibir"/>
+			<item value="inserir"/>
 			<item value="nomeAluno"/>
-			<item value="editar"/>
-			<item value="response"/>
-			<item value="id01"/>
-			<item value="idAluno"/>
-			<item value="frmEditaAluno"/>
-			<item value="cpf"/>
 		</list>
 		<list key="replacehistory">
 		</list>
