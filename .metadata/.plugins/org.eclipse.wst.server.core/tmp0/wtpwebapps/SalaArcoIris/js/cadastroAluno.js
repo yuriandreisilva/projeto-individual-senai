@@ -52,6 +52,8 @@ $(document).ready (function(){
 				console.log("Erro ao cadastrar um novo aluno: "+ info.status + " - "+ info.statusText);	
 			}
 		});	
+		window.location.href = "listar.html";
+
 	}
 
 	// INSERT - resp
@@ -158,7 +160,7 @@ $(document).ready (function(){
 	SALAARCOIRIS.aluno.exibirEditA = function(idAluno){
 		
 		document.getElementById('id01').style.display='block';
-		console.log(idAluno);
+		
 		$.ajax({
 			type:"GET",
 			url: SALAARCOIRIS.PATH +"aluno/checkIdA",
@@ -218,11 +220,10 @@ $(document).ready (function(){
 	SALAARCOIRIS.aluno.alterarA= function(){
 		
 		var aluno = new Object();
-		console.log(aluno)
 		aluno.idAluno = document.frmEditaAluno.idAluno.value;
 		aluno.idResponsavel = document.frmEditaAluno.idResponsavel.value;
-		aluno.nomeAluno = document.frmEditaAluno.nome.value;
-		aluno.cpfAluno = document.frmEditaAluno.cpf.value;
+		aluno.nomeAluno = document.frmEditaAluno.nomeAluno.value;
+		aluno.cpfAluno = document.frmEditaAluno.cpfAluno.value;
 		aluno.email = document.frmEditaAluno.email.value;
 		aluno.nascAluno = document.frmEditaAluno.nascAluno.value;
 		

@@ -4,17 +4,17 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
+		<item key="selection" value="exibirEditA"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
-			<item value="close"/>
 			<item value="exibirEditA"/>
-			<item value="acoes"/>
-			<item value="lista"/>
-			<item value="buscaAluno"/>
-			<item value="listaAlunos"/>
-			<item value="campoBuscaA"/>
+			<item value="nomeAluno"/>
+			<item value="editar"/>
+			<item value="response"/>
+			<item value="id01"/>
+			<item value="idAluno"/>
+			<item value="frmEditaAluno"/>
 			<item value="cpf"/>
 		</list>
 		<list key="replacehistory">
