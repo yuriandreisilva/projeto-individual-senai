@@ -1,6 +1,6 @@
 console.log('carregando páginas fixas')
 $(document).ready(function(){
-	$(".head").load("../fixo/head.html")
+	$("head").load("../fixo/head.html")
 });
 
 $(document).ready(function(){

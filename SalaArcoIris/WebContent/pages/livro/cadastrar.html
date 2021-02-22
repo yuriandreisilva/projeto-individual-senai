@@ -1,16 +1,18 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="../../js/fixo.js"></script>
-
-<div class="head">    
-  
-</div>
-
-
+<!DOCTYPE html> 
+<html lang="pt-br">
+    
+<head>
+    <div class="head">    
+        <!-- importa head -->
+    </div>
+</head>
+    
+    
 <header>
     <!-- importa header -->
 </header>
 <body>    
-
+    
 <main>
     <div class="container">
         <form class="mt-4 mb-4" name="frmEdit" method="POST">
@@ -23,35 +25,36 @@
                     <label for="codigoLivro">Código</label>
                     <input name="codigoLivro" type="text" class="form-control" id="inputCodigo" placeholder="Código (SKU)">
                 </div>
-                    <div class="form-group col-md-6">
-                        <label for="ano">Ano publicação</label>
-                        <input name="ano" type="text" class="form-control" id="inputAno" placeholder="Ano publicação">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="qtdEstoque">Estoque inicial</label>
-                        <input name="qtdEstoque" type="text" class="form-control" id="inputEstoque" placeholder="Estoque inical">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="responsavel">Status livro</label>
-                    <select class="custom-select" id="selecao" onchange="verificarSelectResponsavel()">
-                        <option value="1" selected>Selecione uma opção</option>
-                        <option value="2">Ativo</option>
-                        <option value="3">Inativo</option>
-                    </select>
-                </div>
-                <a type="button" href="editar.html" class="btn btn-secondary">Cancelar</a>
-                <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</a>
-
+                <div class="form-group col-md-6">
+                    <label for="ano">Ano publicação</label>
+                    <input name="ano" type="text" class="form-control" id="inputAno" placeholder="Ano publicação">
             </div>
-        </form>
+            <div class="form-group col-md-6">
+                <label for="qtdEstoque">Estoque inicial</label>
+                <input name="qtdEstoque" type="text" class="form-control" id="inputEstoque" placeholder="Estoque inical">
+            </div>
+            </div>
+            <div class="form-group">
+                <label for="responsavel">Status livro</label>
+                <select class="custom-select" id="selecao" onchange="verificarSelectResponsavel()">
+                    <option value="1" selected>Selecione uma opção</option>
+                    <option value="2">Ativo</option>
+                    <option value="3">Inativo</option>
+                </select>
+            </div>
+            <a type="button" href="editar.html" class="btn btn-secondary">Cancelar</a>
+            <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</a>    
+        </div>
+    </form>
     </div>
 </main>
 
 
 <footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../../js/fixo.js"></script>
     <script src="../../js/cadastroLivro.js"></script>
-  <!-- importa footer que importa scripts + bootstrap -->
+    <!-- importa footer que importa scripts + bootstrap -->
 </footer>
 </body>
 </html>
