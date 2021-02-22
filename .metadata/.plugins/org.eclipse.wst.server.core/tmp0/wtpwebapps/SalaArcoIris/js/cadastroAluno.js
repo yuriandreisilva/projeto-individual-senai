@@ -46,7 +46,7 @@ $(document).ready (function(){
 			success:function(msg){
 				console.log(msg);
 				SALAARCOIRIS.aluno.cadastrarResponsavel();
-				window.location.href = "listar.html";
+				window.location.href = "editar.html";
 			},
 			error:function(info){
 				console.log("Erro ao cadastrar um novo aluno: "+ info.status + " - "+ info.statusText);	
