@@ -2,6 +2,7 @@
 <html lang="pt-br">
     
 <head>
+<meta charset="UTF-8">
     <div class="head">    
         <!-- importa head -->
     </div>
@@ -15,7 +16,7 @@
     
 <main>
     <div class="container">
-        <form class="mt-4 mb-4" name="frmEdit" method="POST">
+        <form class="mt-4 mb-4" name="frmLivro" method="POST">
             <div class="form-row">
                 <div class="form-group col-md-8">
                     <label for="nomeLivro">Nome</label>
@@ -26,24 +27,24 @@
                     <input name="codigoLivro" type="text" class="form-control" id="inputCodigo" placeholder="Código (SKU)" required>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="ano">Ano publicação</label>
-                    <input name="ano" type="text" class="form-control" id="inputAno" placeholder="Ano publicação" required>
+                    <label for="anoLivro">Ano publicação</label>
+                    <input name="anoLivro" type="text" class="form-control" id="inputAno" placeholder="Ano publicação" required>
             </div>
-            <div class="form-group col-md-6">
-                <label for="qtdEstoque">Estoque inicial</label>
-                <input name="qtdEstoque" type="text" class="form-control" id="inputEstoque" placeholder="Estoque inical" required>
-            </div>
+	            <div class="form-group col-md-6">
+	                <label for="qtdEstoque">Estoque inicial</label>
+	                <input name="qtdEstoque" type="text" class="form-control" id="inputEstoque" placeholder="Estoque inical" required>
+	            </div>
             </div>
             <div class="form-group">
                 <label for="responsavel">Status livro</label>
-                <select class="custom-select" id="selecao" onchange="verificarSelectResponsavel()" required>
-                    <option value="1" selected>Selecione uma opção</option>
-                    <option value="2">Ativo</option>
+                <select class="custom-select" id="statusLivro" required>
+                    <option value="1">Selecione uma opção</option>
+                    <option value="2" selected>Ativo</option>
                     <option value="3">Inativo</option>
                 </select>
             </div>
             <button type="button" href="editar.html" class="btn btn-secondary mr-2">Cancelar</button>
-            <button type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</button>    
+            <button type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.livro.cadastrarLivro())>Salvar</button>    
         </div>
     </form>
     </div>

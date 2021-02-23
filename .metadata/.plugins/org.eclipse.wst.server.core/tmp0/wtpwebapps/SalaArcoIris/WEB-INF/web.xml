@@ -11,18 +11,26 @@
   </welcome-file-list>
   
   
-  <servlet>
+ <servlet>
+<!--Serviço Jersey Rest, um tipo de servlet, ou seja mini servidor  -->
 <servlet-name>Jersey REST Service</servlet-name>
+<!-- Container de Servlet, classe onde se encontra o servidor.-->
 <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 <init-param>
+<!-- Inicia parametrização de pacotes configurados para rodar -->
 <param-name>jersey.config.server.provider.packages</param-name>
+<!-- parâmetro do rest criado no projeto, todos os RESTs precisam estar neste caminho/pasta -->
+<!-- É o pacote onde se encontra o REST que será referenciado -->
 <param-value>br.com.salaarcoiris.rest</param-value>
 </init-param>
+<!-- ativa -->
 <load-on-startup>1</load-on-startup>
 </servlet>
+<!-- Faz o mapeamento -->
 <servlet-mapping>
-<servlet-name>Jersey REST Service</servlet-name>
-<url-pattern>/rest/*</url-pattern>
-</servlet-mapping>
-  
+	<!--  -->
+	<servlet-name>Jersey REST Service</servlet-name>
+	<!-- URL do rest utilizado, pegará tudo após a barra, indicado pelo * -->
+	<url-pattern>/rest/*</url-pattern>
+</servlet-mapping>  
 </web-app>

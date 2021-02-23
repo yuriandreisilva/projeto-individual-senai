@@ -2,11 +2,11 @@
 <html lang="pt-br">
 	
 <head>
+<meta charset="UTF-8">
     <div class="head">    
         <!-- importa head -->
     </div>
 </head>
-
 
 <header>
     <!-- importa header -->
@@ -19,28 +19,28 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="nomeAluno">Nome</label>
-                    <input name="nomeAluno" type="text" class="form-control" id="inputNome" placeholder="Nome completo">
+                    <input name="nomeAluno" type="text" class="form-control" id="inputNome" placeholder="Nome completo" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="cpfAluno">CPF</label>
-                    <input name="cpfAluno" type="text" class="form-control" id="cpf" placeholder="000.000.000-00">
+                    <input name="cpfAluno" type="text" class="form-control" id="cpf" placeholder="000.000.000-00" required>
                 </div>
                     <div class="form-group col-md-6">
                         <label for="email">Email</label>
-                        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="email@provedor.com">
+                        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="email@provedor.com" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="senha">Senha</label>
-                        <input name="senha" type="password" class="form-control" id="inputSenha" placeholder="***************">
+                        <input name="senha" type="password" class="form-control" id="inputSenha" placeholder="***************" required>
                     </div>
                 </div>
                 <div class="form-group">
                         <label for="nascAluno">Nascimento</label>
-                        <input name="nascAluno" type="date" class="form-control" id="inputNascimento">
+                        <input name="nascAluno" type="date" class="form-control" id="inputNascimento" required>
                 </div>
                 <div class="form-group">
                     <label for="responsavel">Possui responsável?</label>
-                    <select class="custom-select" id="selecao" onchange="verificarSelectResponsavel()">
+                    <select class="custom-select" id="selecao" onchange="verificarSelectResponsavel()" required>
                         <option value="1" selected>Selecione uma opção</option>
                         <option value="2">Sim</option>
                         <option value="3">Não</option>
@@ -58,9 +58,8 @@
                         <input name="nascResponsavel" type="date" class="form-control" id="inputNascimentoResp">
                     </div> 
                 </fieldset>
-                <a type="button" href="editar.html" class="btn btn-secondary">Cancelar</a>
-                <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</a>
-
+                <a type="button" href="editar.html" class="btn btn-secondary mr-2">Cancelar</a>
+                <button type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</button>
             </div>
         </form>
     </div>
