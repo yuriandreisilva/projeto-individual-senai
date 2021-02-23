@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="cadastrarAluno"/>
+		<item key="selection" value="verificar"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="verificar"/>
+			<item value="selecao"/>
 			<item value="inserirL"/>
 			<item value="frmLivro"/>
 			<item value="nomeLivrofrmLivro"/>
 			<item value="nomeLivro"/>
 			<item value="cadastrarAluno"/>
 			<item value="inserirA"/>
-			<item value="inseri"/>
-			<item value="aluno"/>
 		</list>
 		<list key="replacehistory">
 			<item value="inserirL"/>

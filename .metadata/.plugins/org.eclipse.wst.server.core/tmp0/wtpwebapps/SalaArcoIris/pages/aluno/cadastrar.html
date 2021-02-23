@@ -14,34 +14,38 @@
 <body>    
 
 <main>
-    <div class="container">
-        <form class="mt-4 mb-4" name="frmAluno" method="POST">
+    <div class="container mt-4 mb-4">
+        <form class="needs-validation" novalidate name="frmAluno" method="POST">
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="nomeAluno">Nome</label>
-                    <input name="nomeAluno" type="text" class="form-control" id="inputNome" placeholder="Nome completo" required>
+                    <label for="validaNome">Nome</label>
+                    <input name="nomeAluno" type="text" class="form-control" id="validaNome" placeholder="Nome completo" required>
+              <div class="valid-feedback">
+		        Looks good!
+		      </div>
                 </div>
+		      
                 <div class="form-group col-md-6">
-                    <label for="cpfAluno">CPF</label>
-                    <input name="cpfAluno" type="text" class="form-control" id="cpf" placeholder="000.000.000-00" required>
+                    <label for="validaCpf">CPF</label>
+                    <input name="cpfAluno" type="text" class="form-control" id="validaCpf" placeholder="000.000.000-00" required>
                 </div>
                     <div class="form-group col-md-6">
-                        <label for="email">Email</label>
-                        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="email@provedor.com" required>
+                        <label for="validaEmail">Email</label>
+                        <input name="email" type="email" class="form-control" id="validaEmail" placeholder="email@provedor.com" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="senha">Senha</label>
-                        <input name="senha" type="password" class="form-control" id="inputSenha" placeholder="***************" required>
+                        <label for="validaSenha">Senha</label>
+                        <input name="senha" type="password" class="form-control" id="validaSenha" placeholder="***************" required>
                     </div>
                 </div>
                 <div class="form-group">
-                        <label for="nascAluno">Nascimento</label>
-                        <input name="nascAluno" type="date" class="form-control" id="inputNascimento" required>
+                        <label for="validaNascimento">Nascimento</label>
+                        <input name="nascAluno" type="date" class="form-control" id="validaNascimento" required>
                 </div>
                 <div class="form-group">
-                    <label for="responsavel">Possui responsável?</label>
-                    <select class="custom-select" id="selecao" onchange="verificarSelectResponsavel()" required>
-                        <option value="1" selected>Selecione uma opção</option>
+                    <label for="validaResponsavel">Possui responsável?</label>
+                    <select class="custom-select" id="validaResponsavel" onchange="verificarSelectResponsavel()" required>
+                        <option value="1" selected >Selecione uma opção</option>
                         <option value="2">Sim</option>
                         <option value="3">Não</option>
                     </select>
@@ -65,6 +69,26 @@
     </div>
 </main>
 
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
 
 <footer>
 

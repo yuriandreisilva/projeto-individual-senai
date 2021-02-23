@@ -1,5 +1,5 @@
 function verificarSelectResponsavel(){
-	var input = document.getElementById('selecao').value;
+	var input = document.getElementById('validaResponsavel').value;
 
 	console.log(input);
 
@@ -32,7 +32,7 @@ $(document).ready (function(){
 		aluno.nascAluno = document.frmAluno.nascAluno.value;
 		//
 
-		if (document.frmAluno.selecao.value == 2){
+		if (document.frmAluno.validaResponsavel.value == 2){
 			codigoResp = Math.floor(Math.random() * 1000000);
 			document.getElementById("codigoResp").value=codigoResp;
 		}
@@ -60,7 +60,7 @@ $(document).ready (function(){
 
 	SALAARCOIRIS.aluno.cadastrarResponsavel = function(){
 
-		if (document.frmAluno.selecao.value == 2){
+		if (document.frmAluno.validaResponsavel.value == 2){
 			var responsavel = new Object();
 
 			responsavel.idResp = document.getElementById("codigoResp").value;
@@ -190,7 +190,7 @@ $(document).ready (function(){
 					var id = aluno.idResp;
 					SALAARCOIRIS.aluno.exibirEditResp(id);
 				}else{
-					document.frmEditaAluno.selecao.value = 3;
+					document.frmEditaAluno.validaResponsavel.value = 3;
 				}
 				
 			},
@@ -209,7 +209,7 @@ $(document).ready (function(){
 			data: "idResponsavel="+id,
 			success: function(responsavel){
 //				document.frmEditaAluno.idResponsavel.value = responsavel.idResponsavel;
-				document.frmEditaAluno.selecao.value = 2;
+				document.frmEditaAluno.validaResponsavel.value = 2;
 				verificarSelectResponsavel();
 				document.frmEditaAluno.nomeResponsavel.value = responsavel.nomeResp;
 				document.frmEditaAluno.nascResponsavel.value = responsavel.nascResp;
