@@ -53,6 +53,9 @@ public class JDBCLivroDAO implements LivroDAO{
 			e.printStackTrace();
 			return false;
 		}
+		
+		// RETORNA VERDADEIRO O BOOLEANO PARA O LIVRO REST
+		// 
 		return true;
 	}
 }
