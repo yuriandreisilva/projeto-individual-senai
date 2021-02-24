@@ -20,6 +20,8 @@ import com.google.gson.JsonObject;
 
 import br.com.salaarcoiris.bd.Conexao;
 import br.com.salaarcoiris.jdbc.JDBCLivroDAO;
+import br.com.salaarcoiris.jdbc.JDBCLivroDAO;
+import br.com.salaarcoiris.modelo.Livro;
 import br.com.salaarcoiris.modelo.Livro;
 
 //INDICA O OBJETO POR LOCAL: LIVRO
@@ -59,6 +61,102 @@ public class LivroRest extends UtilRest{
 			
 			// CONSTRÓI A RESPOSTA, PASSANDO A MENSAGEM
 			// NO UTIL REST HÁ ESTA RESPOSTA CONSTRUIDA COM MÉTODO
+			return this.buildResponse(msg);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	@GET
+	@Path("/buscarL")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarL(@QueryParam("valorBusca") String  nome) {
+		try {
+			List<JsonObject> listaLivros = new ArrayList<JsonObject>();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCLivroDAO jdbcLivro = new JDBCLivroDAO (conexao);
+			listaLivros = jdbcLivro.buscarL(nome);
+			conec.fecharConexao();
+			
+			String json = new Gson().toJson(listaLivros);
+			return this.buildResponse(json);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}				
+	}
+	
+	@DELETE
+	@Path("/excluir/{idLivro}")
+	@Consumes("application/*")
+	public Response excluirA(@PathParam("idLivro") int idLivro) {
+		try {
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCLivroDAO jdbcLivro = new JDBCLivroDAO (conexao);
+			
+			boolean retorno = jdbcLivro.deletarL(idLivro);
+			
+			String msg = "";
+			if(retorno) {
+				msg="Livro excluído com sucesso!";
+			}else {
+				msg="Erro ao excluir Livro!";
+			}
+			
+			conec.fecharConexao();
+			
+			return this.buildResponse(msg);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}			
+	}
+	
+	@GET
+	@Path("/checkIdL")
+	@Produces(MediaType.APPLICATION_JSON)
+
+	public Response checkIdL(@QueryParam("idLivro")int idLivro) {
+		try {
+			Livro livro= new Livro();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCLivroDAO jdbcLivro = new JDBCLivroDAO (conexao);
+
+			livro = jdbcLivro.checkIdL(idLivro);
+
+			conec.fecharConexao();
+			return this.buildResponse(livro);
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	@PUT
+	@Path("/alterarL")
+	@Consumes("application/*")
+	public Response alterarL(String livroParam) {
+		try {
+			Livro livro = new Gson().fromJson(livroParam, Livro.class);
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCLivroDAO jdbcLivro = new JDBCLivroDAO (conexao);
+
+			boolean retorno = jdbcLivro.alterarL(livro);
+
+			String msg="";
+			if (retorno) {
+				msg = "Cadastro alterado com sucesso!";
+			}else {
+				msg = "Erro ao alterar cadastro";
+			}
+			conec.fecharConexao();
 			return this.buildResponse(msg);
 		}catch(Exception e) {
 			e.printStackTrace();

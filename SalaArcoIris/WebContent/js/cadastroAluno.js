@@ -38,7 +38,7 @@ $(document).ready (function(){
 		}
 
 		aluno.idResp = codigoResp;
-
+		
 		$.ajax({
 			type: "POST",
 			url: SALAARCOIRIS.PATH + "aluno/inserirA",

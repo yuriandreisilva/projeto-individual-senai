@@ -18,28 +18,25 @@
         <form class="needs-validation" novalidate name="frmAluno" method="POST">
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="validaNome">Nome</label>
+                    <label for="nomeAluno">Nome</label>
                     <input name="nomeAluno" type="text" class="form-control" id="validaNome" placeholder="Nome completo" required>
-              <div class="valid-feedback">
-		        Looks good!
-		      </div>
                 </div>
 		      
                 <div class="form-group col-md-6">
-                    <label for="validaCpf">CPF</label>
+                    <label for="cpfAluno">CPF</label>
                     <input name="cpfAluno" type="text" class="form-control" id="validaCpf" placeholder="000.000.000-00" required>
                 </div>
                     <div class="form-group col-md-6">
-                        <label for="validaEmail">Email</label>
+                        <label for="email">Email</label>
                         <input name="email" type="email" class="form-control" id="validaEmail" placeholder="email@provedor.com" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="validaSenha">Senha</label>
+                        <label for="senha">Senha</label>
                         <input name="senha" type="password" class="form-control" id="validaSenha" placeholder="***************" required>
                     </div>
                 </div>
                 <div class="form-group">
-                        <label for="validaNascimento">Nascimento</label>
+                        <label for="nascAluno">Nascimento</label>
                         <input name="nascAluno" type="date" class="form-control" id="validaNascimento" required>
                 </div>
                 <div class="form-group">
@@ -55,15 +52,15 @@
                 <fieldset class="input-responsaveis" disabled>
                     <div class="form-group">
                         <label for="nomeResponsavel">Responsável</label>
-                        <input name="nomeResponsavel" type="text" class="form-control" id="inputNomeResponsavel" placeholder="Nome completo">
+                        <input name="nomeResponsavel" type="text" class="form-control" id="validaNomeResponsavel" placeholder="Nome completo" required>
                     </div>
                     <div class="form-group">
                         <label for="nascResponsavel">Nascimento</label>
-                        <input name="nascResponsavel" type="date" class="form-control" id="inputNascimentoResp">
+                        <input name="nascResponsavel" type="date" class="form-control" id="validaNascResposnavel" required>
                     </div> 
                 </fieldset>
                 <a type="button" href="editar.html" class="btn btn-secondary mr-2">Cancelar</a>
-                <button type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</button>
+                <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</a>
             </div>
         </form>
     </div>

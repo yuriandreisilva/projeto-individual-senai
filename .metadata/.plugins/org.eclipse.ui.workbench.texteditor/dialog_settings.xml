@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="casesensitive" value="true"/>
+		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="verificar"/>
+		<item key="selection" value="cadastrar"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
-			<item value="verificar"/>
-			<item value="selecao"/>
-			<item value="inserirL"/>
-			<item value="frmLivro"/>
-			<item value="nomeLivrofrmLivro"/>
-			<item value="nomeLivro"/>
-			<item value="cadastrarAluno"/>
-			<item value="inserirA"/>
+			<item value="window.location"/>
+			<item value="cadastrar"/>
+			<item value="exibir"/>
+			<item value="listaLivros"/>
+			<item value="frm"/>
+			<item value="frmedit"/>
+			<item value="deletarA"/>
+			<item value="id"/>
 		</list>
 		<list key="replacehistory">
+			<item value="alterarL"/>
+			<item value="buscarL"/>
+			<item value="deletarL"/>
+			<item value="Livro"/>
 			<item value="inserirL"/>
 			<item value="livro"/>
-			<item value="Livro"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

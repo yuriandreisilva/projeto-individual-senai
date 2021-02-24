@@ -9,9 +9,9 @@ import br.com.salaarcoiris.modelo.Livro;
 
 public interface LivroDAO {
 	public boolean inserirL (Livro livro);
-	/*public List<JsonObject>buscarL(String nome);
+	public List<JsonObject>buscarL(String nome);
 	public boolean deletarL(int idLivro);
 	public Livro checkIdL(int idLivro);
-	public boolean alterarL(Livro livro);*/
+	public boolean alterarL(Livro livro);
 	
 }
