@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="cadastrar"/>
+		<item key="selection" value="success"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
-			<item value="window.location"/>
-			<item value="cadastrar"/>
 			<item value="exibir"/>
-			<item value="listaLivros"/>
-			<item value="frm"/>
-			<item value="frmedit"/>
-			<item value="deletarA"/>
-			<item value="id"/>
+			<item value="cadas"/>
+			<item value="success"/>
+			<item value="qtdEstoque"/>
+			<item value="selectResponsavel"/>
+			<item value="if"/>
+			<item value="location"/>
+			<item value="window.location.href"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>

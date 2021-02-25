@@ -39,9 +39,23 @@ $(document).ready (function(){
 
 		aluno.idResp = codigoResp;
 		
-		if(aluno.nomeAluno==""||aluno.cpfAluno==""||aluno.email==""||aluno.nascAluno==""){
-			alert('Preencher todos os campos!!!')
-		}else{	
+		var nomeResp = document.frmAluno.nomeResponsavel.value;
+		var nascResp = document.frmAluno.nascResponsavel.value;
+		var selectResp = document.getElementById('validaResponsavel').value;
+		
+		if (aluno.nomeAluno==""||aluno.cpfAluno==""||aluno.email==""||aluno.nascAluno=="")
+		{
+			alert('Você não pode editar um campo e deixá-lo em branco!!!')
+		}
+		else if (selectResp == 2 && nomeResp == "" || 
+			selectResp == 2 && nascResp == "")
+		{		
+			alert('Se você selecionou que possui responsável, precisa preencher todos os campos!!!')
+		}
+		else if (selectResp == 1)
+		{
+			alert('Selecione uma opção para responsável!!!')	
+		}else{
 			
 		$.ajax({
 			type: "POST",
@@ -50,8 +64,7 @@ $(document).ready (function(){
 			success:function(msg){
 				console.log(msg);
 				SALAARCOIRIS.aluno.cadastrarResponsavel();
-				alert('success');
-				window.location.assign("editar.html");
+				window.location.href="editar.html";				
 			},
 			error:function(info){
 				alert('erro');
@@ -79,7 +92,7 @@ $(document).ready (function(){
 				url: SALAARCOIRIS.PATH + "responsavel/inserirR",
 				data:JSON.stringify(responsavel),
 				success:function(msg){
-					console.log(msg);
+					console.log(msg);					
 				},
 				error:function(info){
 					console.log("Erro ao cadastrar um novo aluno com responsável: "+ info.status + " - "+ info.statusText);	
@@ -236,27 +249,48 @@ $(document).ready (function(){
 		aluno.email = document.frmEditaAluno.email.value;
 		aluno.nascAluno = document.frmEditaAluno.nascAluno.value;
 		
-		$.ajax({
-			type:"PUT",
-			url: SALAARCOIRIS.PATH + "aluno/alterarA",
-			data:JSON.stringify(aluno),
-			success: function(msg){
-				SALAARCOIRIS.aluno.buscarAluno();
-				
-				console.log("Aluno alterado com sucesso!")
-				console.log(aluno.idResponsavel)
-				
-				if (aluno.idResponsavel>0){
-					var id = aluno.idResponsavel;
+		var nomeResp = document.frmEditaAluno.nomeResponsavel.value;
+		var nascResp = document.frmEditaAluno.nascResponsavel.value;
+		var selectResp = document.getElementById('validaResponsavel').value;
+		
+		if (aluno.nomeAluno==""||aluno.cpfAluno==""||aluno.email==""||aluno.nascAluno=="")
+		{
+			alert('Você não pode editar um campo e deixá-lo em branco!!!')
+		}
+		else if (selectResp == 2 && nomeResp == "" || 
+			selectResp == 2 && nascResp == "")
+		{		
+			alert('Se você selecionou que possui responsável, precisa preencher todos os campos!!!')
+		}
+		else if (selectResp == 1)
+		{
+			alert('Selecione uma opção para responsável!!!')	
+		}
+		else{
+		
+			$.ajax({
+				type:"PUT",
+				url: SALAARCOIRIS.PATH + "aluno/alterarA",
+				data:JSON.stringify(aluno),
+				success: function(msg){
+					SALAARCOIRIS.aluno.buscarAluno();
 					
-					SALAARCOIRIS.aluno.alterarResp(id);
+					console.log("Aluno alterado com sucesso!")
+					console.log(aluno.idResponsavel)
+					
+					if (aluno.idResponsavel>0){
+						var id = aluno.idResponsavel;
+						
+						SALAARCOIRIS.aluno.alterarResp(id);
+					}
+					window.location.href="editar.html";
+					
+				},
+				error: function(info){
+					console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
 				}
-				
-			},
-			error: function(info){
-				console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
-			}
-		});
+			});
+		}
 	}
 	
 	SALAARCOIRIS.aluno.alterarResp= function(id){

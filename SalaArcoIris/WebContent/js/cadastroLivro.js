@@ -18,26 +18,31 @@ $(document).ready (function(){
 	livro.anoLivro = document.frmLivro.anoLivro.value;
 	livro.qtdEstoque = document.frmLivro.qtdEstoque.value;
 	livro.statusLivro = document.frmLivro.statusLivro.value;
-
-	//REQUISIÇÃO AJAX
-		$.ajax({
-			// TYPE POST, MODO QUE SERÃO ENVIADOS PARA O SERVIDOR 
-			type: "POST",
-			// CAMINHO DEFINIDO NO WEB.XML
-			// CHAMA A PATH ESPECÍFICA CRIADA NO ARQUIVO REST
-			url: SALAARCOIRIS.PATH + "livro/inserirL",
-			// PEGA OS DADOS EM OBJETO NO FORMATO JSON, PARA MANDAR PARA O SERVIDOR
-			// CONVERTE EM FORMATO STRING JSON, PADRONIZAÇÃO
-			data:JSON.stringify(livro),
-			// SÓ VOLTA PARA O SUCCESS, APÓS PASSAR TODOS OS PASSOS DO SERVIDOR SEM ERROS
-			success:function(msg){
-				window.location.href = "editar.html";
-			},
-			error:function(info){
-				console.log("Erro ao cadastrar um novo livro: "+ info.status + " - "+ info.statusText);	
-			}
-			
-		});	
+	
+		if (livro.nomeLivro == "" || livro.codigoLivro == "" || livro.anoLivro == "" ||
+				livro.qtdEstoque == "" || livro.statusLivro == "")
+		{
+			alert('Preencha todos os campos!!!')
+		}else{
+			//REQUISIÇÃO AJAX
+			$.ajax({
+				// TYPE POST, MODO QUE SERÃO ENVIADOS PARA O SERVIDOR 
+				type: "POST",
+				// CAMINHO DEFINIDO NO WEB.XML
+				// CHAMA A PATH ESPECÍFICA CRIADA NO ARQUIVO REST
+				url: SALAARCOIRIS.PATH + "livro/inserirL",
+				// PEGA OS DADOS EM OBJETO NO FORMATO JSON, PARA MANDAR PARA O SERVIDOR
+				// CONVERTE EM FORMATO STRING JSON, PADRONIZAÇÃO
+				data:JSON.stringify(livro),
+				// SÓ VOLTA PARA O SUCCESS, APÓS PASSAR TODOS OS PASSOS DO SERVIDOR SEM ERROS
+				success:function(msg){
+					window.location.href = "editar.html";
+				},
+				error:function(info){
+					console.log("Erro ao cadastrar um novo livro: "+ info.status + " - "+ info.statusText);	
+				}
+			});	
+		}
 	}
 	// READ --
 
@@ -121,11 +126,12 @@ $(document).ready (function(){
 			url: SALAARCOIRIS.PATH +"livro/checkIdL",
 			data: "idLivro="+idLivro,
 			success: function(livro){
-				document.frmEditaLivro.idLivro.value = livro.idLivro;
+				console.log()
+				document.frmEditaLivro.idLivro.value = livro.idLivro;	
 				document.frmEditaLivro.nomeLivro.value = livro.nomeLivro;
 				document.frmEditaLivro.codigoLivro.value = livro.codigoLivro;
 				document.frmEditaLivro.anoLivro.value = livro.anoLivro;
-				document.frmEditaLivro.qtdEstoque.value = qtdEstoque.email;
+				document.frmEditaLivro.qtdEstoque.value = livro.qtdEstoque;
 				document.frmEditaLivro.statusLivro.value = livro.statusLivro;				
 			},
 			error: function(info){
@@ -144,22 +150,30 @@ $(document).ready (function(){
 		livro.nomeLivro = document.frmEditaLivro.nomeLivro.value;
 		livro.codigoLivro = document.frmEditaLivro.codigoLivro.value;
 		livro.anoLivro = document.frmEditaLivro.anoLivro.value;
-		qtdEstoque.email = document.frmEditaLivro.qtdEstoque.value;
+		livro.qtdEstoque = document.frmEditaLivro.qtdEstoque.value;
 		livro.statusLivro = document.frmEditaLivro.statusLivro.value;
 		
 		
-		$.ajax({
-			type:"PUT",
-			url: SALAARCOIRIS.PATH + "livro/alterarL",
-			data:JSON.stringify(livro),
-			success: function(msg){
-				SALAARCOIRIS.livro.buscarLivro();
-				console.log("Livro alterado com sucesso!")				
-			},
-			error: function(info){
-				console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
-			}
-		});
+		if (livro.nomeLivro == "" || livro.codigoLivro == "" || livro.anoLivro == "" ||
+				livro.qtdEstoque == "" || livro.statusLivro == "")
+		{
+			alert('Preencha todos os campos!!!')
+		}else{
+		
+			$.ajax({
+				type:"PUT",
+				url: SALAARCOIRIS.PATH + "livro/alterarL",
+				data:JSON.stringify(livro),
+				success: function(msg){
+					SALAARCOIRIS.livro.buscarLivro();
+					console.log("Livro alterado com sucesso!")	
+					window.location.href = "editar.html";
+				},
+				error: function(info){
+					console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
+				}
+			});
+		}
 	}
 	
 });

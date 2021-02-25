@@ -14,8 +14,8 @@
 <body>    
 
 <main>
-    <div class="container mt-4 mb-4">
-        <form class="needs-validation" novalidate name="frmAluno" method="POST">
+    <div class="container">
+        <form class="mt-4 mb-4" name="frmAluno" method="POST">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="nomeAluno">Nome</label>
@@ -42,9 +42,9 @@
                 <div class="form-group">
                     <label for="validaResponsavel">Possui responsável?</label>
                     <select class="custom-select" id="validaResponsavel" onchange="verificarSelectResponsavel()" required>
-                        <option value="1">Selecione uma opção</option>
+                        <option value="1" selected>Selecione uma opção</option>
                         <option value="2">Sim</option>
-                        <option value="3" selected>Não</option> 
+                        <option value="3" >Não</option> 
                     </select>
                 </div>
                 <input type="hidden" id="codigoResp">
@@ -60,7 +60,7 @@
                     </div> 
                 </fieldset>
                 <a type="button" href="editar.html" class="btn btn-secondary mr-2">Cancelar</a>
-                <input type="submit" class="btn btn-primary" onclick="SALAARCOIRIS.aluno.cadastrarAluno()">Salvar</input>
+                <a type="submit" id="button" class="btn btn-primary" onclick="SALAARCOIRIS.aluno.cadastrarAluno()">Salvar</a>
             </div>
         </form>
     </div>

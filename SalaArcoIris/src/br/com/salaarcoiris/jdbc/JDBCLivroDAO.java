@@ -60,7 +60,7 @@ public class JDBCLivroDAO implements LivroDAO{
 	}
 	
 	public List<JsonObject>buscarL(String nome){
-		System.out.println(nome);
+		
 		String comando = "SELECT * "+
 				"FROM livro ";
 		if (nome != "") {
