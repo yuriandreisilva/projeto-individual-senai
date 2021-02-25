@@ -42,9 +42,9 @@
                 <div class="form-group">
                     <label for="validaResponsavel">Possui responsável?</label>
                     <select class="custom-select" id="validaResponsavel" onchange="verificarSelectResponsavel()" required>
-                        <option value="1" selected >Selecione uma opção</option>
+                        <option value="1">Selecione uma opção</option>
                         <option value="2">Sim</option>
-                        <option value="3">Não</option>
+                        <option value="3" selected>Não</option> 
                     </select>
                 </div>
                 <input type="hidden" id="codigoResp">
@@ -60,38 +60,18 @@
                     </div> 
                 </fieldset>
                 <a type="button" href="editar.html" class="btn btn-secondary mr-2">Cancelar</a>
-                <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.aluno.cadastrarAluno())>Salvar</a>
+                <input type="submit" class="btn btn-primary" onclick="SALAARCOIRIS.aluno.cadastrarAluno()">Salvar</input>
             </div>
         </form>
     </div>
 </main>
-
-<script>
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
-</script>
 
 <footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../../js/fixo.js"></script>
     <script src="../../js/cadastroAluno.js"></script>
+    <script src="../../js/validarCadastro.js"></script>
   <!-- importa footer que importa scripts + bootstrap -->
 </footer>
 </body>

@@ -39,6 +39,10 @@ $(document).ready (function(){
 
 		aluno.idResp = codigoResp;
 		
+		if(aluno.nomeAluno==""||aluno.cpfAluno==""||aluno.email==""||aluno.nascAluno==""){
+			alert('Preencher todos os campos!!!')
+		}else{	
+			
 		$.ajax({
 			type: "POST",
 			url: SALAARCOIRIS.PATH + "aluno/inserirA",
@@ -46,14 +50,16 @@ $(document).ready (function(){
 			success:function(msg){
 				console.log(msg);
 				SALAARCOIRIS.aluno.cadastrarResponsavel();
-				window.location.href = "editar.html";
+				alert('success');
+				window.location.assign("editar.html");
 			},
 			error:function(info){
+				alert('erro');
 				console.log("Erro ao cadastrar um novo aluno: "+ info.status + " - "+ info.statusText);	
 			}
-		});	
-		
-
+			
+		});
+		}
 	}
 
 	// INSERT - resp
