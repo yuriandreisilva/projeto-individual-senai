@@ -30,34 +30,18 @@ $(document).ready (function(){
 		aluno.cpfAluno = document.frmAluno.cpfAluno.value;
 		aluno.email = document.frmAluno.email.value;
 		aluno.nascAluno = document.frmAluno.nascAluno.value;
-		//
-
+		
+		// Converte Nome para primeira letra maiúscula
+		aluno.nomeAluno = aluno.nomeAluno.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
+		
 		if (document.frmAluno.validaResponsavel.value == 2){
 			codigoResp = Math.floor(Math.random() * 1000000);
 			document.getElementById("codigoResp").value=codigoResp;
 		}
 
-		aluno.idResp = codigoResp;
+		aluno.idResp = codigoResp;		
 		
-		var nomeResp = document.frmAluno.nomeResponsavel.value;
-		var nascResp = document.frmAluno.nascResponsavel.value;
-		var selectResp = document.getElementById('validaResponsavel').value;
-		
-		if (aluno.nomeAluno==""||aluno.cpfAluno==""||aluno.email==""||aluno.nascAluno=="")
-		{
-			alert('Você não pode editar um campo e deixá-lo em branco!!!')
-			document.frmAluno.cpfAluno.focus();
-		}
-		else if (selectResp == 2 && nomeResp == "" || 
-			selectResp == 2 && nascResp == "")
-		{		
-			alert('Se você selecionou que possui responsável, precisa preencher todos os campos!!!')
-		}
-		else if (selectResp == 1)
-		{
-			alert('Selecione uma opção para responsável!!!')	
-		}else{
-			
+		if (validarCampos() === true){	
 		$.ajax({
 			type: "POST",
 			url: SALAARCOIRIS.PATH + "aluno/inserirA",
@@ -75,6 +59,86 @@ $(document).ready (function(){
 		});
 		}
 	}
+	
+	validarCpf = function(){
+		
+		var cpf = document.frmAluno.cpfAluno.value;
+		
+		cpf = cpf.replace(/\D/g, '');
+		   
+		if(cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+	    
+	    var result = true;
+	    
+	    [9,10].forEach(function(j){
+	        var soma = 0, r;
+	        cpf.split(/(?=)/).splice(0,j).forEach(function(e, i){
+	            soma += parseInt(e) * ((j+2)-(i+1));
+	        });
+	        r = soma % 11;
+	        r = (r <2)?0:11-r;
+	        if(r != cpf.substring(j, j+1)) result = false;
+	    });
+	    return result;
+	}
+	
+	
+	 validarCampos = function(){
+		var validacao = true;
+		
+		var aluno = new Object();
+			
+		aluno.nomeAluno = document.frmAluno.nomeAluno.value;
+		aluno.cpfAluno = document.frmAluno.cpfAluno.value;
+		aluno.email = document.frmAluno.email.value;
+		aluno.nascAluno = document.frmAluno.nascAluno.value;
+			
+		var nomeResp = document.frmAluno.nomeResponsavel.value;
+		var nascResp = document.frmAluno.nascResponsavel.value;
+		var selectResp = document.getElementById('validaResponsavel').value; 
+		var expRegNome = new RegExp(/^((\b[A-zÀ-ú']{2,40}\b)\s*){2,}$/);
+		var expRegEmail = new RegExp(/^([a-z]){1,}([a-z0-9._-]){1,}([@]){1}([a-z]){2,}([.]){1}([a-z]){2,}([.]?){1}([a-z]?){2,}$/i);
+		
+		validarCpf();
+		
+//		if (aluno.cpfAluno==""||aluno.email==""||aluno.nascAluno=="")
+//		{
+//			alert('Você não pode editar um campo e deixá-lo em branco!!!')
+//			validacao = false;
+//		}else if (!expRegNome.test(aluno.nomeAluno)){
+//			alert('Nome inválido!!!')
+//			document.frmAluno.nomeAluno.focus();
+//			validacao = false;
+//	
+//		}else if (validarCpf() === false){
+//			alert('CPF inválido!!!')
+//			document.frmAluno.cpfAluno.focus();
+//			validacao = false;
+			console.log(aluno.email)
+		/*}else*/ if (!expRegEmail.test(aluno.email)){
+			alert('E-mail inválido!!!')
+			document.frmAluno.email.focus();
+			validacao = false;
+		}
+//		else if (aluno.nascAluno=="x"){
+//			
+//		}else if (selectResp == 2 && nomeResp == "" || 
+//			selectResp == 2 && nascResp == "")
+//		{		
+//			alert('Se você selecionou que possui responsável, precisa preencher todos os campos!!!')
+//			validacao = false;
+//		}else if (selectResp == 2 && selectResp =="x"/* e menor de idade */)
+//		{
+//			
+//		}else if (selectResp == 1)
+//		{
+//			alert('Selecione uma opção para responsável!!!')
+//			validacao = false;
+//		}
+		
+		return validacao;
+	}
+	
 
 	// INSERT - resp
 
