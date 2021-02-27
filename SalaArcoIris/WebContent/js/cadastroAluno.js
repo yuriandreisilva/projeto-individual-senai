@@ -46,6 +46,7 @@ $(document).ready (function(){
 		if (aluno.nomeAluno==""||aluno.cpfAluno==""||aluno.email==""||aluno.nascAluno=="")
 		{
 			alert('Você não pode editar um campo e deixá-lo em branco!!!')
+			document.frmAluno.cpfAluno.focus();
 		}
 		else if (selectResp == 2 && nomeResp == "" || 
 			selectResp == 2 && nascResp == "")
@@ -64,7 +65,7 @@ $(document).ready (function(){
 			success:function(msg){
 				console.log(msg);
 				SALAARCOIRIS.aluno.cadastrarResponsavel();
-				window.location.href="editar.html";				
+				location.href="editar.html";				
 			},
 			error:function(info){
 				alert('erro');
