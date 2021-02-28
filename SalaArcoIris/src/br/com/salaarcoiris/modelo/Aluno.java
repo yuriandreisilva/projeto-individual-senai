@@ -11,7 +11,7 @@ public class Aluno implements Serializable {
 	private String nomeAluno;
 	private String nascAluno;
 	private String email;
-	private String senha;
+	private int senha;
 	
 	private String nomeResp;
 	private String dataNascResp;
@@ -66,10 +66,10 @@ public class Aluno implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getSenha() {
+	public int getSenha() {
 		return senha;
 	}
-	public void setSenha(String senha) {
+	public void setSenha(int senha) {
 		this.senha = senha;
 	}
 	

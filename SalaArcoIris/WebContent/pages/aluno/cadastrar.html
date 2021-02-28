@@ -2,6 +2,7 @@
 <html lang="pt-br">
 	
 <head>
+
 <meta charset="UTF-8">
     <div class="head">    
         <!-- importa head -->
@@ -31,7 +32,7 @@
                         <input name="email" type="email" class="form-control" id="validaEmail" placeholder="email@provedor.com" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="senha">Senha</label>
+                        <label for="senha">Senha (Apenas 4 números)</label>
                         <input name="senha" type="password" class="form-control" id="validaSenha" placeholder="***************" required>
                     </div>
                 </div>
@@ -41,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="validaResponsavel">Possui responsável?</label>
-                    <select class="custom-select" id="validaResponsavel" onchange="verificarSelectResponsavel()" required>
+                    <select name="select" class="custom-select" id="validaResponsavel" onchange="verificarSelectResponsavel()" required>
                         <option value="1" selected>Selecione uma opção</option>
                         <option value="2">Sim</option>
                         <option value="3" >Não</option> 
@@ -67,12 +68,16 @@
 </main>
 
 <footer>
-
+	
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
     <script src="../../js/fixo.js"></script>
     <script src="../../js/formatarCampoCpf.js"></script>
     <script src="../../js/cadastroAluno.js"></script>
-    <script src="../../js/validarCadastro.js"></script>
+    
+    
+    
+    
   <!-- importa footer que importa scripts + bootstrap -->
 </footer>
 </body>

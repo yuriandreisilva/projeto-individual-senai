@@ -8,14 +8,14 @@
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="addEventListener"/>
+			<item value="cpf"/>
 			<item value="exibir"/>
 			<item value="cadas"/>
 			<item value="success"/>
 			<item value="qtdEstoque"/>
 			<item value="selectResponsavel"/>
 			<item value="if"/>
-			<item value="location"/>
-			<item value="window.location.href"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>

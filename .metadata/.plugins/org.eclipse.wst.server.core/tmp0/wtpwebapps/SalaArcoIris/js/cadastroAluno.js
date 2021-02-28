@@ -30,6 +30,7 @@ $(document).ready (function(){
 		aluno.cpfAluno = document.frmAluno.cpfAluno.value;
 		aluno.email = document.frmAluno.email.value;
 		aluno.nascAluno = document.frmAluno.nascAluno.value;
+		aluno.senha = document.frmAluno.senha.value;
 		
 		// Converte Nome para primeira letra maiúscula
 		aluno.nomeAluno = aluno.nomeAluno.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
@@ -39,17 +40,27 @@ $(document).ready (function(){
 			document.getElementById("codigoResp").value=codigoResp;
 		}
 
-		aluno.idResp = codigoResp;		
-		
-		if (validarCampos() === true){	
+		aluno.idResp = codigoResp;	
+				
+		if (validarCampos()){	
 		$.ajax({
 			type: "POST",
 			url: SALAARCOIRIS.PATH + "aluno/inserirA",
 			data:JSON.stringify(aluno),
 			success:function(msg){
-				console.log(msg);
 				SALAARCOIRIS.aluno.cadastrarResponsavel();
-				location.href="editar.html";				
+			// Um tipo de alert estilzado, importado para ficar mais interativo
+				Swal.fire({
+					  icon: 'success',
+					  title: 'Aluno cadastrado com sucesso',
+					  showConfirmButton: false,
+					  timer: 1500
+					})
+			// Função para atrasar o window.location (redirecionamento para listagem de cadastros)		
+				setTimeout(func, 1500);
+				function func() {
+					location.href="editar.html";
+				}
 			},
 			error:function(info){
 				alert('erro');
@@ -62,7 +73,7 @@ $(document).ready (function(){
 	
 	validarCpf = function(){
 		
-		var cpf = document.frmAluno.cpfAluno.value;
+		var cpf = document.getElementById('validaCpf').value;
 		
 		cpf = cpf.replace(/\D/g, '');
 		   
@@ -81,61 +92,156 @@ $(document).ready (function(){
 	    });
 	    return result;
 	}
+
+	validarIdade = function(){
+	   var idadeFinal = true;
+	   var selectResp = document.getElementById('validaResponsavel').value;
+	   var data = document.getElementById('validaNascimento').value; // pega o valor do input
+	   data = data.replace(/\//g, "-"); // substitui eventuais barras (ex. IE) "/" por hífen "-"
+	   var data_array = data.split("-"); // quebra a data em array
+	   
+	   // para o IE onde será inserido no formato dd/MM/yyyy
+	   if(data_array[0].length != 4){
+	      data = data_array[2]+"-"+data_array[1]+"-"+data_array[0]; // remonto a data no formato yyyy/MM/dd
+	   }
+	   
+	   // comparo as datas e calculo a idade
+	   var hoje = new Date();
+	   var nasc  = new Date(data);
+	   var idade = hoje.getFullYear() - nasc.getFullYear();
+	   var m = hoje.getMonth() - nasc.getMonth();
+	   if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+	   
+	   if (idade < 18 && selectResp != 2){
+		   idadeFinal = false;
+	   }
 	
+	   if(idade >= 18 && idade <= 60){
+		   idadeFinal = true;
+	   }
+	   
+	   // se for maior que 60 não vai acontecer nada!
+	   return idadeFinal;
+	}
+	
+	validarIdadeResponsavel = function(){
+		   var idadeFinalResponsavel = true;
+		   var selectResp = document.getElementById('validaResponsavel').value;
+		   var data = document.getElementById('validaNascResposnavel').value; // pega o valor do input
+		   data = data.replace(/\//g, "-"); // substitui eventuais barras (ex. IE) "/" por hífen "-"
+		   var data_array = data.split("-"); // quebra a data em array
+		   
+		   // para o IE onde será inserido no formato dd/MM/yyyy
+		   if(data_array[0].length != 4){
+		      data = data_array[2]+"-"+data_array[1]+"-"+data_array[0]; // remonto a data no formato yyyy/MM/dd
+		   }
+		   
+		   // comparo as datas e calculo a idade
+		   var hoje = new Date();
+		   var nasc  = new Date(data);
+		   var idade = hoje.getFullYear() - nasc.getFullYear();
+		   var m = hoje.getMonth() - nasc.getMonth();
+		   if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+		   
+		   if(idade < 18){
+			   idadeFinalResponsavel = false;
+		   }
+		
+		   if(idade >= 18 && idade <= 60){
+			   idadeFinalResponsavel = true;
+		   }
+		   
+		   // se for maior que 60 não vai acontecer nada!
+		   return idadeFinalResponsavel;
+		}	
 	
 	 validarCampos = function(){
 		var validacao = true;
+			
+		nomeAluno = document.getElementById('validaNome').value;
+		cpfAluno = document.getElementById('validaCpf').value;
+		email = document.getElementById('validaEmail').value;
+		senha = document.getElementById('validaSenha').value;
+		nascAluno = document.getElementById('validaNascimento').value;
+		nomeResp = document.getElementById('validaNomeResponsavel').value;
+		nascResp = document.getElementById('validaNascResposnavel').value;
 		
-		var aluno = new Object();
-			
-		aluno.nomeAluno = document.frmAluno.nomeAluno.value;
-		aluno.cpfAluno = document.frmAluno.cpfAluno.value;
-		aluno.email = document.frmAluno.email.value;
-		aluno.nascAluno = document.frmAluno.nascAluno.value;
-			
-		var nomeResp = document.frmAluno.nomeResponsavel.value;
-		var nascResp = document.frmAluno.nascResponsavel.value;
 		var selectResp = document.getElementById('validaResponsavel').value; 
 		var expRegNome = new RegExp(/^((\b[A-zÀ-ú']{2,40}\b)\s*){2,}$/);
-		var expRegEmail = new RegExp(/^([a-z]){1,}([a-z0-9._-]){1,}([@]){1}([a-z]){2,}([.]){1}([a-z]){2,}([.]?){1}([a-z]?){2,}$/i);
+		var expRegEmail = new RegExp(/^([a-z]){1,}([a-z0-9._-]){1,}([@]){1}([a-z]){2,}([.]){1}([a-z]){2,}([.]?){1}([a-z]?){2,}$/i);	
+		var expRegSenha = new RegExp(/^(?=.*\d)[0-9\d]{4}$/);
 		
-		validarCpf();
-		
-//		if (aluno.cpfAluno==""||aluno.email==""||aluno.nascAluno=="")
-//		{
-//			alert('Você não pode editar um campo e deixá-lo em branco!!!')
-//			validacao = false;
-//		}else if (!expRegNome.test(aluno.nomeAluno)){
-//			alert('Nome inválido!!!')
-//			document.frmAluno.nomeAluno.focus();
-//			validacao = false;
-//	
-//		}else if (validarCpf() === false){
-//			alert('CPF inválido!!!')
-//			document.frmAluno.cpfAluno.focus();
-//			validacao = false;
-			console.log(aluno.email)
-		/*}else*/ if (!expRegEmail.test(aluno.email)){
-			alert('E-mail inválido!!!')
+		if (!expRegNome.test(nomeAluno)){
+			Swal.fire({
+				  icon: 'error',
+				  title: 'Oops...',
+				  text: 'Nome inválido!',
+				})
+			document.frmAluno.nomeAluno.focus();
+			validacao = false;
+	
+		}else if (!validarCpf()){
+			Swal.fire({
+				  icon: 'error',
+				  title: 'Oops...',
+				  text: 'CPF inválido!',
+				})
+			document.frmAluno.cpfAluno.focus();
+			validacao = false;
+			
+		}else if (!expRegEmail.test(email)){
+			Swal.fire({
+				  icon: 'error',
+				  title: 'Oops...',
+				  text: 'E-mail inválido!',
+				})
 			document.frmAluno.email.focus();
 			validacao = false;
+		}else if(!expRegSenha.test(senha)){
+			Swal.fire({
+				  icon: 'error',
+				  title: 'Oops...',
+				  text: 'Senha inválida, apenas 4 números!',
+				})
+			document.frmAluno.senha.focus();
 		}
-//		else if (aluno.nascAluno=="x"){
-//			
-//		}else if (selectResp == 2 && nomeResp == "" || 
-//			selectResp == 2 && nascResp == "")
-//		{		
-//			alert('Se você selecionou que possui responsável, precisa preencher todos os campos!!!')
-//			validacao = false;
-//		}else if (selectResp == 2 && selectResp =="x"/* e menor de idade */)
-//		{
-//			
-//		}else if (selectResp == 1)
-//		{
-//			alert('Selecione uma opção para responsável!!!')
-//			validacao = false;
-//		}
-		
+		else if (!validarIdade() || nascAluno == ""){
+			Swal.fire({
+				  icon: 'error',
+				  title: 'Oops...',
+				  text: 'Idade inválida ou menor de idade precisa ter responsável!',
+				})
+			document.frmAluno.nascAluno.focus();
+			validacao = false;			
+		}
+		else if (selectResp == 2 && nomeResp == "")
+		{		
+			Swal.fire({
+				  icon: 'error',
+				  title: 'Oops...',
+				  text: 'Se você selecionou que possui responsável, precisa preencher todos os campos!',
+				})
+			document.frmAluno.nomeResponsavel.focus();
+			validacao = false;
+		}else if (!validarIdadeResponsavel() || nascResp == "")
+		{
+			Swal.fire({
+				  icon: 'error',
+				  title: 'Oops...',
+				  text: 'O responsável precisa ser maior de idade!',
+				})
+			document.frmAluno.nascResponsavel.focus();
+			validacao = false;
+		}else if (selectResp == 1)
+		{
+			Swal.fire({
+				  icon: 'error',
+				  title: 'Oops...',
+				  text: 'Selecione uma opção para responsável!',
+				})
+			document.frmAluno.select.focus();
+			validacao = false;
+		}
 		return validacao;
 	}
 	
@@ -255,6 +361,7 @@ $(document).ready (function(){
 				document.frmEditaAluno.cpfAluno.value = aluno.cpfAluno;
 				document.frmEditaAluno.email.value = aluno.email;
 				document.frmEditaAluno.nascAluno.value = aluno.nascAluno;
+				document.frmEditaAluno.senha.value = aluno.senha;
 				
 				$.ajax({
 					type:"GET",
@@ -317,22 +424,9 @@ $(document).ready (function(){
 		var nomeResp = document.frmEditaAluno.nomeResponsavel.value;
 		var nascResp = document.frmEditaAluno.nascResponsavel.value;
 		var selectResp = document.getElementById('validaResponsavel').value;
+
 		
-		if (aluno.nomeAluno==""||aluno.cpfAluno==""||aluno.email==""||aluno.nascAluno=="")
-		{
-			alert('Você não pode editar um campo e deixá-lo em branco!!!')
-		}
-		else if (selectResp == 2 && nomeResp == "" || 
-			selectResp == 2 && nascResp == "")
-		{		
-			alert('Se você selecionou que possui responsável, precisa preencher todos os campos!!!')
-		}
-		else if (selectResp == 1)
-		{
-			alert('Selecione uma opção para responsável!!!')	
-		}
-		else{
-		
+		if (validarCampos()){
 			$.ajax({
 				type:"PUT",
 				url: SALAARCOIRIS.PATH + "aluno/alterarA",

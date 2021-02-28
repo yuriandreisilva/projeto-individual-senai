@@ -24,8 +24,8 @@ public class JDBCAlunoDAO implements AlunoDAO{
 	}
 
 	public boolean inserirA(Aluno aluno) {
-		String comando = " INSERT INTO aluno (cpfAluno, nomeAluno, dataNasc, email, idResponsavel) "
-				+ "values (?,?,?,?,?);";
+		String comando = " INSERT INTO aluno (cpfAluno, nomeAluno, dataNasc, email, idResponsavel, senha) "
+				+ "values (?,?,?,?,?,?);";
 
 		PreparedStatement p;
 
@@ -38,6 +38,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			p.setString(3, aluno.getNascAluno());
 			p.setString(4, aluno.getEmail());
 			p.setInt(5, aluno.getIdResp());
+			p.setInt(6, aluno.getSenha());
 
 			p.execute();
 
@@ -72,6 +73,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				String dataNasc = rs.getString("dataNasc");
 				String email = rs.getString("email");
 				int idResponsavel = rs.getInt("idResponsavel");
+				int senha = rs.getInt("senha");
 				
 				aluno = new JsonObject();
 				aluno.addProperty("idAluno", id);				
@@ -80,6 +82,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				aluno.addProperty("dataNasc", dataNasc);
 				aluno.addProperty("email", email);
 				aluno.addProperty("idResponsavel", idResponsavel);
+				aluno.addProperty("senha", senha);
 
 				listaAlunos.add(aluno);
 			}
@@ -123,6 +126,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				String dataNasc = rs.getString("dataNasc");
 				String email = rs.getString("email");
 				int idResponsavel = rs.getInt("idResponsavel");
+				int senha = rs.getInt("senha");
 //				String nomeResp = rs.getString("nomeResp");
 //				String dataNascResp = rs.getString("dataNasc");
 				
@@ -130,8 +134,8 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				aluno.setNomeAluno(nomeAluno);
 				aluno.setNascAluno(dataNasc);
 				aluno.setEmail(email);
-				
 				aluno.setIdResp(idResponsavel);
+				aluno.setSenha(senha);
 //				aluno.setNomeResp(nomeResp);
 //				aluno.setDataNascResp(dataNascResp);
 				
