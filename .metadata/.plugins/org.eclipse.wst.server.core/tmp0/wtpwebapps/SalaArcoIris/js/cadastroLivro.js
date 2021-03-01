@@ -15,11 +15,11 @@ $(document).ready (function(){
 	//OBJETO.CAMPO RECEBE VALOR DO CAMPO NO INPUT
 	livro.nomeLivro = document.frmLivro.nomeLivro.value;
 	livro.codigoLivro = document.frmLivro.codigoLivro.value;
-	livro.anoLivro = document.frmLivro.anoLivro.value;
+	livro.publicacao = document.frmLivro.publicacao.value;
 	livro.qtdEstoque = document.frmLivro.qtdEstoque.value;
 	livro.statusLivro = document.frmLivro.statusLivro.value;
 	
-		if (livro.nomeLivro == "" || livro.codigoLivro == "" || livro.anoLivro == "" ||
+		if (livro.nomeLivro == "" || livro.codigoLivro == "" || livro.publicacao == "" ||
 				livro.qtdEstoque == "" || livro.statusLivro == "")
 		{
 			alert('Preencha todos os campos!!!')
@@ -130,7 +130,7 @@ $(document).ready (function(){
 				document.frmEditaLivro.idLivro.value = livro.idLivro;	
 				document.frmEditaLivro.nomeLivro.value = livro.nomeLivro;
 				document.frmEditaLivro.codigoLivro.value = livro.codigoLivro;
-				document.frmEditaLivro.anoLivro.value = livro.anoLivro;
+				document.frmEditaLivro.publicacao.value = livro.publicacao;
 				document.frmEditaLivro.qtdEstoque.value = livro.qtdEstoque;
 				document.frmEditaLivro.statusLivro.value = livro.statusLivro;				
 			},
@@ -149,12 +149,12 @@ $(document).ready (function(){
 		livro.idLivro = document.frmEditaLivro.idLivro.value;
 		livro.nomeLivro = document.frmEditaLivro.nomeLivro.value;
 		livro.codigoLivro = document.frmEditaLivro.codigoLivro.value;
-		livro.anoLivro = document.frmEditaLivro.anoLivro.value;
+		livro.publicacao = document.frmEditaLivro.publicacao.value;
 		livro.qtdEstoque = document.frmEditaLivro.qtdEstoque.value;
 		livro.statusLivro = document.frmEditaLivro.statusLivro.value;
 		
 		
-		if (livro.nomeLivro == "" || livro.codigoLivro == "" || livro.anoLivro == "" ||
+		if (livro.nomeLivro == "" || livro.codigoLivro == "" || livro.publicacao == "" ||
 				livro.qtdEstoque == "" || livro.statusLivro == "")
 		{
 			alert('Preencha todos os campos!!!')

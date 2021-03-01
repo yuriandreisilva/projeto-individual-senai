@@ -6,9 +6,10 @@ import java.io.Serializable;
 public class Livro implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private int idLivro, statusLivro, anoLivro, qtdEstoque;
+	private int idLivro, statusLivro, qtdEstoque;
 	private String nomeLivro;
 	private String codigoLivro;
+	private String publicacao;
 	
 	public int getIdLivro() {
 		return idLivro;
@@ -22,11 +23,11 @@ public class Livro implements Serializable {
 	public void setStatusLivro(int statusLivro) {
 		this.statusLivro = statusLivro;
 	}
-	public int getAnoLivro() {
-		return anoLivro;
+	public String getPublicacao() {
+		return publicacao;
 	}
-	public void setAnoLivro(int anoLivro) {
-		this.anoLivro = anoLivro;
+	public void setPublicacao(String publicacao) {
+		this.publicacao = publicacao;
 	}
 	public int getQtdEstoque() {
 		return qtdEstoque;

@@ -26,7 +26,7 @@ public class JDBCLivroDAO implements LivroDAO{
 	public boolean inserirL(Livro livro) {
 		// SQL
 		// INJECTION QUERY, LINHA DE COMANDO EM SQL PARA INSERÇÃO NO BD
-		String comando = " INSERT INTO livro (nomeLivro, codigoLivro, anoLivro, qtdEstoque, statusLivro) "
+		String comando = " INSERT INTO livro (nomeLivro, codigoLivro, publicacao, qtdEstoque, statusLivro) "
 				+ "values (?,?,?,?,?);";
 
 		// PREPAREDSTATEMENT É UM ATRIBUTO DA CLASSE, PARA PREPARAR O AMBIENTE
@@ -42,7 +42,7 @@ public class JDBCLivroDAO implements LivroDAO{
 			// OBJETO LIVRO É PASSADO POR PARÂMETRO PARA REFERENCIAR
 			p.setString(1, livro.getNomeLivro());
 			p.setString(2, livro.getCodigoLivro());
-			p.setInt(3, livro.getAnoLivro());
+			p.setString(3, livro.getPublicacao());
 			p.setInt(4, livro.getQtdEstoque());
 			p.setInt(5, livro.getStatusLivro());
 
@@ -80,7 +80,7 @@ public class JDBCLivroDAO implements LivroDAO{
 				int idLivro = rs.getInt("idLivro");
 				String nomeLivro = rs.getString("nomeLivro");
 				String codigoLivro = rs.getString("codigoLivro");
-				int anoLivro = rs.getInt("anoLivro");
+				String publicacao = rs.getString("publicacao");
 				int qtdEstoque = rs.getInt("qtdEstoque");
 				int statusLivro = rs.getInt("statusLivro");
 				
@@ -88,7 +88,7 @@ public class JDBCLivroDAO implements LivroDAO{
 				livro.addProperty("idLivro", idLivro);				
 				livro.addProperty("nomeLivro", nomeLivro);
 				livro.addProperty("codigoLivro", codigoLivro);
-				livro.addProperty("anoLivro", anoLivro);
+				livro.addProperty("publicacao", publicacao);
 				livro.addProperty("qtdEstoque", qtdEstoque);
 				livro.addProperty("statusLivro", statusLivro);
 
@@ -131,13 +131,13 @@ public class JDBCLivroDAO implements LivroDAO{
 				int id = rs.getInt("idLivro");
 				String nomeLivro = rs.getString("nomeLivro");
 				String codigoLivro = rs.getString("codigoLivro");
-				int anoLivro = rs.getInt("anoLivro");
+				String publicacao = rs.getString("publicacao");
 				int qtdEstoque = rs.getInt("qtdEstoque");
 				int statusLivro = rs.getInt("statusLivro");
 				
 				livro.setNomeLivro(nomeLivro);
 				livro.setCodigoLivro(codigoLivro);
-				livro.setAnoLivro(anoLivro);
+				livro.setPublicacao(publicacao);
 				livro.setQtdEstoque(qtdEstoque);
 				livro.setStatusLivro(statusLivro);
 
@@ -154,7 +154,7 @@ public class JDBCLivroDAO implements LivroDAO{
 		
 		public boolean alterarL(Livro livro) {		
 			String comando = "UPDATE livro "
-					+ "SET nomeLivro=?, codigoLivro=?, anoLivro=?, qtdEstoque=? , statusLivro=?"
+					+ "SET nomeLivro=?, codigoLivro=?, publicacao=?, qtdEstoque=? , statusLivro=?"
 					+ " WHERE idLivro=?";
 			PreparedStatement p;
 			try {
@@ -163,7 +163,7 @@ public class JDBCLivroDAO implements LivroDAO{
 								
 				p.setString(1, livro.getNomeLivro());
 				p.setString(2, livro.getCodigoLivro());
-				p.setInt(3, livro.getAnoLivro());
+				p.setString(3, livro.getPublicacao());
 				p.setInt(4, livro.getQtdEstoque());
 				p.setInt(5, livro.getStatusLivro());
 				p.setInt(6, livro.getIdLivro());

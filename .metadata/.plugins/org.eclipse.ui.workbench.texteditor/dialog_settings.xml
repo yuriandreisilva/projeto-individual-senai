@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="success"/>
+		<item key="selection" value="Publicacao"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
-			<item value="addEventListener"/>
-			<item value="cpf"/>
+			<item value="publicacao"/>
+			<item value="listaDeLivros"/>
+			<item value="alterarR"/>
+			<item value="validarIdadeResponsavel"/>
+			<item value="exibirEditA"/>
+			<item value="inserirA"/>
 			<item value="exibir"/>
-			<item value="cadas"/>
-			<item value="success"/>
-			<item value="qtdEstoque"/>
-			<item value="selectResponsavel"/>
-			<item value="if"/>
+			<item value="validarCpf"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>

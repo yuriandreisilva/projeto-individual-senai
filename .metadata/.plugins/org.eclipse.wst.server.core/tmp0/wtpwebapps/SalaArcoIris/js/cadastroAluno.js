@@ -10,7 +10,20 @@ function verificarSelectResponsavel(){
 	}  	
 };
 
-
+function exibirMsgSuccessRedirecionar(){
+	// Um tipo de alert estilzado, importado para ficar mais interativo
+	Swal.fire({
+		  icon: 'success',
+		  title: 'Processo concluído com sucesso',
+		  showConfirmButton: false,
+		  timer: 1500
+		})
+	// Função para atrasar o window.location (redirecionamento para listagem de cadastros)		
+	setTimeout(func, 1500);
+	function func() {
+		location.href="editar.html";
+	}
+}
 
 SALAARCOIRIS = new Object();
 
@@ -49,18 +62,7 @@ $(document).ready (function(){
 			data:JSON.stringify(aluno),
 			success:function(msg){
 				SALAARCOIRIS.aluno.cadastrarResponsavel();
-			// Um tipo de alert estilzado, importado para ficar mais interativo
-				Swal.fire({
-					  icon: 'success',
-					  title: 'Aluno cadastrado com sucesso',
-					  showConfirmButton: false,
-					  timer: 1500
-					})
-			// Função para atrasar o window.location (redirecionamento para listagem de cadastros)		
-				setTimeout(func, 1500);
-				function func() {
-					location.href="editar.html";
-				}
+				exibirMsgSuccessRedirecionar()
 			},
 			error:function(info){
 				alert('erro');
@@ -214,12 +216,12 @@ $(document).ready (function(){
 			document.frmAluno.nascAluno.focus();
 			validacao = false;			
 		}
-		else if (selectResp == 2 && nomeResp == "")
+		else if (selectResp == 2 && !expRegNome.test(nomeResp))
 		{		
 			Swal.fire({
 				  icon: 'error',
 				  title: 'Oops...',
-				  text: 'Se você selecionou que possui responsável, precisa preencher todos os campos!',
+				  text: 'Nome do responsável inválido!',
 				})
 			document.frmAluno.nomeResponsavel.focus();
 			validacao = false;
@@ -257,6 +259,7 @@ $(document).ready (function(){
 			responsavel.nomeResp = document.frmAluno.nomeResponsavel.value;
 			responsavel.nascResp = document.frmAluno.nascResponsavel.value;
 
+			responsavel.nomeResp = responsavel.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
 
 			$.ajax({
 				type: "POST",
@@ -424,6 +427,8 @@ $(document).ready (function(){
 		var nomeResp = document.frmEditaAluno.nomeResponsavel.value;
 		var nascResp = document.frmEditaAluno.nascResponsavel.value;
 		var selectResp = document.getElementById('validaResponsavel').value;
+		
+		aluno.nomeAluno = aluno.nomeAluno.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
 
 		
 		if (validarCampos()){
@@ -459,6 +464,8 @@ $(document).ready (function(){
 		responsavel.idResponsavel = document.frmEditaAluno.idResponsavel.value;
 		responsavel.nomeResp = document.frmEditaAluno.nomeResponsavel.value;
 		responsavel.nascResp = document.frmEditaAluno.nascResponsavel.value;
+		
+		responsavel.nomeResp = responsavel.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
 		
 		$.ajax({
 			type:"PUT",
