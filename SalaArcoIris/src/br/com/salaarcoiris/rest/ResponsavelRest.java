@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 
 import br.com.salaarcoiris.bd.Conexao;
 import br.com.salaarcoiris.jdbc.JDBCResponsavelDAO;
+import br.com.salaarcoiris.jdbc.JDBCResponsavelDAO;
 import br.com.salaarcoiris.modelo.Responsavel;
 
 
@@ -100,5 +101,33 @@ public class ResponsavelRest extends UtilRest{
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
 		}
+	}
+	
+	@DELETE
+	@Path("/excluir/{idResponsavel}")
+	@Consumes("application/*")
+	public Response excluirR(@PathParam("idResponsavel") int idResponsavel) {
+		try {
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCResponsavelDAO jdbcResponsavel = new JDBCResponsavelDAO (conexao);
+			
+			boolean retorno = jdbcResponsavel.deletarR(idResponsavel);
+			
+			String msg = "";
+			if(retorno) {
+				msg="Responsavel excluído com sucesso!";
+			}else {
+				msg="Erro ao excluir Responsavel!";
+			}
+			
+			conec.fecharConexao();
+			
+			return this.buildResponse(msg);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}			
 	}
 }

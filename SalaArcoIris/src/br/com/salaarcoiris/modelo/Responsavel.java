@@ -5,15 +5,15 @@ import java.io.Serializable;
 public class Responsavel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private int idResp;
+	private int idResponsavel;
 	private String nomeResp;
 	private String nascResp;
 	
-	public int getIdResp() {
-		return idResp;
+	public int getIdResponsavel() {
+		return idResponsavel;
 	}
-	public void setIdResp(int idResp) {
-		this.idResp = idResp;
+	public void setIdResponsavel(int idResponsavel) {
+		this.idResponsavel = idResponsavel;
 	}
 	public String getNomeResp() {
 		return nomeResp;

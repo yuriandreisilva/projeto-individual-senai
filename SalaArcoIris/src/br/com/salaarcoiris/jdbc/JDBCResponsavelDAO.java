@@ -33,7 +33,7 @@ private Connection conexao;
 					
 					p = this.conexao.prepareStatement(comando);
 				
-					p.setInt(1, responsavel.getIdResp());
+					p.setInt(1, responsavel.getIdResponsavel());
 					p.setString(2, responsavel.getNomeResp());
 					p.setString(3, responsavel.getNascResp());
 					
@@ -57,7 +57,7 @@ private Connection conexao;
 			ResultSet rs = p.executeQuery();
 			while (rs.next()) {
 				
-				int idResp = rs.getInt("idResponsavel");
+				int id = rs.getInt("idResponsavel");
 				String nomeResp = rs.getString("nomeResp");
 				String nascResp = rs.getString("dataNasc");
 				
@@ -65,7 +65,7 @@ private Connection conexao;
 				responsavel.setNomeResp(nomeResp);
 				responsavel.setNascResp(nascResp);
 				
-				responsavel.setIdResp(idResp);
+				responsavel.setIdResponsavel(id);
 						
 
 			}
@@ -74,19 +74,37 @@ private Connection conexao;
 		}
 		return responsavel;
 	}
+	
 	public boolean alterarR(Responsavel responsavel) {		
 		String comando = "UPDATE responsavel "
-				+ "SET nomeResponsavel=?, dataNasc=? "
+				+ "SET nomeResp=?, dataNasc=? "
 				+ " WHERE idResponsavel=?";
 		PreparedStatement p;
+
 		try {
 			
 			p = this.conexao.prepareStatement(comando);
 			p.setString(1, responsavel.getNomeResp());
 			p.setString(2, responsavel.getNascResp());
+			p.setInt(3, responsavel.getIdResponsavel());
 
 			p.executeUpdate();
 
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean deletarR(int idResponsavel) {
+		
+		String comando = "DELETE FROM responsavel WHERE idResponsavel = ?";
+		PreparedStatement p;
+		try {
+			p=this.conexao.prepareStatement(comando);
+			p.setInt(1, idResponsavel);
+			p.execute();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return false;
