@@ -160,6 +160,14 @@ $(document).ready (function(){
 		   // se for maior que 60 não vai acontecer nada!
 		   return idadeFinalResponsavel;
 		}	
+
+	alertError = function(text){
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			text: text,
+		  })
+	}	
 	
 	 validarCampos = function(){
 		var validacao = true;
@@ -176,75 +184,44 @@ $(document).ready (function(){
 		var expRegNome = new RegExp(/^((\b[A-zÀ-ú']{2,40}\b)\s*){2,}$/);
 		var expRegEmail = new RegExp(/^([a-z]){1,}([a-z0-9._-]){1,}([@]){1}([a-z]){2,}([.]){1}([a-z]){2,}([.]?){1}([a-z]?){2,}$/i);	
 		var expRegSenha = new RegExp(/^(?=.*\d)[0-9\d]{4}$/);
+	
 		
 		if (!expRegNome.test(nomeAluno)){
-			Swal.fire({
-				  icon: 'error',
-				  title: 'Oops...',
-				  text: 'Nome inválido!',
-				})
+			alertError('Nome inválido!')
 			document.frmAluno.nomeAluno.focus();
 			validacao = false;
 	
 		}else if (!validarCpf()){
-			Swal.fire({
-				  icon: 'error',
-				  title: 'Oops...',
-				  text: 'CPF inválido!',
-				})
+			alertError('CPF inválido!')
 			document.frmAluno.cpfAluno.focus();
 			validacao = false;
 			
 		}else if (!expRegEmail.test(email)){
-			Swal.fire({
-				  icon: 'error',
-				  title: 'Oops...',
-				  text: 'E-mail inválido!',
-				})
+			alertError('E-mail inválido!')
 			document.frmAluno.email.focus();
 			validacao = false;
 		}else if(!expRegSenha.test(senha)){
-			Swal.fire({
-				  icon: 'error',
-				  title: 'Oops...',
-				  text: 'Senha inválida, apenas 4 números!',
-				})
+			alertError('Senha inválida, apenas 4 números!')
 			document.frmAluno.senha.focus();
 		}
 		else if (!validarIdade() || nascAluno == ""){
-			Swal.fire({
-				  icon: 'error',
-				  title: 'Oops...',
-				  text: 'Idade inválida ou menor de idade precisa ter responsável!',
-				})
+			alertError('Idade inválida ou menor de idade precisa ter responsável!')
 			document.frmAluno.nascAluno.focus();
 			validacao = false;			
 		}
 		else if (selectResp == "ativo" && !expRegNome.test(nomeResp))
 		{		
-			Swal.fire({
-				  icon: 'error',
-				  title: 'Oops...',
-				  text: 'Nome do responsável inválido!',
-				})
+			alertError('Nome do responsável inválido!')
 			document.frmAluno.nomeResponsavel.focus();
 			validacao = false;
 		}else if (!validarIdadeResponsavel() && selectResp == "ativo" || nascResp == "" && selectResp == "ativo" )
 		{
-			Swal.fire({
-				  icon: 'error',
-				  title: 'Oops...',
-				  text: 'O responsável precisa ser maior de idade!',
-				})
+			alertError('O responsável precisa ser maior de idade!')
 			document.frmAluno.nascResponsavel.focus();
 			validacao = false;
 		}else if (selectResp == 0)
 		{
-			Swal.fire({
-				  icon: 'error',
-				  title: 'Oops...',
-				  text: 'Selecione uma opção para responsável!',
-				})
+			alertError('Selecione uma opção para responsável!')
 			document.frmAluno.select.focus();
 			validacao = false;
 		}
