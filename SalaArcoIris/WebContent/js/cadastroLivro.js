@@ -68,10 +68,39 @@ $(document).ready (function(){
 		})
 	}
 
+	
+	function validarData(){
+		var validacao; 
+		    // pega o valor do input
+		   var data2 = new Date(document.getElementById('validaPublicacao').value).toDateString();
+
+		   var hoje = new Date().toDateString();
+		  
+
+		   console.log(hoje)
+		   console.log('input = ' + data2)
+
+		   if (hoje > data2) {
+		     console.log('Hoje é maior que data2')
+		   } else if (hoje == data2) {
+		     console.log('Hoje é igual a data2')
+		   } else {
+		     console.log('Hoje é menor que data2')
+		   }
+		   
+		   console.log('diff = ' + diff);
+		   
+		   if(diff > 0){
+		      console.log("Data não pode ser superior à de hoje!");
+		      validacao = false;
+		   }
+		   return validacao;
+		}
 
 	validarCampos = function (){
 		var validacao = true;
-
+		console.log(validarData())
+		
 		nomeLivro = document.getElementById('validaNome').value;
 		codigoLivro = document.getElementById('validaCodigo').value;
 		publicacao = document.getElementById('validaPublicacao').value;
@@ -90,7 +119,7 @@ $(document).ready (function(){
 			document.frmLivro.codigoLivro.focus();
 
 			validacao = false;
-		}else if (publicacao == ""){
+		}else if (publicacao == "" || !validarData()){
 			alertError('Data de publicação inválida!')
 			document.frmLivro.publicacao.focus();
 

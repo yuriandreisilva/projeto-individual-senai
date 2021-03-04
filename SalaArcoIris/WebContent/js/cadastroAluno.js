@@ -11,11 +11,11 @@ function verificarSelectResponsavel(){
 	
 };
 
-function exibirMsgSuccessRedirecionar(){
+function exibirMsgSuccessRedirecionar(msg){
 	// Um tipo de alert estilzado, importado para ficar mais interativo
 	Swal.fire({
 		  icon: 'success',
-		  title: 'Processo concluído com sucesso',
+		  title: 'Processo realizado com sucesso!',
 		  showConfirmButton: false,
 		  timer: 1500
 		})
@@ -26,7 +26,13 @@ function exibirMsgSuccessRedirecionar(){
 	}
 }
 
-
+alertError = function(text){
+	Swal.fire({
+		icon: 'error',
+		title: 'Oops...',
+		text: text,
+	  })
+}
 
 SALAARCOIRIS = new Object();
 
@@ -64,15 +70,18 @@ $(document).ready (function(){
 			type: "POST",
 			url: SALAARCOIRIS.PATH + "aluno/inserirA",
 			data:JSON.stringify(aluno),
-			success:function(msg){
-				SALAARCOIRIS.aluno.cadastrarResponsavel();
-				exibirMsgSuccessRedirecionar()
+			success:function(retorno){
+				if(retorno === "true"){
+					SALAARCOIRIS.aluno.cadastrarResponsavel();
+					exibirMsgSuccessRedirecionar()
+				}else {
+					alertError('Provavelmente este e-mail ou CPF já foi cadastrado!')
+				}
 			},
 			error:function(info){
-				alert('erro');
+				alertError('Erro ao cadastrar!')
 				console.log("Erro ao cadastrar um novo aluno: "+ info.status + " - "+ info.statusText);	
 			}
-			
 		});
 		}
 	}
@@ -159,15 +168,7 @@ $(document).ready (function(){
 		   
 		   // se for maior que 60 não vai acontecer nada!
 		   return idadeFinalResponsavel;
-		}	
-
-	alertError = function(text){
-		Swal.fire({
-			icon: 'error',
-			title: 'Oops...',
-			text: text,
-		  })
-	}	
+		}		
 	
 	 validarCampos = function(){
 		var validacao = true;
@@ -323,7 +324,7 @@ $(document).ready (function(){
 			type:"DELETE",
 			url: SALAARCOIRIS.PATH +"aluno/excluir/"+idAluno,
 			success: function(msg){
-				exibirMsgSuccessRedirecionar()
+				
 			},
 			error: function(info){
 				console.log("Erro ao excluir livro: " + info.status + " - " + info.statusText);
@@ -337,8 +338,7 @@ $(document).ready (function(){
 			type:"DELETE",
 			url: SALAARCOIRIS.PATH +"responsavel/excluir/"+idResponsavel,
 			success: function(msg){
-				console.log("Exclusão responsavél success")
-				exibirMsgSuccessRedirecionar()
+	
 			},
 			error: function(info){
 				console.log("Erro ao excluir responsável: " + info.status + " - " + info.statusText);
@@ -435,9 +435,6 @@ $(document).ready (function(){
 				data:JSON.stringify(aluno),
 				success: function(msg){
 					SALAARCOIRIS.aluno.buscarAluno();
-					
-					console.log("Aluno alterado com sucesso!")
-					console.log(aluno.idResponsavel)
 					
 					if (aluno.idResponsavel>0){
 						var id = aluno.idResponsavel;

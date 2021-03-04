@@ -1,3 +1,23 @@
+function exibirMsgSuccessRedirecionar(){
+	// Um tipo de alert estilzado, importado para ficar mais interativo
+	Swal.fire({
+		  icon: 'success',
+		  title: 'Processo concluído com sucesso',
+		  showConfirmButton: false,
+		  timer: 1500
+		})
+	// Função para atrasar o window.location (redirecionamento para listagem de cadastros)		
+	setTimeout(func, 1500);
+	function func() {
+		location.href="editar.html";
+	}
+}
+
+function mostrarData(){
+	var data = document.getElementById('validaPublicacao').value; // pega o valor do input
+	console.log(data);
+}
+
 SALAARCOIRIS = new Object();
 
 SALAARCOIRIS.livro = new Object();
@@ -19,11 +39,7 @@ $(document).ready (function(){
 	livro.qtdEstoque = document.frmLivro.qtdEstoque.value;
 	livro.statusLivro = document.frmLivro.statusLivro.value;
 	
-		if (livro.nomeLivro == "" || livro.codigoLivro == "" || livro.publicacao == "" ||
-				livro.qtdEstoque == "" || livro.statusLivro == "")
-		{
-			alert('Preencha todos os campos!!!')
-		}else{
+	if (validarCampos()){
 			//REQUISIÇÃO AJAX
 			$.ajax({
 				// TYPE POST, MODO QUE SERÃO ENVIADOS PARA O SERVIDOR 
@@ -36,7 +52,7 @@ $(document).ready (function(){
 				data:JSON.stringify(livro),
 				// SÓ VOLTA PARA O SUCCESS, APÓS PASSAR TODOS OS PASSOS DO SERVIDOR SEM ERROS
 				success:function(msg){
-					window.location.href = "editar.html";
+					exibirMsgSuccessRedirecionar()
 				},
 				error:function(info){
 					console.log("Erro ao cadastrar um novo livro: "+ info.status + " - "+ info.statusText);	
@@ -44,6 +60,86 @@ $(document).ready (function(){
 			});	
 		}
 	}
+	alertError = function(text) {
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			text: text,
+		})
+	}
+
+	
+	function validarData(){
+		var validacao; 
+		    // pega o valor do input
+		   var data2 = new Date(document.getElementById('validaPublicacao').value).toDateString();
+
+		   var hoje = new Date().toDateString();
+		  
+
+		   console.log(hoje)
+		   console.log('input = ' + data2)
+
+		   if (hoje > data2) {
+		     console.log('Hoje é maior que data2')
+		   } else if (hoje == data2) {
+		     console.log('Hoje é igual a data2')
+		   } else {
+		     console.log('Hoje é menor que data2')
+		   }
+		   
+		   console.log('diff = ' + diff);
+		   
+		   if(diff > 0){
+		      console.log("Data não pode ser superior à de hoje!");
+		      validacao = false;
+		   }
+		   return validacao;
+		}
+
+	validarCampos = function (){
+		var validacao = true;
+		console.log(validarData())
+		
+		nomeLivro = document.getElementById('validaNome').value;
+		codigoLivro = document.getElementById('validaCodigo').value;
+		publicacao = document.getElementById('validaPublicacao').value;
+		qtdEstoque = document.getElementById('validaEstoqueInicial').value;
+		statusLivro = document.getElementById('validaStatus').value;
+
+		var expRegNome = new RegExp(/^((\b[A-zÀ-ú']{2,40}\b)\s*){2,}$/);
+
+		if (!expRegNome.test(nomeLivro)){
+			alertError('Nome inválido!')
+		 	document.frmLivro.nomeLivro.focus();
+
+		  	validacao = false;
+		}else if (codigoLivro == ""){
+			alertError('Código inválido!')
+			document.frmLivro.codigoLivro.focus();
+
+			validacao = false;
+		}else if (publicacao == "" || !validarData()){
+			alertError('Data de publicação inválida!')
+			document.frmLivro.publicacao.focus();
+
+			validacao = false;
+		}else if (qtdEstoque <0 || qtdEstoque == ""){
+			alertError('Quantidade inicial de estoque inválida!')
+			document.frmLivro.qtdEstoque.focus();
+
+			validacao = false;
+		}else if (statusLivro == 0){
+			alertError('Status do livro inválido!')
+			document.frmLivro.statusLivro.focus();
+
+			validacao = false;
+		}
+
+		return validacao;	
+
+	}
+
 	// READ --
 
 	SALAARCOIRIS.livro.buscarLivro = function(){

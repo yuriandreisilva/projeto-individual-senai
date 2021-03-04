@@ -37,17 +37,11 @@ public class AlunoRest extends UtilRest{
 			
 			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO(conexao);
 			boolean retorno  = jdbcAluno.inserirA(aluno);
-			String msg="";
 			
-			if(retorno) {
-				msg = "Aluno cadastrado com sucesso!";
-			}else {
-				msg = "Erro ao cadastrar aluno.";
-			}
-			
+//			System.out.println(retorno);
 			conec.fecharConexao();
 			
-			return this.buildResponse(msg);
+			return this.buildResponse(retorno);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());

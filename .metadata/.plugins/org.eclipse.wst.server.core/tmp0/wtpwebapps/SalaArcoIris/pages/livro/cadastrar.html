@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="publicacao">Publicação</label>
-                    <input name="publicacao" type="month" class="form-control" id="validaPublicacao" required>
+                    <input name="publicacao" type="month" class="form-control" id="validaPublicacao" onchange="mostrarData()" required>
                 </div>
 	            <div class="form-group col-md-6">
 	                <label for="qtdEstoque">Estoque inicial</label>
@@ -36,8 +36,8 @@
 	            </div>
             </div>
             <div class="form-group">
-                <label for="responsavel">Status livro</label>
-                <select class="custom-select" id="statusLivro" required>
+                <label for="statusLivro">Status livro</label>
+                <select name="statusLivro" class="custom-select" id="validaStatus" required>
                     <option value="1">Selecione uma opção</option>
                     <option value="2" selected>Ativo</option>
                     <option value="3">Inativo</option>
@@ -55,7 +55,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../../js/fixo.js"></script>
     <script src="../../js/cadastroLivro.js"></script>
-    <script src="../../js/validarCadastro.js"></script>
+    
     <!-- importa footer que importa scripts + bootstrap -->
 </footer>
 </body>

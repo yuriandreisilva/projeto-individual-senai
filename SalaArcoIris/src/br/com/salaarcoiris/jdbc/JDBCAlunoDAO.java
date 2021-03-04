@@ -42,16 +42,17 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			p.setString(7, aluno.getStatusResponsavel());
 
 			p.execute();
-
+			
 		}catch (SQLException e) {
 			e.printStackTrace();
+			
 			return false;
 		}
 		return true;
 	}
 	
 	public List<JsonObject>buscarA(String nome){
-		System.out.println(nome);
+	
 		String comando = "SELECT * "+
 				"FROM aluno ";
 		if (nome != "") {
