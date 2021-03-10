@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="deletarA"/>
+		<item key="selection" value="checkId"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="exibir"/>
+			<item value="checkId"/>
+			<item value="console.log"/>
+			<item value="validarData"/>
+			<item value="publicacao"/>
 			<item value="alterarA"/>
 			<item value="system"/>
 			<item value="delete"/>
-			<item value="Resp"/>
-			<item value="idResp"/>
-			<item value="alterarR"/>
-			<item value="deletarA"/>
-			<item value="validaResponsavel"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>

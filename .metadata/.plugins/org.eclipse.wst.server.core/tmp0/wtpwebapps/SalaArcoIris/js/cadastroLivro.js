@@ -51,10 +51,15 @@ $(document).ready (function(){
 				// CONVERTE EM FORMATO STRING JSON, PADRONIZAÇÃO
 				data:JSON.stringify(livro),
 				// SÓ VOLTA PARA O SUCCESS, APÓS PASSAR TODOS OS PASSOS DO SERVIDOR SEM ERROS
-				success:function(msg){
-					exibirMsgSuccessRedirecionar()
+				success:function(retorno){
+					if(retorno === "true"){
+						exibirMsgSuccessRedirecionar()
+					}else {
+						alertError('Provavelmente este código já foi usado em outro cadastrado!')
+					}
 				},
 				error:function(info){
+					alertError('Erro ao cadastrar novo livro: ' + info.status + " - "+ info.statusText)
 					console.log("Erro ao cadastrar um novo livro: "+ info.status + " - "+ info.statusText);	
 				}
 			});	
@@ -70,36 +75,21 @@ $(document).ready (function(){
 
 	
 	function validarData(){
-		var validacao; 
-		    // pega o valor do input
-		   var data2 = new Date(document.getElementById('validaPublicacao').value).toDateString();
-
-		   var hoje = new Date().toDateString();
-		  
-
-		   console.log(hoje)
-		   console.log('input = ' + data2)
-
-		   if (hoje > data2) {
-		     console.log('Hoje é maior que data2')
-		   } else if (hoje == data2) {
-		     console.log('Hoje é igual a data2')
-		   } else {
-		     console.log('Hoje é menor que data2')
-		   }
-		   
-		   console.log('diff = ' + diff);
-		   
-		   if(diff > 0){
-		      console.log("Data não pode ser superior à de hoje!");
-		      validacao = false;
-		   }
-		   return validacao;
+		var validacao = true; 
+		publicacao = document.getElementById('validaPublicacao').value;
+		
+		var data = new Date(publicacao);
+		var dataAtual = new Date();
+		
+		if (data > dataAtual || publicacao == ""){
+			validacao = false;
 		}
+		
+		return validacao;
+	}
 
 	validarCampos = function (){
 		var validacao = true;
-		console.log(validarData())
 		
 		nomeLivro = document.getElementById('validaNome').value;
 		codigoLivro = document.getElementById('validaCodigo').value;
@@ -222,7 +212,6 @@ $(document).ready (function(){
 			url: SALAARCOIRIS.PATH +"livro/checkIdL",
 			data: "idLivro="+idLivro,
 			success: function(livro){
-				console.log()
 				document.frmEditaLivro.idLivro.value = livro.idLivro;	
 				document.frmEditaLivro.nomeLivro.value = livro.nomeLivro;
 				document.frmEditaLivro.codigoLivro.value = livro.codigoLivro;
@@ -249,21 +238,17 @@ $(document).ready (function(){
 		livro.qtdEstoque = document.frmEditaLivro.qtdEstoque.value;
 		livro.statusLivro = document.frmEditaLivro.statusLivro.value;
 		
-		
-		if (livro.nomeLivro == "" || livro.codigoLivro == "" || livro.publicacao == "" ||
-				livro.qtdEstoque == "" || livro.statusLivro == "")
-		{
-			alert('Preencha todos os campos!!!')
-		}else{
-		
+		if (validarCampos()){
 			$.ajax({
 				type:"PUT",
 				url: SALAARCOIRIS.PATH + "livro/alterarL",
 				data:JSON.stringify(livro),
-				success: function(msg){
-					SALAARCOIRIS.livro.buscarLivro();
-					console.log("Livro alterado com sucesso!")	
-					window.location.href = "editar.html";
+				success: function(retorno){
+					if(retorno === "true"){
+						exibirMsgSuccessRedirecionar()
+					}else {
+						alertError('Provavelmente este código já foi usado em outro cadastrado!')
+					}
 				},
 				error: function(info){
 					console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);

@@ -49,19 +49,12 @@ public class LivroRest extends UtilRest{
 			// RETORNO RECEBE DO JDBC UMA RESPOSTA TRUE OR FALSE, SE ESTIVER CORRETA
 			// A LINHA DE COMANDO, O PARÂMETRO, OS MÉTODOS GETTERS/SETTERS E DEMAIS ITENS
 			// ENTRARÁ NO IF COM MENSAGEM DE SUCESSO, IF VERIFICA SE TRUE, SE NÃO, MSG DE ERRO
-			String msg="";
-			
-			if(retorno) {
-				msg = "Livro cadastrado com sucesso!";
-			}else {
-				msg = "Erro ao cadastrar livro.";
-			}
 			
 			conec.fecharConexao();
 			
 			// CONSTRÓI A RESPOSTA, PASSANDO A MENSAGEM
 			// NO UTIL REST HÁ ESTA RESPOSTA CONSTRUIDA COM MÉTODO
-			return this.buildResponse(msg);
+			return this.buildResponse(retorno);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
@@ -150,14 +143,8 @@ public class LivroRest extends UtilRest{
 
 			boolean retorno = jdbcLivro.alterarL(livro);
 
-			String msg="";
-			if (retorno) {
-				msg = "Cadastro alterado com sucesso!";
-			}else {
-				msg = "Erro ao alterar cadastro";
-			}
 			conec.fecharConexao();
-			return this.buildResponse(msg);
+			return this.buildResponse(retorno);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
