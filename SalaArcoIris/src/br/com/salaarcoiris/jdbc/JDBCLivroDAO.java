@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import br.com.salaarcoiris.jdbcinterface.LivroDAO;
 import br.com.salaarcoiris.modelo.Livro;
 
-public class JDBCLivroDAO implements LivroDAO{
+public class JDBCLivroDAO implements LivroDAO {
 
 	private Connection conexao;
 
@@ -24,6 +24,7 @@ public class JDBCLivroDAO implements LivroDAO{
 	}
 
 	public boolean inserirL(Livro livro) {
+		System.out.println("está chegando: " + livro);
 		// SQL
 		// INJECTION QUERY, LINHA DE COMANDO EM SQL PARA INSERÇÃO NO BD
 		String comando = " INSERT INTO livro (nomeLivro, codigoLivro, publicacao, qtdEstoque, statusLivro) "
@@ -49,24 +50,23 @@ public class JDBCLivroDAO implements LivroDAO{
 			// EXECUTA A LINHA DE COMANDO COM OS VALORES CORRETOS
 			p.execute();
 
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		// RETORNA VERDADEIRO O BOOLEANO PARA O LIVRO REST
-		// 
+		//
 		return true;
 	}
-	
-	public List<JsonObject>buscarL(String nome){
-		
-		String comando = "SELECT * "+
-				"FROM livro ";
+
+	public List<JsonObject> buscarL(String nome) {
+
+		String comando = "SELECT * " + "FROM livro ";
 		if (nome != "") {
-			comando += "WHERE livro.nomeLivro LIKE '%"+ nome + "%' "; 
+			comando += "WHERE livro.nomeLivro LIKE '%" + nome + "%' ";
 		}
-		comando += "ORDER BY livro.nomeLivro ASC";		
+		comando += "ORDER BY livro.nomeLivro ASC";
 		List<JsonObject> listaLivros = new ArrayList<JsonObject>();
 		JsonObject livro = null;
 
@@ -75,7 +75,7 @@ public class JDBCLivroDAO implements LivroDAO{
 			Statement stmt = conexao.createStatement();
 			ResultSet rs = stmt.executeQuery(comando);
 
-			while(rs.next()) {
+			while (rs.next()) {
 
 				int idLivro = rs.getInt("idLivro");
 				String nomeLivro = rs.getString("nomeLivro");
@@ -83,9 +83,9 @@ public class JDBCLivroDAO implements LivroDAO{
 				String publicacao = rs.getString("publicacao");
 				int qtdEstoque = rs.getInt("qtdEstoque");
 				int statusLivro = rs.getInt("statusLivro");
-				
+
 				livro = new JsonObject();
-				livro.addProperty("idLivro", idLivro);				
+				livro.addProperty("idLivro", idLivro);
 				livro.addProperty("nomeLivro", nomeLivro);
 				livro.addProperty("codigoLivro", codigoLivro);
 				livro.addProperty("publicacao", publicacao);
@@ -95,33 +95,32 @@ public class JDBCLivroDAO implements LivroDAO{
 				listaLivros.add(livro);
 			}
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return listaLivros;
 	}
-	
+
 	// DELETE - livro
-	
+
 	public boolean deletarL(int idLivro) {
 		String comando = "DELETE FROM livro WHERE idLivro = ?";
 		PreparedStatement p;
 		try {
-			p=this.conexao.prepareStatement(comando);
+			p = this.conexao.prepareStatement(comando);
 			p.setInt(1, idLivro);
 			p.execute();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
-	
+
 	// UPDATE - livro
-	
+
 	public Livro checkIdL(int idLivro) {
-		String comando = "select * from livro " +
-				"where livro.idLivro = ?";
+		String comando = "select * from livro " + "where livro.idLivro = ?";
 		Livro livro = new Livro();
 		try {
 			PreparedStatement p = this.conexao.prepareStatement(comando);
@@ -134,46 +133,43 @@ public class JDBCLivroDAO implements LivroDAO{
 				String publicacao = rs.getString("publicacao");
 				int qtdEstoque = rs.getInt("qtdEstoque");
 				int statusLivro = rs.getInt("statusLivro");
-				
+
 				livro.setNomeLivro(nomeLivro);
 				livro.setCodigoLivro(codigoLivro);
 				livro.setPublicacao(publicacao);
 				livro.setQtdEstoque(qtdEstoque);
 				livro.setStatusLivro(statusLivro);
 
-				
 				livro.setIdLivro(idLivro);
-				
 
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return livro;
 	}
-		
-		public boolean alterarL(Livro livro) {		
-			String comando = "UPDATE livro "
-					+ "SET nomeLivro=?, codigoLivro=?, publicacao=?, qtdEstoque=? , statusLivro=?"
-					+ " WHERE idLivro=?";
-			PreparedStatement p;
-			try {
-				
-				p = this.conexao.prepareStatement(comando);
-								
-				p.setString(1, livro.getNomeLivro());
-				p.setString(2, livro.getCodigoLivro());
-				p.setString(3, livro.getPublicacao());
-				p.setInt(4, livro.getQtdEstoque());
-				p.setInt(5, livro.getStatusLivro());
-				p.setInt(6, livro.getIdLivro());
 
-				p.executeUpdate();
+	public boolean alterarL(Livro livro) {
+		String comando = "UPDATE livro " + "SET nomeLivro=?, codigoLivro=?, publicacao=?, qtdEstoque=? , statusLivro=?"
+				+ " WHERE idLivro=?";
+		PreparedStatement p;
+		try {
 
-			}catch (SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
-			return true;
+			p = this.conexao.prepareStatement(comando);
+
+			p.setString(1, livro.getNomeLivro());
+			p.setString(2, livro.getCodigoLivro());
+			p.setString(3, livro.getPublicacao());
+			p.setInt(4, livro.getQtdEstoque());
+			p.setInt(5, livro.getStatusLivro());
+			p.setInt(6, livro.getIdLivro());
+
+			p.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
+		return true;
+	}
 }

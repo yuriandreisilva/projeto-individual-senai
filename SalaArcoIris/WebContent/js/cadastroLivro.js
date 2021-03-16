@@ -28,7 +28,7 @@ $(document).ready (function(){
 
 	// INSERT - Livro
 	SALAARCOIRIS.livro.cadastrarLivro = function(){
-
+		
 	// CRIA OBJETO
 	var livro = new Object();
 	
@@ -39,7 +39,7 @@ $(document).ready (function(){
 	livro.qtdEstoque = document.frmLivro.qtdEstoque.value;
 	livro.statusLivro = document.frmLivro.statusLivro.value;
 	
-	if (validarCampos()){
+	//if (validarCampos()){
 			//REQUISIÇÃO AJAX
 			$.ajax({
 				// TYPE POST, MODO QUE SERÃO ENVIADOS PARA O SERVIDOR 
@@ -63,7 +63,7 @@ $(document).ready (function(){
 					console.log("Erro ao cadastrar um novo livro: "+ info.status + " - "+ info.statusText);	
 				}
 			});	
-		}
+	//	}
 	}
 	alertError = function(text) {
 		Swal.fire({
