@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import com.google.gson.JsonObject;
 
 import java.sql.PreparedStatement;
@@ -29,12 +31,15 @@ public class JDBCUsuarioDAO implements UsuarioDAO {
 		PreparedStatement p;
 
 		try {
-
+			
 			p = this.conexao.prepareStatement(comando);
 
 			p.setString(1, usuario.getEmailUsuario());
-			p.setString(2, usuario.getSenhaUsuario());
-			p.setBoolean(3, usuario.getStatus());
+			
+			String sha256hex = DigestUtils.sha256Hex(usuario.getSenhaUsuario());
+			p.setString(2, sha256hex);
+
+			p.setInt(3, usuario.getStatus());
 			p.setInt(4, usuario.getPermissao());
 
 			p.execute();
@@ -68,7 +73,7 @@ public class JDBCUsuarioDAO implements UsuarioDAO {
 				String emailUsuario = rs.getString("emailUsuario");
 				String senhaUsuario = rs.getString("senhaUsuario");
 				int status = rs.getInt("status");
-				Boolean permissao = rs.getBoolean("permissao");
+				int permissao = rs.getInt("permissao");
 
 				usuario = new JsonObject();
 				usuario.addProperty("idUsuario", id);
@@ -116,7 +121,7 @@ public class JDBCUsuarioDAO implements UsuarioDAO {
 				int id = rs.getInt("idUsuario");
 				String emailUsuario = rs.getString("emailUsuario");
 				String senhaUsuario = rs.getString("senhaUsuario");
-				Boolean status = rs.getBoolean("status");
+				int status = rs.getInt("status");
 				int permissao = rs.getInt("permissao");
 
 				usuario.setEmailUsuario(emailUsuario);
@@ -143,9 +148,9 @@ public class JDBCUsuarioDAO implements UsuarioDAO {
 
 			p.setString(1, usuario.getEmailUsuario());
 			p.setString(2, usuario.getSenhaUsuario());
-			p.setBoolean(3, usuario.getStatus());
+			p.setInt(3, usuario.getStatus());
 			p.setInt(4, usuario.getPermissao());
-
+		
 			p.setInt(5, usuario.getIdUsuario());
 
 			p.executeUpdate();

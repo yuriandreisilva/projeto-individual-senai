@@ -53,7 +53,7 @@
 					<div class="form-group  col-md-6">
 						<label for="status">Status</label>
 						<select name="status" class="custom-select" id="validaStatus" required>
-							<option value="9" selected>Selecione uma opção</option>
+							<option value="9">Selecione uma opção</option>
 							<option value="0" >Inativo</option> 
 							<option value="1">Ativo</option>
 						</select>
@@ -61,14 +61,14 @@
 					<div class="form-group  col-md-6">
 						<label for="permissao">Tipo de usuário</label>
 						<select name="permissao" class="custom-select" id="validaTipoUsuario" required>
-							<option value="9" selected>Selecione uma opção</option>
-							<option value="0">Comum</option>
+							<option value="9">Selecione uma opção</option>
+							<option value="0">Operador</option>
 							<option value="1" >Administrador</option> 
 						</select>
 					</div>
 				</div> 
-					<a type="button" href="editar.html" class="btn btn-secondary">Cancelar</a>
-					<a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.usuario.alterarA())>Salvar</a>
+					<a type="button" onclick="document.getElementById('id01').style.display='none'" class="btn btn-secondary">Cancelar</a>
+					<a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.usuario.alterarU())>Salvar</a>
 				</div>
 			</form>
 		</div>

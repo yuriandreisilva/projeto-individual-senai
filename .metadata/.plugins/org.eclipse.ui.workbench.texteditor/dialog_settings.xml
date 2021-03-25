@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="buscarL"/>
+		<item key="selection" value="Senha"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
-			<item value="buscar"/>
-			<item value="buscarL"/>
-			<item value="exibir"/>
-			<item value="checkId"/>
-			<item value="console.log"/>
-			<item value="validarData"/>
-			<item value="publicacao"/>
-			<item value="alterarA"/>
+			<item value="senha"/>
+			<item value="boolean"/>
+			<item value="alterarU"/>
+			<item value="checkIdU"/>
+			<item value="active"/>
+			<item value="deletarL"/>
+			<item value="delete"/>
+			<item value="exibirMsgSuccessRedirecionar"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>

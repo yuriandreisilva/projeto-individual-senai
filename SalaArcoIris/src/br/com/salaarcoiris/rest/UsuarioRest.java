@@ -130,14 +130,8 @@ public class UsuarioRest extends UtilRest{
 
 			boolean retorno = jdbcUsuario.alterarU(usuario);
 
-			String msg="";
-			if (retorno) {
-				msg = "Cadastro alterado com sucesso!";
-			}else {
-				msg = "Erro ao alterar cadastro";
-			}
 			conec.fecharConexao();
-			return this.buildResponse(msg);
+			return this.buildResponse(retorno);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());

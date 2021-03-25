@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: sala_arco_iris
 -- ------------------------------------------------------
--- Server version	8.0.20
+-- Server version	8.0.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,11 +25,11 @@ DROP TABLE IF EXISTS `adm_usuario`;
 CREATE TABLE `adm_usuario` (
   `idUsuario` int NOT NULL AUTO_INCREMENT COMMENT 'ID do usuário/adm',
   `emailUsuario` varchar(45) NOT NULL COMMENT 'E-mail usuário/adm',
-  `senhaUsuario` varchar(45) NOT NULL COMMENT 'Senha usuário/adm',
-  `status` tinyint(1) NOT NULL,
-  `permissao` tinyint NOT NULL,
+  `senhaUsuario` varchar(95) NOT NULL COMMENT 'Senha usuário/adm',
+  `status` int NOT NULL,
+  `permissao` int NOT NULL,
   PRIMARY KEY (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `adm_usuario` (
 
 LOCK TABLES `adm_usuario` WRITE;
 /*!40000 ALTER TABLE `adm_usuario` DISABLE KEYS */;
-INSERT INTO `adm_usuario` VALUES (1,'yuri@gmail.com','123',0,0);
+INSERT INTO `adm_usuario` VALUES (1,'yuri@gmail.com','296506902c693b458707ad6f7e24a544',1,1),(12,'silvio@santos.com.br','2aa8f0bef5ca2997f992cce61f0ed85a1820cdbb636f2cfcfc0fe865d39be8fa',1,1);
 /*!40000 ALTER TABLE `adm_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +62,7 @@ CREATE TABLE `aluno` (
   UNIQUE KEY `cpfAluno_UNIQUE` (`cpfAluno`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_aluno_responsavel1_idx` (`idResponsavel`)
-) ENGINE=InnoDB AUTO_INCREMENT=367 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=368 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `aluno` (
 
 LOCK TABLES `aluno` WRITE;
 /*!40000 ALTER TABLE `aluno` DISABLE KEYS */;
-INSERT INTO `aluno` VALUES (124,'100.260.559-88','Sdfasdfas Fasdfasdfas','1996-07-03','teste@gmail.com',557399,1234,'inativo'),(357,'177.476.420-24','Gilderas Fdasdfasdf','1996-07-03','alylissonr@gmail.com',0,1234,'inativo'),(362,'664.179.500-42','Gilderas Dfasdfads','1996-07-03','teste@hotmail.com',0,1234,'inativo'),(366,'414.662.510-69','Dfasdfasdf Dfasfdasdf','2021-07-03','teste1@gmail.com',23852,1234,'ativo');
+INSERT INTO `aluno` VALUES (362,'664.179.500-42','Gilderas Dfasdfads','1996-07-03','teste@hotmail.com',0,1234,'inativo');
 /*!40000 ALTER TABLE `aluno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +119,7 @@ CREATE TABLE `livro` (
   `statusLivro` int NOT NULL COMMENT 'Status do livro',
   PRIMARY KEY (`idLivro`),
   UNIQUE KEY `codigoLivro_UNIQUE` (`codigoLivro`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `livro` (
 
 LOCK TABLES `livro` WRITE;
 /*!40000 ALTER TABLE `livro` DISABLE KEYS */;
-INSERT INTO `livro` VALUES (13,'Livro Tecc','MX-1234','2021-03-04',10,2),(15,'Livro Tec','MX-12345','2021-03-04',10,2);
+INSERT INTO `livro` VALUES (15,'Livro Tec','MX-12345','2021-03-04',10,2),(19,'Livro Tec','MX-123asfas','1996-07-03',10,2);
 /*!40000 ALTER TABLE `livro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +177,7 @@ CREATE TABLE `responsavel` (
 
 LOCK TABLES `responsavel` WRITE;
 /*!40000 ALTER TABLE `responsavel` DISABLE KEYS */;
-INSERT INTO `responsavel` VALUES (23852,'Fasdfasdf Asdfasdfa','1996-07-03'),(557399,'Dfasfa Adfasdf','1996-07-04'),(725765,'Dfasdf Asdfasdf','1996-07-04');
+INSERT INTO `responsavel` VALUES (725765,'Dfasdf Asdfasdf','1996-07-04');
 /*!40000 ALTER TABLE `responsavel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,4 +198,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-10 11:27:23
+-- Dump completed on 2021-03-25 12:16:23

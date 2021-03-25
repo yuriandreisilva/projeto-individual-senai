@@ -11,4 +11,7 @@
 <fullyQualifiedTypeName name="java.sql.Date"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="br.com.salaarcoiris.modelo.Responsavel"/>
+<fullyQualifiedTypeName name="br.com.salaarcoiris.bd.Conexao"/>
+<fullyQualifiedTypeName name="org.apache.commons.codec.binary.Base64"/>
+<fullyQualifiedTypeName name="java.util.Base64"/>
 </qualifiedTypeNameHistroy>

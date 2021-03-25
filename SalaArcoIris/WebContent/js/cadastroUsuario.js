@@ -1,3 +1,11 @@
+function ValidaDados(){
+
+    var senhaembase64 = btoa(document.frmLogin.senhaUsuario.value);
+    document.frmLogin.senha.value = senhaembase64;
+
+    return true;
+}
+
 function exibirMsgSuccessRedirecionar(){
 	// Um tipo de alert estilzado, importado para ficar mais interativo
 	Swal.fire({
@@ -29,8 +37,11 @@ $(document).ready (function(){
 
 	var usuario = new Object();
 	
-	usuario.emailUsuario = document.frmUsuario.emailUsuario.value;
-	usuario.senhaUsuario = document.frmUsuario.senhaUsuario.value;
+	usuario.emailUsuario = document.frmUsuario.emailUsuario.value;	
+	
+	var senhaembase64 = btoa(document.frmUsuario.senhaUsuario.value);
+    usuario.senhaUsuario = senhaembase64;
+	
 	usuario.status = document.frmUsuario.status.value;
 	usuario.permissao = document.frmUsuario.permissao.value;
 	
@@ -108,10 +119,24 @@ $(document).ready (function(){
 
 				
 				for(var i=0; i<listaDeUsuarios.length; i++){
+					
+					if (listaDeUsuarios[i].status == true){
+						status = "Ativo"
+					}else{
+						status = "Inativo"
+					}
+					
+					if (listaDeUsuarios[i].permissao == 1){
+						permissao = "Administrador"
+					}else{
+						permissao = "Operador"
+					}
+					
+						
 					tabela+="<tr>"+
 						"<th scope='row'>"+listaDeUsuarios[i].emailUsuario+"</th>"+
-						"<td>"+listaDeUsuarios[i].status+"</td>"+
-                        "<td>"+listaDeUsuarios[i].permissao+"</td>"+					
+						"<td>"+status+"</td>"+
+                        "<td>"+permissao+"</td>"+					
 						"<td>"+"<a class='btn btn-warning' onclick=\"SALAARCOIRIS.usuario.exibirEditU('"+listaDeUsuarios[i].idUsuario+"')\">Editar</a>" +"</td>"+
 						"<td>"+"<a class='btn btn-danger' onclick=\"SALAARCOIRIS.usuario.deletarU('"+listaDeUsuarios[i].idUsuario+"')\">Apagar</a>" +"</td>"+
 					"</tr>";
@@ -150,14 +175,28 @@ $(document).ready (function(){
 		document.getElementById('id01').style.display='block';
 		$.ajax({
 			type:"GET",
-			url: SALAARCOIRIS.PATH +"usuario/checkIdL",
+			url: SALAARCOIRIS.PATH +"usuario/checkIdU",
 			data: "idUsuario="+idUsuario,
 			success: function(usuario){
 				document.frmEditaUsuario.idUsuario.value = usuario.idUsuario;	
 				document.frmEditaUsuario.emailUsuario.value = usuario.emailUsuario;
 				document.frmEditaUsuario.senhaUsuario.value = usuario.senhaUsuario;
-				document.frmEditaUsuario.status.value = usuario.status;
-				document.frmEditaUsuario.permissao.value = usuario.permissao;
+				
+				if (usuario.status == 0){
+					document.frmEditaUsuario.status.value = "0";
+				}else{
+					document.frmEditaUsuario.status.value = "1";
+				}
+				
+				console.log(usuario.status);
+				
+				if (usuario.permissao == 0){
+					document.frmEditaUsuario.permissao.value = "0";
+				}else {
+					document.frmEditaUsuario.permissao.value = "1";
+				}
+				
+			
 			},
 			error: function(info){
 				console.log("Erro ao buscar cadastro para usuario: "+info.status+" - "+info.statusText);
@@ -177,6 +216,7 @@ $(document).ready (function(){
         usuario.status  = document.frmEditaUsuario.status.value;
         usuario.permissao  = document.frmEditaUsuario.permissao.value;
 		
+        
 		//if (validarCampos()){
 			$.ajax({
 				type:"PUT",

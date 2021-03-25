@@ -73,7 +73,7 @@ $(document).ready (function(){
 			success:function(retorno){
 				if(retorno === "true"){
 					SALAARCOIRIS.aluno.cadastrarResponsavel();
-					exibirMsgSuccessRedirecionar()
+					exibirMsgSuccessRedirecionar();
 				}else {
 					alertError('Provavelmente este e-mail ou CPF já foi cadastrado!')
 				}
@@ -324,7 +324,7 @@ $(document).ready (function(){
 			type:"DELETE",
 			url: SALAARCOIRIS.PATH +"aluno/excluir/"+idAluno,
 			success: function(msg){
-				
+				SALAARCOIRIS.aluno.buscarAluno();
 			},
 			error: function(info){
 				console.log("Erro ao excluir livro: " + info.status + " - " + info.statusText);
@@ -338,7 +338,7 @@ $(document).ready (function(){
 			type:"DELETE",
 			url: SALAARCOIRIS.PATH +"responsavel/excluir/"+idResponsavel,
 			success: function(msg){
-	
+				SALAARCOIRIS.aluno.buscarAluno();
 			},
 			error: function(info){
 				console.log("Erro ao excluir responsável: " + info.status + " - " + info.statusText);

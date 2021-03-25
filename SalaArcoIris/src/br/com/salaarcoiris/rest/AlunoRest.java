@@ -1,4 +1,5 @@
 package br.com.salaarcoiris.rest;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,53 +23,52 @@ import br.com.salaarcoiris.bd.Conexao;
 import br.com.salaarcoiris.jdbc.JDBCAlunoDAO;
 import br.com.salaarcoiris.modelo.Aluno;
 
-
 @Path("aluno")
-public class AlunoRest extends UtilRest{
+public class AlunoRest extends UtilRest {
 	@POST
 	@Path("/inserirA")
 	@Consumes("application/*")
 	public Response inserirA(String alunoParam) {
-		//System.out.println(alunoParam);
+		// System.out.println(alunoParam);
 		try {
 			Aluno aluno = new Gson().fromJson(alunoParam, Aluno.class);
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
-			
+
 			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO(conexao);
-			boolean retorno  = jdbcAluno.inserirA(aluno);
-			
-//			System.out.println(retorno);
+			boolean retorno = jdbcAluno.inserirA(aluno);
+
+			// System.out.println(retorno);
 			conec.fecharConexao();
-			
+
 			return this.buildResponse(retorno);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
 		}
 	}
-	
+
 	@GET
 	@Path("/buscarA")
 	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarA(@QueryParam("valorBusca") String  nome) {
+	public Response buscarA(@QueryParam("valorBusca") String nome) {
 		try {
 			List<JsonObject> listaAlunos = new ArrayList<JsonObject>();
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
-			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO (conexao);
+			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO(conexao);
 			listaAlunos = jdbcAluno.buscarA(nome);
 			conec.fecharConexao();
-			
+
 			String json = new Gson().toJson(listaAlunos);
 			return this.buildResponse(json);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
-		}				
+		}
 	}
-	
+
 	@DELETE
 	@Path("/excluir/{idAluno}")
 	@Consumes("application/*")
@@ -76,48 +76,49 @@ public class AlunoRest extends UtilRest{
 		try {
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
-			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO (conexao);
-			
+			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO(conexao);
+
 			boolean retorno = jdbcAluno.deletarA(idAluno);
-			
+
 			String msg = "";
-			if(retorno) {
-				msg="Aluno exclu�do com sucesso!";
-			}else {
-				msg="Erro ao excluir Aluno!";
+			if (retorno) {
+				msg = "Aluno excluído com sucesso!";
+			} else {
+				msg = "Erro ao excluir Aluno!";
 			}
-			
+
 			conec.fecharConexao();
-			
+
 			return this.buildResponse(msg);
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
-		}			
+		}
 	}
-	
+
 	@GET
 	@Path("/checkIdA")
 	@Produces(MediaType.APPLICATION_JSON)
 
-	public Response checkIdA(@QueryParam("idAluno")int idAluno) {
+	public Response checkIdA(@QueryParam("idAluno") int idAluno) {
 		try {
-			Aluno aluno= new Aluno();
+			Aluno aluno = new Aluno();
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
-			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO (conexao);
+			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO(conexao);
 
 			aluno = jdbcAluno.checkIdA(idAluno);
 
 			conec.fecharConexao();
 			return this.buildResponse(aluno);
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
 		}
 	}
+
 	@PUT
 	@Path("/alterarA")
 	@Consumes("application/*")
@@ -126,19 +127,19 @@ public class AlunoRest extends UtilRest{
 			Aluno aluno = new Gson().fromJson(alunoParam, Aluno.class);
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
-			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO (conexao);
+			JDBCAlunoDAO jdbcAluno = new JDBCAlunoDAO(conexao);
 
 			boolean retorno = jdbcAluno.alterarA(aluno);
 
-			String msg="";
+			String msg = "";
 			if (retorno) {
 				msg = "Cadastro alterado com sucesso!";
-			}else {
+			} else {
 				msg = "Erro ao alterar cadastro";
 			}
 			conec.fecharConexao();
 			return this.buildResponse(msg);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
 		}

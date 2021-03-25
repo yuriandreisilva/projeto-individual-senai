@@ -8,7 +8,7 @@ public class Usuario implements Serializable {
 	private int idUsuario;
 	private String emailUsuario;
 	private String senhaUsuario;
-	private Boolean status;
+	private int status;
 	private int permissao;
 
 	public int getIdUsuario() {
@@ -35,11 +35,11 @@ public class Usuario implements Serializable {
 		this.senhaUsuario = senhaUsuario;
 	}
 
-	public Boolean getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
