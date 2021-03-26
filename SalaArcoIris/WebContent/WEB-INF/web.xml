@@ -44,4 +44,18 @@
 	<servlet-name>AutenticaServlet</servlet-name>
 	<url-pattern>/autenticar</url-pattern>
 </servlet-mapping>
+
+<filter>
+    <filter-name>ServletFilter</filter-name>
+    <filter-class>Filter.ServletFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ServletFilter</filter-name>
+    <url-pattern>/pages/*</url-pattern>
+  </filter-mapping>
+  
+  <session-config>
+    <session-timeout>5</session-timeout>
+  </session-config>
+
 </web-app>
