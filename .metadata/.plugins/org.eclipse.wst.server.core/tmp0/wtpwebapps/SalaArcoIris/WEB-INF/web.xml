@@ -45,6 +45,21 @@
 	<url-pattern>/autenticar</url-pattern>
 </servlet-mapping>
 
+<servlet>
+	<servlet-name>Logout</servlet-name>
+	<servlet-class>LoginServlet.LogoutServlet</servlet-class>
+		<init-param>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>LoginServlet.LogoutServlet</param-value>
+		</init-param>
+	<load-on-startup>1</load-on-startup>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>Logout</servlet-name>
+	<url-pattern>/deslogar</url-pattern>
+</servlet-mapping>
+
 <filter>
     <filter-name>ServletFilter</filter-name>
     <filter-class>Filter.ServletFilter</filter-class>

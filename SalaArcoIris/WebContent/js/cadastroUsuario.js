@@ -1,10 +1,3 @@
-function ValidaDados(){
-
-    var senhaembase64 = btoa(document.frmLogin.senhaUsuario.value);
-    document.frmLogin.senhaUsuario.value = senhaembase64;
-    
-    return true;
-}
 
 function exibirMsgSuccessRedirecionar(){
 	// Um tipo de alert estilzado, importado para ficar mais interativo

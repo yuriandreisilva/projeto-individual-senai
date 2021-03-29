@@ -137,4 +137,5 @@ public class UsuarioRest extends UtilRest{
 			return this.buildErrorResponse(e.getMessage());
 		}
 	}
+	
 }

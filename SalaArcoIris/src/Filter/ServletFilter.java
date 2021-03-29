@@ -47,6 +47,7 @@ public class ServletFilter implements Filter {
 				
 
 				((HttpServletResponse) response).sendRedirect("http://localhost:8080/SalaArcoIris/index.html");
+				
 			} else {
 				
 				filterChain.doFilter(request, response);

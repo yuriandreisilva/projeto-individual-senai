@@ -19,7 +19,7 @@ public class JDBCAutenticaDAO {
 		
 		java.sql.Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
-		System.out.println(comando);
+		
 		if(rs.next()) {
 				return true;
 			}else {

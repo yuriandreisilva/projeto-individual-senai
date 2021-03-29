@@ -46,7 +46,7 @@ public class AutenticacaoServlet extends HttpServlet {
 			sessao.setAttribute("login", request.getParameter("emailUsuario"));
 			response.sendRedirect("pages/home/home.html");
 		} else {
-			response.sendRedirect("index.html");
+			response.sendRedirect("index-error.html");
 		}
 
 	}
