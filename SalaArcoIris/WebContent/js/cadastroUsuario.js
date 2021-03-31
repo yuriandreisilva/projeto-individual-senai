@@ -39,7 +39,7 @@ $(document).ready (function(){
 	usuario.permissao = document.frmUsuario.permissao.value;
 	
 	
-	//if (validarCampos()){
+	if (validarCampos()){
 			$.ajax({
 				type: "POST",
 				url: SALAARCOIRIS.PATH + "usuario/inserirU",
@@ -56,7 +56,7 @@ $(document).ready (function(){
 					console.log("Erro ao cadastrar um novo usuario: "+ info.status + " - "+ info.statusText);	
 				}
 			});	
-	//	}
+		}
 	}
 	alertError = function(text) {
 		Swal.fire({
@@ -68,6 +68,20 @@ $(document).ready (function(){
 
 	validarCampos = function (){
 		var validacao = true;
+		
+		var expRegEmail = new RegExp(/^([a-z]){1,}([a-z0-9._-]){1,}([@]){1}([a-z]){2,}([.]){1}([a-z]){2,}([.]?){1}([a-z]?){2,}$/i);
+		
+		email = document.getElementById('validaEmail').value;
+		
+		if (!expRegEmail.test(email)){
+			alertError('Email inválido!')
+			document.frmUsuario.emailUsuario.focus();
+			validacao = false;
+		}
+//		else if (document.querySelectorAll(status,permissao)=='9'){
+//			console.log('validacao retornando '+ validacao);
+//			validacao = false;
+//		}
 		
 		return validacao;	
 
