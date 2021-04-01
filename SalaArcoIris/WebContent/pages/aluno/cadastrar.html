@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="validaResponsavel">Possui responsável?</label>
-                    <select name="statusResponsavel" class="custom-select" id="validaResponsavel" onchange="verificarSelectResponsavel()" required>
+                    <select name="statusResp" class="custom-select" id="validaResponsavel" onchange="verificarSelectResponsavel()" required>
                         <option value="0" selected>Selecione uma opção</option>
                         <option value="ativo">Sim</option>
                         <option value="inativo" >Não</option> 
@@ -52,12 +52,12 @@
                 <hr>
                 <fieldset class="input-responsaveis" disabled>
                     <div class="form-group">
-                        <label for="nomeResponsavel">Responsável</label>
-                        <input name="nomeResponsavel" type="text" class="form-control" id="validaNomeResponsavel" placeholder="Nome completo" required>
+                        <label for="nomeResp">Responsável</label>
+                        <input name="nomeResp" type="text" class="form-control" id="validaNomeResp" placeholder="Nome completo" required>
                     </div>
                     <div class="form-group">
-                        <label for="nascResponsavel">Nascimento</label>
-                        <input name="nascResponsavel" type="date" class="form-control" id="validaNascResposnavel" required>
+                        <label for="dataNascResp">Nascimento</label>
+                        <input name="dataNascResp" type="date" class="form-control" id="validaNascResposnavel" required>
                     </div> 
                 </fieldset>
                 <a type="button" href="editar.html" class="btn btn-secondary mr-2">Cancelar</a>

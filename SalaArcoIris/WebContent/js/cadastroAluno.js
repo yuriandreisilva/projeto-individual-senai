@@ -44,7 +44,7 @@ $(document).ready (function(){
 		// INSERT - Aluno
 		SALAARCOIRIS.aluno.cadastrarAluno = function(){
 
-		var codigoResp = 0;
+//		var codigoResp = 0;
 
 		var aluno = new Object();
 		
@@ -53,18 +53,15 @@ $(document).ready (function(){
 		aluno.email = document.frmAluno.email.value;
 		aluno.nascAluno = document.frmAluno.nascAluno.value;
 		aluno.senha = document.frmAluno.senha.value;
-		aluno.statusResponsavel = document.frmAluno.statusResponsavel.value;
+		
+		aluno.statusResp = document.frmAluno.statusResp.value;
+		aluno.nomeResp = document.frmAluno.nomeResp.value;
+		aluno.dataNascResp = document.frmAluno.dataNascResp.value;
 		
 		// Converte Nome para primeira letra maiúscula
 		aluno.nomeAluno = aluno.nomeAluno.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
-		
-		if (document.frmAluno.validaResponsavel.value == "ativo"){
-			codigoResp = Math.floor(Math.random() * 1000000);
-			document.getElementById("codigoResp").value=codigoResp;
-		}
+		aluno.nomeResp = aluno.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
 
-		aluno.idResponsavel = codigoResp;	
-				
 		if (validarCampos()){	
 		$.ajax({
 			type: "POST",
@@ -72,7 +69,6 @@ $(document).ready (function(){
 			data:JSON.stringify(aluno),
 			success:function(retorno){
 				if(retorno === "true"){
-					SALAARCOIRIS.aluno.cadastrarResponsavel();
 					exibirMsgSuccessRedirecionar();
 				}else {
 					alertError('Provavelmente este e-mail ou CPF já foi cadastrado!')
@@ -178,7 +174,7 @@ $(document).ready (function(){
 		email = document.getElementById('validaEmail').value;
 		senha = document.getElementById('validaSenha').value;
 		nascAluno = document.getElementById('validaNascimento').value;
-		nomeResp = document.getElementById('validaNomeResponsavel').value;
+		nomeResp = document.getElementById('validaNomeResp').value;
 		nascResp = document.getElementById('validaNascResposnavel').value;
 		
 		var selectResp = document.getElementById('validaResponsavel').value; 
@@ -213,12 +209,12 @@ $(document).ready (function(){
 		else if (selectResp == "ativo" && !expRegNome.test(nomeResp))
 		{		
 			alertError('Nome do responsável inválido!')
-			document.frmAluno.nomeResponsavel.focus();
+			document.frmAluno.nomeResp.focus();
 			validacao = false;
 		}else if (!validarIdadeResponsavel() && selectResp == "ativo" || nascResp == "" && selectResp == "ativo" )
 		{
 			alertError('O responsável precisa ser maior de idade!')
-			document.frmAluno.nascResponsavel.focus();
+			document.frmAluno.dataNascResp.focus();
 			validacao = false;
 		}else if (selectResp == 0)
 		{
@@ -229,35 +225,6 @@ $(document).ready (function(){
 		return validacao;
 	}
 	
-
-	// INSERT - resp
-
-	SALAARCOIRIS.aluno.cadastrarResponsavel = function(){
-
-		if (document.frmAluno.validaResponsavel.value == "ativo"){
-			var responsavel = new Object();
-
-			responsavel.idResponsavel = document.getElementById("codigoResp").value;
-			responsavel.nomeResp = document.frmAluno.nomeResponsavel.value;
-			responsavel.nascResp = document.frmAluno.nascResponsavel.value;
-
-			responsavel.nomeResp = responsavel.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
-
-			$.ajax({
-				type: "POST",
-				url: SALAARCOIRIS.PATH + "responsavel/inserirR",
-				data:JSON.stringify(responsavel),
-				success:function(msg){
-					console.log(msg);					
-				},
-				error:function(info){
-					console.log("Erro ao cadastrar um novo aluno com responsável: "+ info.status + " - "+ info.statusText);	
-				}
-			});
-		}
-	}
-
-
 	// READ --
 
 	SALAARCOIRIS.aluno.buscarAluno = function(){
@@ -300,7 +267,7 @@ $(document).ready (function(){
 						"<th scope='row'>"+listaDeAlunos[i].nomeAluno+"</th>"+
 						"<td>"+listaDeAlunos[i].cpfAluno+"</td>"+					
 						"<td>"+"<a class='btn btn-warning' onclick=\"SALAARCOIRIS.aluno.exibirEditA('"+listaDeAlunos[i].idAluno+"')\">Editar</a>" +"</td>"+
-						"<td>"+"<a class='btn btn-danger' onclick=\"SALAARCOIRIS.aluno.deletarA('"+listaDeAlunos[i].idAluno+"'),SALAARCOIRIS.aluno.deletarR('"+listaDeAlunos[i].idResponsavel+"')\">Apagar</a>" +"</td>"+
+						"<td>"+"<a class='btn btn-danger' onclick=\"SALAARCOIRIS.aluno.deletarA('"+listaDeAlunos[i].idAluno+"')\">Apagar</a>" +"</td>"+
 					"</tr>";
 			
 				}
@@ -331,58 +298,27 @@ $(document).ready (function(){
 			}
 		});
 	}
-	
-	SALAARCOIRIS.aluno.deletarR = function(idResponsavel){
 		
-		$.ajax({
-			type:"DELETE",
-			url: SALAARCOIRIS.PATH +"responsavel/excluir/"+idResponsavel,
-			success: function(msg){
-				SALAARCOIRIS.aluno.buscarAluno();
-			},
-			error: function(info){
-				console.log("Erro ao excluir responsável: " + info.status + " - " + info.statusText);
-			}
-		});
-	}
-	
 	SALAARCOIRIS.aluno.exibirEditA = function(idAluno){
-		
 		document.getElementById('id01').style.display='block';
 		$.ajax({
 			type:"GET",
 			url: SALAARCOIRIS.PATH +"aluno/checkIdA",
 			data: "idAluno="+idAluno,
 			success: function(aluno){
+				
 				document.frmEditaAluno.idAluno.value = aluno.idAluno;
-				document.frmEditaAluno.idResponsavel.value = aluno.idResponsavel;
 				document.frmEditaAluno.nomeAluno.value = aluno.nomeAluno;
 				document.frmEditaAluno.cpfAluno.value = aluno.cpfAluno;
 				document.frmEditaAluno.email.value = aluno.email;
 				document.frmEditaAluno.nascAluno.value = aluno.nascAluno;
 				document.frmEditaAluno.senha.value = aluno.senha;
-				document.frmEditaAluno.statusResponsavel.value = aluno.statusResponsavel;
 				
-				$.ajax({
-					type:"GET",
-					url: SALAARCOIRIS.PATH +"responsavel/checkIdR",
-					data: "idResponsavel="+aluno.idResponsavel,
-					success: function(responsavel){
-						document.frmEditaAluno.nomeResponsavel.value = "";
-						document.frmEditaAluno.nascResponsavel.value = "";
-					},
-					error: function(info){
-						console.log("erro");
-					}
-
-				});	
+				document.frmEditaAluno.statusResp.value = aluno.statusResp;
+				document.frmEditaAluno.nomeResp.value = aluno.nomeResp;
+				document.frmEditaAluno.dataNascResp.value = aluno.dataNascResp;
 				
-				if (aluno.idResponsavel>0){
-					var id = aluno.idResponsavel;
-					SALAARCOIRIS.aluno.exibirEditResp(id);
-				}else{
-					document.frmEditaAluno.validaResponsavel.value = "inativo";
-				}
+				verificarSelectResponsavel();
 				
 			},
 			error: function(info){
@@ -392,41 +328,24 @@ $(document).ready (function(){
 		});	
 		
 	}
-	SALAARCOIRIS.aluno.exibirEditResp = function(id){
-		
-		$.ajax({
-			type:"GET",
-			url: SALAARCOIRIS.PATH +"responsavel/checkIdR",
-			data: "idResponsavel="+id,
-			success: function(responsavel){
-				verificarSelectResponsavel();
-				document.frmEditaAluno.nomeResponsavel.value = responsavel.nomeResp;
-				document.frmEditaAluno.nascResponsavel.value = responsavel.nascResp;
-			},
-			error: function(info){
-				console.log("Erro ao buscar cadastro para responsável: "+info.status+" - "+info.statusText);
-			}
-
-		});	
-	}
+	
 	SALAARCOIRIS.aluno.alterarA= function(){
 		
 		var aluno = new Object();
 		aluno.idAluno = document.frmEditaAluno.idAluno.value;
-		aluno.idResponsavel = document.frmEditaAluno.idResponsavel.value;
 		aluno.nomeAluno = document.frmEditaAluno.nomeAluno.value;
 		aluno.cpfAluno = document.frmEditaAluno.cpfAluno.value;
 		aluno.email = document.frmEditaAluno.email.value;
 		aluno.nascAluno = document.frmEditaAluno.nascAluno.value;
-		aluno.statusResponsavel = document.frmEditaAluno.statusResponsavel.value;
+
+		aluno.statusResp = document.frmEditaAluno.statusResp.value;
+		aluno.nomeResp = document.frmEditaAluno.nomeResp.value;
+		aluno.dataNascResp = document.frmEditaAluno.dataNascResp.value;
 		
-		
-		var nomeResp = document.frmEditaAluno.nomeResponsavel.value;
-		var nascResp = document.frmEditaAluno.nascResponsavel.value;
 		var selectResp = document.getElementById('validaResponsavel').value;
 		
 		aluno.nomeAluno = aluno.nomeAluno.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
-
+		aluno.nomeResp = aluno.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
 		
 		if (validarCampos()){
 			$.ajax({
@@ -435,13 +354,7 @@ $(document).ready (function(){
 				data:JSON.stringify(aluno),
 				success: function(msg){
 					SALAARCOIRIS.aluno.buscarAluno();
-					
-					if (aluno.idResponsavel>0){
-						var id = aluno.idResponsavel;
-						SALAARCOIRIS.aluno.alterarResp(id);
-					}
 					exibirMsgSuccessRedirecionar();
-					
 				},
 				error: function(info){
 					console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
@@ -449,32 +362,4 @@ $(document).ready (function(){
 			});
 		}
 	}
-	
-	SALAARCOIRIS.aluno.alterarResp= function(id){
-		
-		var responsavel = new Object();
-		
-		responsavel.idResponsavel = id;
-		responsavel.nomeResp = document.frmEditaAluno.nomeResponsavel.value;
-		responsavel.nascResp = document.frmEditaAluno.nascResponsavel.value;
-		
-		responsavel.nomeResp = responsavel.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
-		
-		$.ajax({
-			type:"PUT",
-			url: SALAARCOIRIS.PATH + "responsavel/alterarR",
-			data:JSON.stringify(responsavel),
-			success: function(msg){
-				SALAARCOIRIS.aluno.buscarAluno();
-				
-				console.log("Responsável alterado com sucesso!")
-				
-			},
-			error: function(info){
-				console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
-			}
-		});
-	}
-	
-	
 });

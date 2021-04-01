@@ -6,14 +6,14 @@ import java.io.Serializable;
 public class Aluno implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private int idAluno, idResponsavel;
+	private int idAluno;
 	private String cpfAluno;
 	private String nomeAluno;
 	private String nascAluno;
 	private String email;
-	private String statusResponsavel;
 	private int senha;
 	
+	private String statusResp;
 	private String nomeResp;
 	private String dataNascResp;
 	
@@ -35,12 +35,7 @@ public class Aluno implements Serializable {
 	public void setIdAluno(int idAluno) {
 		this.idAluno = idAluno;
 	}
-	public int getIdResp() {
-		return idResponsavel;
-	}
-	public void setIdResp(int idResponsavel) {
-		this.idResponsavel = idResponsavel;
-	}
+
 	public String getCpfAluno() {
 		return cpfAluno;
 	}
@@ -73,11 +68,11 @@ public class Aluno implements Serializable {
 	public void setSenha(int senha) {
 		this.senha = senha;
 	}
-	public String getStatusResponsavel() {
-		return statusResponsavel;
+	public String getStatusResp() {
+		return statusResp;
 	}
-	public void setStatusResponsavel(String statusResponsavel) {
-		this.statusResponsavel = statusResponsavel;
+	public void setStatusResp(String statusResp) {
+		this.statusResp = statusResp;
 	}
 	
 	
