@@ -58,17 +58,18 @@ $(document).ready (function(){
 		aluno.nomeResp = document.frmAluno.nomeResp.value;
 		aluno.dataNascResp = document.frmAluno.dataNascResp.value;
 		
+		
+		
+		
 		// Converte Nome para primeira letra maiúscula
 		aluno.nomeAluno = aluno.nomeAluno.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
 		aluno.nomeResp = aluno.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
 
-		// if (document.frmAluno.validaResponsavel.value == "ativo"){
-		// 	codigoResp = Math.floor(Math.random() * 1000000);
-		// 	document.getElementById("codigoResp").value=codigoResp;
-		// }
-
-		// aluno.idResponsavel = codigoResp;	
-				
+		if (document.frmAluno.statusResp.value == 'inativo'){
+			aluno.nomeResp = document.frmAluno.nomeResp.value = "null";
+			aluno.dataNascResp = document.frmAluno.dataNascResp.value = "0000-00-00";
+		}
+		
 		if (validarCampos()){	
 		$.ajax({
 			type: "POST",
@@ -76,7 +77,6 @@ $(document).ready (function(){
 			data:JSON.stringify(aluno),
 			success:function(retorno){
 				if(retorno === "true"){
-					// SALAARCOIRIS.aluno.cadastrarResponsavel();
 					exibirMsgSuccessRedirecionar();
 				}else {
 					alertError('Provavelmente este e-mail ou CPF já foi cadastrado!')
@@ -233,35 +233,6 @@ $(document).ready (function(){
 		return validacao;
 	}
 	
-
-	// INSERT - resp
-
-	// SALAARCOIRIS.aluno.cadastrarResponsavel = function(){
-
-	// 	if (document.frmAluno.validaResponsavel.value == "ativo"){
-	// 		var responsavel = new Object();
-
-	// 		responsavel.idResponsavel = document.getElementById("codigoResp").value;
-	// 		responsavel.nomeResp = document.frmAluno.nomeResp.value;
-	// 		responsavel.nascResp = document.frmAluno.dataNascResp.value;
-
-	// 		responsavel.nomeResp = responsavel.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
-
-	// 		$.ajax({
-	// 			type: "POST",
-	// 			url: SALAARCOIRIS.PATH + "responsavel/inserirR",
-	// 			data:JSON.stringify(responsavel),
-	// 			success:function(msg){
-	// 				console.log(msg);					
-	// 			},
-	// 			error:function(info){
-	// 				console.log("Erro ao cadastrar um novo aluno com responsável: "+ info.status + " - "+ info.statusText);	
-	// 			}
-	// 		});
-	// 	}
-	// }
-
-
 	// READ --
 
 	SALAARCOIRIS.aluno.buscarAluno = function(){
@@ -335,21 +306,7 @@ $(document).ready (function(){
 			}
 		});
 	}
-	
-	// SALAARCOIRIS.aluno.deletarR = function(idResponsavel){
 		
-	// 	$.ajax({
-	// 		type:"DELETE",
-	// 		url: SALAARCOIRIS.PATH +"responsavel/excluir/"+idResponsavel,
-	// 		success: function(msg){
-	// 			SALAARCOIRIS.aluno.buscarAluno();
-	// 		},
-	// 		error: function(info){
-	// 			console.log("Erro ao excluir responsável: " + info.status + " - " + info.statusText);
-	// 		}
-	// 	});
-	// }
-	
 	SALAARCOIRIS.aluno.exibirEditA = function(idAluno){
 		document.getElementById('id01').style.display='block';
 		$.ajax({
@@ -363,33 +320,13 @@ $(document).ready (function(){
 				document.frmEditaAluno.cpfAluno.value = aluno.cpfAluno;
 				document.frmEditaAluno.email.value = aluno.email;
 				document.frmEditaAluno.nascAluno.value = aluno.nascAluno;
-				document.frmEditaAluno.senha.value = aluno.senha;
+//				document.frmEditaAluno.senha.value = aluno.senha;
 				
 				document.frmEditaAluno.statusResp.value = aluno.statusResp;
 				document.frmEditaAluno.nomeResp.value = aluno.nomeResp;
 				document.frmEditaAluno.dataNascResp.value = aluno.dataNascResp;
 				
 				verificarSelectResponsavel();
-				// $.ajax({
-				// 	type:"GET",
-				// 	url: SALAARCOIRIS.PATH +"responsavel/checkIdR",
-				// 	data: "idResponsavel="+aluno.idResponsavel,
-				// 	success: function(responsavel){
-				// 		document.frmEditaAluno.nomeResp.value = "";
-				// 		document.frmEditaAluno.dataNascResp.value = "";
-				// 	},
-				// 	error: function(info){
-				// 		console.log("erro");
-				// 	}
-
-				// });	
-				
-				// if (aluno.idResponsavel>0){
-				// 	var id = aluno.idResponsavel;
-				// 	SALAARCOIRIS.aluno.exibirEditResp(id);
-				// }else{
-				// 	document.frmEditaAluno.validaResponsavel.value = "inativo";
-				// }
 				
 			},
 			error: function(info){
@@ -399,23 +336,7 @@ $(document).ready (function(){
 		});	
 		
 	}
-	// SALAARCOIRIS.aluno.exibirEditResp = function(id){
-		
-	// 	$.ajax({
-	// 		type:"GET",
-	// 		url: SALAARCOIRIS.PATH +"responsavel/checkIdR",
-	// 		data: "idResponsavel="+id,
-	// 		success: function(responsavel){
-	// 			verificarSelectResponsavel();
-	// 			document.frmEditaAluno.nomeResp.value = responsavel.nomeResp;
-	// 			document.frmEditaAluno.dataNascResp.value = responsavel.nascResp;
-	// 		},
-	// 		error: function(info){
-	// 			console.log("Erro ao buscar cadastro para responsável: "+info.status+" - "+info.statusText);
-	// 		}
-
-	// 	});	
-	// }
+	
 	SALAARCOIRIS.aluno.alterarA= function(){
 		
 		var aluno = new Object();
@@ -441,13 +362,7 @@ $(document).ready (function(){
 				data:JSON.stringify(aluno),
 				success: function(msg){
 					SALAARCOIRIS.aluno.buscarAluno();
-					
-					// if (aluno.idResponsavel>0){
-					// 	var id = aluno.idResponsavel;
-					// 	SALAARCOIRIS.aluno.alterarResp(id);
-					// }
 					exibirMsgSuccessRedirecionar();
-					
 				},
 				error: function(info){
 					console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
@@ -455,32 +370,4 @@ $(document).ready (function(){
 			});
 		}
 	}
-	
-	// SALAARCOIRIS.aluno.alterarResp= function(id){
-		
-	// 	var responsavel = new Object();
-		
-	// 	responsavel.idResponsavel = id;
-	// 	responsavel.nomeResp = document.frmEditaAluno.nomeResp.value;
-	// 	responsavel.nascResp = document.frmEditaAluno.dataNascResp.value;
-		
-	// 	responsavel.nomeResp = responsavel.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
-		
-	// 	$.ajax({
-	// 		type:"PUT",
-	// 		url: SALAARCOIRIS.PATH + "responsavel/alterarR",
-	// 		data:JSON.stringify(responsavel),
-	// 		success: function(msg){
-	// 			SALAARCOIRIS.aluno.buscarAluno();
-				
-	// 			console.log("Responsável alterado com sucesso!")
-				
-	// 		},
-	// 		error: function(info){
-	// 			console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
-	// 		}
-	// 	});
-	// }
-	
-	
 });

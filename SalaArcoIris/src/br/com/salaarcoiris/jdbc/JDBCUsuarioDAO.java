@@ -139,7 +139,7 @@ public class JDBCUsuarioDAO implements UsuarioDAO {
 	}
 
 	public boolean alterarU(Usuario usuario) {
-		String comando = "UPDATE adm_usuario " + "SET emailUsuario=?, senhaUsuario=?, status=?, permissao=? "
+		String comando = "UPDATE adm_usuario " + "SET emailUsuario=?, status=?, permissao=? "
 				+ " WHERE idUsuario=?";
 		PreparedStatement p;
 		try {
@@ -147,11 +147,10 @@ public class JDBCUsuarioDAO implements UsuarioDAO {
 			p = this.conexao.prepareStatement(comando);
 
 			p.setString(1, usuario.getEmailUsuario());
-			p.setString(2, usuario.getSenhaUsuario());
-			p.setInt(3, usuario.getStatus());
-			p.setInt(4, usuario.getPermissao());
+			p.setInt(2, usuario.getStatus());
+			p.setInt(3, usuario.getPermissao());
 		
-			p.setInt(5, usuario.getIdUsuario());
+			p.setInt(4, usuario.getIdUsuario());
 
 			p.executeUpdate();
 

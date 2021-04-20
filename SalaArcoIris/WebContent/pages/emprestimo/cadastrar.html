@@ -14,25 +14,125 @@
 <body>    
 
 <main>
-  <div class="card text-center">
-    <div class="card-header">
-      Em construção!!!
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">Por gentileza, aguarde.</h5>
-      <p class="card-text">Página de cadastro de empréstimos.</p>
-      <a href="../home/home.html" class="btn btn-primary">Voltar para home</a>
-    </div>
-    <div class="card-footer text-muted">
-      Obrigado!
-    </div>
+  <div class="container text-center">
+      <div class="badge badge-primary text-wrap mt-4 " style="width: 15rem; height: 3rem; font-size: 2rem;">
+        Empréstimo
+      </div>
+  </div>
+  <div class="container">
+    <form name="frmEmprestimo" class="needs-validation mb-4" method="POST">
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="formGroupExampleInput">Aluno</label>
+          <div class="input-group">
+            <input name="" type="text" class="form-control mr-3" placeholder="Aluno" disabled>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAluno" >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+                Todos
+              </button>
+            </div>
+          </div>
+          <!-- Modal Aluno -->
+          <div class="modal fade" id="modalAluno" tabindex="-1" aria-labelledby="modalAlunoLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalAlunoLabel">Alunos</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                	<div class="container-fluid">
+						<div class="row">
+							<div class="input-group mb-3">
+								<input type="text" class="form-control mx-1" placeholder="Pesquisar" aria-label="Pesquisar username" aria-describedby="button-addon2" id="buscaAluno" onkeyup="SALAARCOIRIS.emprestimo.buscarAluno()">
+							</div>
+						</div>
+					</div>
+                  <div class="container-fluid" id="listaAlunos"></div>
+                  <div class="text-center">
+				    <button type="button" class="btn btn-link" id="anterior" disabled>&lsaquo; Anterior</button>
+				    <span id="numeracao"></span>
+				    <button type="button" class="btn btn-link"id="proximo" disabled>Próximo &rsaquo;</button>
+				</div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="formGroupExampleInput2">Livro</label>
+          <div class="input-group">
+            <input name="" type="text" class="form-control mr-3" id="nomeLivro" placeholder="Livro" disabled>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+              </button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalLivro">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+              Todos
+              </button>
+            </div>
+          </div>
+          <!-- Modal Livro -->
+          <div class="modal fade" id="modalLivro" tabindex="-1" aria-labelledby="modalLivroLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalLivroLabel">Livros</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                ...
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="badge badge-warning text-wrap" >
+            Devolver daqui 7 dias
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <a type="button" href="editar.html" class="btn btn-secondary mr-2">Cancelar</a>
+          <a type="button" id="button" class="btn btn-primary" onclick="SALAARCOIRIS.emprestimo.cadastrarEmprestimo();">Salvar</a>
+        </div>
+      </div>
+    </form>
   </div>
 </main>
+
+
 
 
 <footer>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="../../js/fixo.js"></script>
+  
   <script src="../../js/cadastroEmprestimo.js"></script>
   <!-- importa footer que importa scripts + bootstrap -->
 </footer>

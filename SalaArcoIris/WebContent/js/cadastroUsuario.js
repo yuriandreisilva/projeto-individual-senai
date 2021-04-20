@@ -187,7 +187,7 @@ $(document).ready (function(){
 			success: function(usuario){
 				document.frmEditaUsuario.idUsuario.value = usuario.idUsuario;	
 				document.frmEditaUsuario.emailUsuario.value = usuario.emailUsuario;
-				document.frmEditaUsuario.senhaUsuario.value = usuario.senhaUsuario;
+//				document.frmEditaUsuario.senhaUsuario.value = usuario.senhaUsuario;
 				
 				if (usuario.status == 0){
 					document.frmEditaUsuario.status.value = "0";
@@ -219,12 +219,12 @@ $(document).ready (function(){
 
         usuario.idUsuario  = document.frmEditaUsuario.idUsuario.value	
         usuario.emailUsuario  = document.frmEditaUsuario.emailUsuario.value;
-        usuario.senhaUsuario  = document.frmEditaUsuario.senhaUsuario.value;
+//        usuario.senhaUsuario  = document.frmEditaUsuario.senhaUsuario.value;
         usuario.status  = document.frmEditaUsuario.status.value;
         usuario.permissao  = document.frmEditaUsuario.permissao.value;
 		
         
-		//if (validarCampos()){
+		if (validarCampos()){
 			$.ajax({
 				type:"PUT",
 				url: SALAARCOIRIS.PATH + "usuario/alterarU",
@@ -233,14 +233,14 @@ $(document).ready (function(){
 					if(retorno === "true"){
 						exibirMsgSuccessRedirecionar()
 					}else {
-						alertError('Provavelmente este código já foi usado em outro cadastrado!')
+						alertError('Ops!!! Houve algum erro ao salvar.')
 					}
 				},
 				error: function(info){
 					console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
 				}
 			});
-	//	}
+		}
 	}
 	
 });

@@ -15,6 +15,11 @@
 <body>    
 
 <main>
+<div class="container text-center">
+      <div class="badge badge-primary text-wrap mt-4 " style="width: 15rem; height: 3rem; font-size: 2rem;">
+        Novo Aluno
+      </div>
+  </div>
     <div class="container">
         <form class="needs-validation mt-4 mb-4" novalidate name="frmAluno" method="POST">
             <div class="form-row">
@@ -48,7 +53,6 @@
                         <option value="inativo" >Não</option> 
                     </select>
                 </div>
-                <input type="hidden" id="codigoResp">
                 <hr>
                 <fieldset class="input-responsaveis" disabled>
                     <div class="form-group">
@@ -60,8 +64,9 @@
                         <input name="dataNascResp" type="date" class="form-control" id="validaNascResposnavel" required>
                     </div> 
                 </fieldset>
-                <a type="button" href="editar.html" class="btn btn-secondary mr-2">Cancelar</a>
-                <a type="submit" id="button" class="btn btn-primary" onclick="SALAARCOIRIS.aluno.cadastrarAluno();">Salvar</a>
+                
+                <button type="submit" href="editar.html" class="btn btn-secondary mr-2">Cancelar</button>
+                <button type="submit" id="button" class="btn btn-primary" onclick="SALAARCOIRIS.aluno.cadastrarEmprestimo();">Salvar</button>
             </div>
         </form>
     </div>
@@ -73,7 +78,7 @@
 
     <script src="../../js/fixo.js"></script>
     <script src="../../js/formatarCampoCpf.js"></script>
-    <script src="../../js/cadastroAluno.js"></script>
+    <script src="../../js/cadastroEmprestimo.js"></script>
     
     
     

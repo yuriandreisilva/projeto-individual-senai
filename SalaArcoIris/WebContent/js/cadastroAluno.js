@@ -58,10 +58,18 @@ $(document).ready (function(){
 		aluno.nomeResp = document.frmAluno.nomeResp.value;
 		aluno.dataNascResp = document.frmAluno.dataNascResp.value;
 		
+		
+		
+		
 		// Converte Nome para primeira letra maiúscula
 		aluno.nomeAluno = aluno.nomeAluno.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
 		aluno.nomeResp = aluno.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
 
+		if (document.frmAluno.statusResp.value == 'inativo'){
+			aluno.nomeResp = document.frmAluno.nomeResp.value = "null";
+			aluno.dataNascResp = document.frmAluno.dataNascResp.value = "0000-00-00";
+		}
+		
 		if (validarCampos()){	
 		$.ajax({
 			type: "POST",
@@ -312,7 +320,7 @@ $(document).ready (function(){
 				document.frmEditaAluno.cpfAluno.value = aluno.cpfAluno;
 				document.frmEditaAluno.email.value = aluno.email;
 				document.frmEditaAluno.nascAluno.value = aluno.nascAluno;
-				document.frmEditaAluno.senha.value = aluno.senha;
+//				document.frmEditaAluno.senha.value = aluno.senha;
 				
 				document.frmEditaAluno.statusResp.value = aluno.statusResp;
 				document.frmEditaAluno.nomeResp.value = aluno.nomeResp;
