@@ -285,12 +285,57 @@ $(document).ready (function(){
 			}
 			tabela +="</tbody" +
 					"</table>";
+			var tamanhoPagina = 5;
+			var pagina = 0;
+				
+				function paginar() {
+				    $('table > tbody > tr').remove();
+				    var tbody = $('table > tbody');
+					for (var i = pagina * tamanhoPagina; i < listaDeAlunos.length && i < (pagina + 1) *  tamanhoPagina; i++){
+						tbody.append(
+					            $('<tr>')
+					                .append($('<td>').append(listaDeAlunos[i].nomeAluno))
+					                .append($('<td>').append(listaDeAlunos[i].cpfAluno))
+					                .append($('<td>'+'<a class="btn btn-warning" onclick=\'SALAARCOIRIS.aluno.exibirEditA("'+listaDeAlunos[i].idAluno+'")\'>Editar</a>' +'</td>').append())
+					                .append($('<td>'+'<a class="btn btn-danger" onclick=\'SALAARCOIRIS.aluno.deletarA("'+listaDeAlunos[i].idAluno+'")\'>Apagar</a>' +'</td>').append())
+					        )
+				    }
+				    $('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeAlunos.length / tamanhoPagina));
+				}
+				
+				$(function() {
+				    $('#proximo').click(function() {
+				        if (pagina < listaDeAlunos.length / tamanhoPagina - 1) {
+				            pagina++;
+				            paginar();
+				            ajustarBotoes();
+				        }
+				    });
+				    $('#anterior').click(function() {
+				        if (pagina > 0) {
+				            pagina--;
+				            paginar();
+				            ajustarBotoes();
+				        }
+				    });
+				    paginar();
+				    ajustarBotoes();
+				});
+				
+				function ajustarBotoes() {
+				    $('#proximo').prop('disabled', listaDeAlunos.length <= tamanhoPagina || pagina > listaDeAlunos.length / tamanhoPagina - 1);
+				    $('#anterior').prop('disabled', listaDeAlunos.length <= tamanhoPagina || pagina == 0);
+				}
+			tabela +="</tbody" +
+					"</table>";
+			
+			
 			return tabela;
 
 			$("#listaAlunos").html(tabela);
 		}	
+				
 	}
-
 	SALAARCOIRIS.aluno.buscarAluno();
 
 	SALAARCOIRIS.aluno.deletarA = function(idAluno){

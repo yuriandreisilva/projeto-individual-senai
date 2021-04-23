@@ -68,7 +68,7 @@ public class LivroRest extends UtilRest {
 	@Path("/buscarL")
 	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarL(@QueryParam("valorBusca") String nome) {
+	public Response buscarL(@QueryParam("valorBuscaLivro") String nome) {
 		try {
 			List<JsonObject> listaLivros = new ArrayList<JsonObject>();
 			Conexao conec = new Conexao();
@@ -76,7 +76,7 @@ public class LivroRest extends UtilRest {
 			JDBCLivroDAO jdbcLivro = new JDBCLivroDAO(conexao);
 			listaLivros = jdbcLivro.buscarL(nome);
 			conec.fecharConexao();
-
+			
 			String json = new Gson().toJson(listaLivros);
 			return this.buildResponse(json);
 		} catch (Exception e) {

@@ -138,7 +138,7 @@ $(document).ready (function(){
 		$.ajax({
 			type: "GET",
 			url: SALAARCOIRIS.PATH + "livro/buscarL",
-			data: "valorBusca="+valorBusca,
+			data: "valorBuscaLivro="+valorBusca,
 			success: function(dados){
 				dados = JSON.parse(dados);
 				$("#listaLivros").html(SALAARCOIRIS.livro.exibir(dados));
@@ -182,12 +182,57 @@ $(document).ready (function(){
 			}
 			tabela +="</tbody" +
 					"</table>";
+			var tamanhoPagina = 5;
+			var pagina = 0;
+				
+				function paginar() {
+				    $('table > tbody > tr').remove();
+				    var tbody = $('table > tbody');
+					for (var i = pagina * tamanhoPagina; i < listaDeLivros.length && i < (pagina + 1) *  tamanhoPagina; i++){
+						tbody.append(
+					            $('<tr>')
+					                .append($('<td>').append(listaDeLivros[i].nomeLivro))
+					                .append($('<td>').append(listaDeLivros[i].codigoLivro))
+					                .append($('<td>'+'<a class="btn btn-warning" onclick=\'SALAARCOIRIS.livro.exibirEditL("'+listaDeLivros[i].idLivro+'")\'>Editar</a>' +'</td>').append())
+					                .append($('<td>'+'<a class="btn btn-danger" onclick=\'SALAARCOIRIS.livro.deletarL("'+listaDeLivros[i].idLivro+'")\'>Apagar</a>' +'</td>').append())
+					        )
+				    }
+				    $('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeLivros.length / tamanhoPagina));
+				}
+				
+				$(function() {
+				    $('#proximo').click(function() {
+				        if (pagina < listaDeLivros.length / tamanhoPagina - 1) {
+				            pagina++;
+				            paginar();
+				            ajustarBotoes();
+				        }
+				    });
+				    $('#anterior').click(function() {
+				        if (pagina > 0) {
+				            pagina--;
+				            paginar();
+				            ajustarBotoes();
+				        }
+				    });
+				    paginar();
+				    ajustarBotoes();
+				});
+				
+				function ajustarBotoes() {
+				    $('#proximo').prop('disabled', listaDeLivros.length <= tamanhoPagina || pagina > listaDeLivros.length / tamanhoPagina - 1);
+				    $('#anterior').prop('disabled', listaDeLivros.length <= tamanhoPagina || pagina == 0);
+				}
+			tabela +="</tbody" +
+					"</table>";
+			
+			
 			return tabela;
 
-			$("#listaLivros").html(tabela);
+			$("#listaAlunos").html(tabela);
 		}	
+				
 	}
-
 	SALAARCOIRIS.livro.buscarLivro();
 
 	SALAARCOIRIS.livro.deletarL = function(idLivro){

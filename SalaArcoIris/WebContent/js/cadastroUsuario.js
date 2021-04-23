@@ -153,14 +153,58 @@ $(document).ready (function(){
 			}else if (listaDeUsuarios == ""){
 				tabela += "<tr scope='row'><td colspan='6'>Nenhum registro encontrado</td></tr>";
 			}
+			var tamanhoPagina = 5;
+			var pagina = 0;
+				
+				function paginar() {
+				    $('table > tbody > tr').remove();
+				    var tbody = $('table > tbody');
+					for (var i = pagina * tamanhoPagina; i < listaDeUsuarios.length && i < (pagina + 1) *  tamanhoPagina; i++){
+						tbody.append(
+					            $('<tr>')
+					                .append($('<td>').append(listaDeUsuarios[i].emailUsuario))
+					                .append($('<td>').append(status))
+					                .append($('<td>').append(permissao))
+					                .append($('<td>'+'<a class="btn btn-warning" onclick=\'SALAARCOIRIS.livro.exibirEditU("'+listaDeUsuarios[i].idUsuario+'")\'>Editar</a>' +'</td>').append())
+					                .append($('<td>'+'<a class="btn btn-danger" onclick=\'SALAARCOIRIS.livro.deletarU("'+listaDeUsuarios[i].idUsuario+'")\'>Apagar</a>' +'</td>').append())
+					        )
+				    }
+				    $('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeUsuarios.length / tamanhoPagina));
+				}
+				
+				$(function() {
+				    $('#proximo').click(function() {
+				        if (pagina < listaDeUsuarios.length / tamanhoPagina - 1) {
+				            pagina++;
+				            paginar();
+				            ajustarBotoes();
+				        }
+				    });
+				    $('#anterior').click(function() {
+				        if (pagina > 0) {
+				            pagina--;
+				            paginar();
+				            ajustarBotoes();
+				        }
+				    });
+				    paginar();
+				    ajustarBotoes();
+				});
+				
+				function ajustarBotoes() {
+				    $('#proximo').prop('disabled', listaDeUsuarios.length <= tamanhoPagina || pagina > listaDeUsuarios.length / tamanhoPagina - 1);
+				    $('#anterior').prop('disabled', listaDeUsuarios.length <= tamanhoPagina || pagina == 0);
+				}
 			tabela +="</tbody" +
 					"</table>";
+			
+			
 			return tabela;
 
-			$("#listaUsuarios").html(tabela);
+			$("#listaAlunos").html(tabela);
 		}	
+				
 	}
-
 	SALAARCOIRIS.usuario.buscarUsuario();
 
 	SALAARCOIRIS.usuario.deletarU = function(idUsuario){
