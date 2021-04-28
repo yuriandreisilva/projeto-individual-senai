@@ -9,7 +9,6 @@ $(document).ready (function(){
 
 		// INSERT - emprestimo
 		SALAARCOIRIS.emprestimo.cadastrarEmprestimo = function(){
-            console.log('entrando');
 //            location.href="cadastrar.html";
             // var emprestimo = new Object();
         }
@@ -17,8 +16,8 @@ $(document).ready (function(){
 	// READ --
 
 	SALAARCOIRIS.emprestimo.buscarAluno = function(){
+		
 		var valorBusca = $("#buscaAluno").val();
-		console.log("busca aluno")
 		$.ajax({
 			type: "GET",
 			url: SALAARCOIRIS.PATH + "aluno/buscarA",
@@ -76,12 +75,13 @@ $(document).ready (function(){
 					for (var i = pagina * tamanhoPagina; i < listaDeAlunos.length && i < (pagina + 1) *  tamanhoPagina; i++){
 						tbody.append(
 					            $('<tr>')
-					                .append($('<td>').append(listaDeAlunos[i].nomeAluno))
-					                .append($('<td>').append(listaDeAlunos[i].cpfAluno))
-					                .append($('<td><div class="radio text-center"><label><input type="radio" id="regular" name="optradio" value="'+listaDeAlunos[i].idAluno+'"></label>').append())
+					                .append($('<td id="nome'+listaDeAlunos[i].idAluno+'">').append(listaDeAlunos[i].nomeAluno))
+					                .append($('<td id="cpf'+listaDeAlunos[i].idAluno+'">').append(listaDeAlunos[i].cpfAluno))
+					                .append($('<td><div class="radio text-center"><label><input type="radio" id="regular" name="escolheAluno" value="'+listaDeAlunos[i].idAluno+'" required></label>').append())
 					        )
 				    }
 				    $('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeAlunos.length / tamanhoPagina));
+				    
 				}
 				
 				$(function() {
@@ -115,15 +115,28 @@ $(document).ready (function(){
 
 			$("#listaAlunos").html(tabela);
 		}	
-				
+//		$("#idAluno").html(SALAARCOIRIS.emprestimo.exibirAluno(dados));	
+		
 	}
 	SALAARCOIRIS.emprestimo.buscarAluno();
+	
+	SALAARCOIRIS.emprestimo.preencherAluno = function(){
+		
+		if (document.querySelector('input[name="escolheAluno"]:checked')){
+			idAluno = document.querySelector('input[name="escolheAluno"]:checked').value;
+			nomeAluno = $("#nome"+idAluno).text();
+			cpfAluno = $("#cpf"+idAluno).text();
+				$('#campoAluno').val(nomeAluno);
+				$('#cpfAluno').val(cpfAluno);
+		}else{
+			alert('Selecione um aluno!!!')
+		}
+	}
 	
 	/* *************************************************************** */
 	
 	SALAARCOIRIS.emprestimo.buscarLivro = function(){
 		var valorBuscaLivro = $("#buscaLivro").val();
-		console.log("busca aluno")
 		$.ajax({
 			type: "GET",
 			url: SALAARCOIRIS.PATH + "livro/buscarL",
@@ -222,8 +235,49 @@ $(document).ready (function(){
 			return tabelaLivro;
 
 			$("#listaLivros").html(tabelaLivro);
-		}		
+		}	
+
+		
+
 	}
 	SALAARCOIRIS.emprestimo.buscarLivro();
+	
+	
+
     });
+	var click = 1;
+	function duplicarCampos(){
+		var clone = document.getElementById('adicionarLivro').cloneNode(true);
+		var novoLivro = document.getElementById('novoLivro');
+		novoLivro.appendChild (clone);
+		
+		var camposClonados = clone.getElementsByTagName('input');
+		click = click + 1;
+
+		for(i=0; i<camposClonados.length;i++){
+			camposClonados[i].value = '';
+			
+		}
+		if(click >1){ 
+			document.querySelectorAll('#rmBook').forEach(button => button.disabled = false);
+		}
+	}
+	
+	function removerCampos(id){
+		var node1 = document.getElementById('novoLivro');
+		node1.removeChild(node1.childNodes[1]);
+		click = click - 1;
+		if(click <=1){ 
+			document.querySelectorAll('#rmBook').forEach(button => button.disabled = true);
+		}else{
+			document.querySelectorAll('#rmBook').forEach(button => button.disabled = false);
+		}  
+	}
+
+	window.onload = ocultarBotaoRemoverLivro;
+
+	function ocultarBotaoRemoverLivro(){
+		if (click <=1){
+		}
+	}
 
