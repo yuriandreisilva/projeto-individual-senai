@@ -1,3 +1,27 @@
+function exibirMsgSuccessRedirecionar(msg){
+	// Um tipo de alert estilzado, importado para ficar mais interativo
+	Swal.fire({
+		  icon: 'success',
+		  title: 'Processo realizado com sucesso!',
+		  showConfirmButton: false,
+		  timer: 1500
+		})
+	// Função para atrasar o window.location (redirecionamento para listagem de cadastros)		
+	setTimeout(func, 1500);
+	function func() {
+		location.href="editar.html";
+	}
+}
+
+alertError = function(text){
+	Swal.fire({
+		icon: 'error',
+		title: 'Oops...',
+		text: text,
+	  })
+}
+
+
 SALAARCOIRIS = new Object();
 
 SALAARCOIRIS.emprestimo = new Object();
@@ -36,9 +60,9 @@ $(document).ready (function(){
 		SALAARCOIRIS.emprestimo.exibirAluno = function(listaDeAlunos){
 			var tabela = 
 				"<br>"+
-				"<table class='table'>"+
+				"<table class='table table-bordered'>"+
 					"<thead>"+
-						"<tr>"+	
+						"<tr class='text-center'>"+	
 							"<th scope='col'> Nome</th>"+
 							"<th scope='col'> CPF</th>"+
 							"<th scope='col'> Escolher</th>"+
@@ -129,7 +153,7 @@ $(document).ready (function(){
 				$('#campoAluno').val(nomeAluno);
 				$('#cpfAluno').val(cpfAluno);
 		}else{
-			alert('Selecione um aluno!!!')
+			alertError('Selecione um aluno!!!')
 		}
 	}
 	
@@ -157,12 +181,13 @@ $(document).ready (function(){
 			
 			var tabelaLivro = 
 				"<br>"+
-				"<table class='table'>"+
+				"<table class='table table-bordered'>"+
 					"<thead>"+
 						"<tr>"+	
-							"<th scope='col'> Livro</th>"+
-							"<th scope='col'> Código</th>"+
-							"<th scope='col'> Escolher</th>"+
+							"<th scope='col-xs-5 col-sm-5 col-md-5 col-lg-5'> Livro</th>"+
+							"<th scope='col-xs-4 col-sm-2 col-md-4 col-lg-4'> Código</th>"+
+							"<th scope='col-xs-2 col-sm-2 col-md-2 col-lg-2'> Disponibilidade</th>"+
+							"<th scope='col-xs-2 col-sm-2 col-md-2 col-lg-2'> Escolher</th>"+
 						"</tr>"+
 					"</thead>"+
 					"<tbody>";
@@ -173,6 +198,7 @@ $(document).ready (function(){
 			    	tabelaLivro+="<tr>"+
 					"<th scope='row'>"+listaDeLivros[i].nomeLivro+"</th>"+
 					"<td>"+listaDeLivros[i].codigoLivro+"</td>"+
+					"<td>"+listaDeLivros[i].qtdEstoque+"</td>"+
 					"<td>" +
 						"<div class='radio text-center'>"+
 							"<label><input type='radio' id='regular' name='optradio' value='"+listaDeLivros[i].idLivro+"'></label>"+
@@ -196,9 +222,10 @@ $(document).ready (function(){
 					for (var i = pagina * tamanhoPagina; i < listaDeLivros.length && i < (pagina + 1) *  tamanhoPagina; i++){
 						tbody.append(
 					            $('<tr>')
-					                .append($('<td>').append(listaDeLivros[i].nomeLivro))
-					                .append($('<td>').append(listaDeLivros[i].codigoLivro))
-					                .append($('<td><div class="radio text-center"><label><input type="radio" id="regular" name="optradio" value="'+listaDeLivros[i].idLivro+'"></label>').append())
+					                .append($('<td class="col-xs-5 col-sm-5 col-md-5 col-lg-5" id="nome'+listaDeLivros[i].idLivro+'">').append(listaDeLivros[i].nomeLivro))
+					                .append($('<td class="col-xs-4 col-sm-2 col-md-4 col-lg-4" id="codigo'+listaDeLivros[i].idLivro+'">').append(listaDeLivros[i].codigoLivro))
+					                .append($('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">').append(listaDeLivros[i].qtdEstoque))
+					                .append($('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><div class="radio text-center"><label><input type="radio" id="regular" name="escolheLivro" value="'+listaDeLivros[i].idLivro+'"></label>').append())
 					        )
 				    }
 				    $('#numeracaoLivro').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeLivros.length / tamanhoPagina));
@@ -242,7 +269,20 @@ $(document).ready (function(){
 	}
 	SALAARCOIRIS.emprestimo.buscarLivro();
 	
+	SALAARCOIRIS.emprestimo.preencherLivro = function(){
+		
+		if (document.querySelector('input[name="escolheLivro"]:checked')){
+			idLivro = document.querySelector('input[name="escolheLivro"]:checked').value;
+			nomeLivro = $("#nome"+idLivro).text();
+			codigoLivro = $("#codigo"+idLivro).text();
+				$('#nomeLivro').val(nomeLivro);
+				$('#codigoLivro').val(codigoLivro);
+		}else{
+			alertError('Selecione um livro!!!')
+		}
+	}
 	
+	/* *************************************************************** */
 
     });
 	var click = 1;
@@ -274,10 +314,10 @@ $(document).ready (function(){
 		}  
 	}
 
-	window.onload = ocultarBotaoRemoverLivro;
-
-	function ocultarBotaoRemoverLivro(){
-		if (click <=1){
-		}
-	}
+//	window.onload = ocultarBotaoRemoverLivro;
+//
+//	function ocultarBotaoRemoverLivro(){
+//		if (click <=1){
+//		}
+//	}
 
