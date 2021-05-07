@@ -15,8 +15,8 @@
 
 <main>
   <div class="container text-center">
-      <div class="badge badge-primary text-wrap mt-4 " style="width: 15rem; height: 3rem; font-size: 2rem;">
-        Empréstimo
+      <div class="badge badge-primary text-wrap mt-4 " style="width: 15rem; height: 5rem; font-size: 2rem;">
+        Novo Empréstimo
       </div>
   </div>
   <div class="container">
@@ -63,7 +63,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" onclick="SALAARCOIRIS.emprestimo.preencherAluno()">Selecionar</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" aria-label="Close" onclick="SALAARCOIRIS.emprestimo.preencherAluno()">Selecionar</button>
                 </div>
               </div>
             </div>
@@ -71,45 +71,9 @@
         </div>
       </div>
       <!-- LIVROOOOOO  -->
-      <div class="form-row">
-        <div class="form-group col-md-12">
-          <label for="formGroupExampleInput2">Livro</label>
-          <div id="listaLivrosEscolhidos">
-          	
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-12">
-<!--           <label for="formGroupExampleInput2">Livro</label> -->
-          <div class="input-group mb-2" id="adicionarLivro">
-            <input name="nomeLivro" type="text" class="form-control col-7 mr-2" id="nomeLivro" placeholder="Livro" disabled>
-            <input name="codigoLivro" type="text" class="form-control col-3 mr-2" id="codigoLivro" placeholder="Código Livro" disabled>
-            <input name="qtdLivro" type="number" class="form-control col-1 mr-2" placeholder="QTD" min="1" max="3">
-            <div class="input-group-btn">
-              <button type="button" class="btn btn-danger" id="rmBook" onclick="removerCampos(this)" disabled>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 20">
-                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-              </button>
-              <button type="button" class="btn btn-primary" id="button-duplic" onclick="duplicarCampos()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 20">
-                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                </svg>
-              </button>
-	          <!-- Modal Livro -->
-	          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalLivro" onclick="SALAARCOIRIS.emprestimo.buscarLivro(this)">
-	            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 20">
-	              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-	            </svg>
-	          Livros
-	          </button>
-            </div>
-          </div>
-          <div class="input-group" id="novoLivro">
-          </div>
+          
+          
+     
           <div class="modal fade" id="modalLivro" tabindex="-1" aria-labelledby="modalLivroLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content">
@@ -136,13 +100,30 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" onclick="SALAARCOIRIS.emprestimo.preencherLivros(this)">Selecionar</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" aria-label="Close" onclick="SALAARCOIRIS.emprestimo.preencherLivros()">Selecionar</button>
                 </div>
               </div>
             </div>
           </div>
+          <hr>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div id="adicionarLivros">
+          <!-- conteúdo dinâmico -->
+          </div>
         </div>
       </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+        <!-- Modal Livro -->
+          <button type="button" class="btn btn-primary col-12" data-toggle="modal" data-target="#modalLivro" onclick="SALAARCOIRIS.emprestimo.buscarLivro(this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 20">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+          Livros
+          </button>
+		</div>
+	  </div>
       <div class="form-row">
         <div class="form-group col-md-12">
           <div class="badge badge-warning text-wrap" >

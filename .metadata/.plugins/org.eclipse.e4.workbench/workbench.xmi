@@ -392,13 +392,13 @@
       <children xsi:type="basic:PartStack" xmi:id="_WLEaoaerEeuq8YeiywP0Ug" elementId="PartStack@5043e5a7" selectedElement="_2GYAEKR-EeuYk7C3N2_WFA">
         <tags>active</tags>
         <children xsi:type="basic:Part" xmi:id="_CvbGEKSREeupSafrEzyA1g" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="cadastrar.html" iconURI="platform:/plugin/org.eclipse.wst.html.ui/icons/full/obj16/sourceEditor.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.wst.html.core.htmlsource.source&quot; name=&quot;cadastrar.html&quot; partName=&quot;cadastrar.html&quot; title=&quot;cadastrar.html&quot; tooltip=&quot;SalaArcoIris/WebContent/pages/emprestimo/cadastrar.html&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/SalaArcoIris/WebContent/pages/emprestimo/cadastrar.html&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;3619&quot; selectionTopPixel=&quot;1311&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.wst.html.core.htmlsource.source&quot; name=&quot;cadastrar.html&quot; partName=&quot;cadastrar.html&quot; title=&quot;cadastrar.html&quot; tooltip=&quot;SalaArcoIris/WebContent/pages/emprestimo/cadastrar.html&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/SalaArcoIris/WebContent/pages/emprestimo/cadastrar.html&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;5309&quot; selectionTopPixel=&quot;1433&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>removeOnHide</tags>
           <tags>org.eclipse.wst.html.core.htmlsource.source</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_2GYAEKR-EeuYk7C3N2_WFA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="cadastroEmprestimo.js" iconURI="platform:/plugin/org.eclipse.wst.jsdt.ui/icons/full/obj16/jcu_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.wst.jsdt.ui.CompilationUnitEditor&quot; name=&quot;cadastroEmprestimo.js&quot; partName=&quot;cadastroEmprestimo.js&quot; title=&quot;cadastroEmprestimo.js&quot; tooltip=&quot;SalaArcoIris/WebContent/js/cadastroEmprestimo.js&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/SalaArcoIris/WebContent/js/cadastroEmprestimo.js&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;12312&quot; selectionTopPixel=&quot;5685&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.wst.jsdt.ui.CompilationUnitEditor&quot; name=&quot;cadastroEmprestimo.js&quot; partName=&quot;cadastroEmprestimo.js&quot; title=&quot;cadastroEmprestimo.js&quot; tooltip=&quot;SalaArcoIris/WebContent/js/cadastroEmprestimo.js&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/SalaArcoIris/WebContent/js/cadastroEmprestimo.js&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;7635&quot; selectionTopPixel=&quot;3985&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>removeOnHide</tags>
           <tags>org.eclipse.wst.jsdt.ui.CompilationUnitEditor</tags>
@@ -406,7 +406,7 @@
           <tags>activeOnClose</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_rfypQK39Eeumr6NXsNd5nw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="cadastrar.html" iconURI="platform:/plugin/org.eclipse.wst.html.ui/icons/full/obj16/sourceEditor.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.wst.html.core.htmlsource.source&quot; name=&quot;cadastrar.html&quot; partName=&quot;cadastrar.html&quot; title=&quot;cadastrar.html&quot; tooltip=&quot;SalaArcoIris/WebContent/pages/aluno/cadastrar.html&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/SalaArcoIris/WebContent/pages/aluno/cadastrar.html&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;82&quot; selectionOffset=&quot;458&quot; selectionTopPixel=&quot;342&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.wst.html.core.htmlsource.source&quot; name=&quot;cadastrar.html&quot; partName=&quot;cadastrar.html&quot; title=&quot;cadastrar.html&quot; tooltip=&quot;SalaArcoIris/WebContent/pages/aluno/cadastrar.html&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/SalaArcoIris/WebContent/pages/aluno/cadastrar.html&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;458&quot; selectionTopPixel=&quot;342&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>removeOnHide</tags>
           <tags>org.eclipse.wst.html.core.htmlsource.source</tags>
@@ -673,7 +673,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_hWcjHXwyEeuBquspuOWSWA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Ux5aMK3rEeumr6NXsNd5nw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_hWnjyXwyEeuBquspuOWSWA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_hkK18K6zEeuA-KrE5tdftQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_hWnjyXwyEeuBquspuOWSWA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_hWcjKnwyEeuBquspuOWSWA" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -716,7 +716,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_hWdKBHwyEeuBquspuOWSWA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_UyR0sq3rEeumr6NXsNd5nw" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_hWnja3wyEeuBquspuOWSWA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_hkQ8kK6zEeuA-KrE5tdftQ" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_hWnja3wyEeuBquspuOWSWA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_hWdKD3wyEeuBquspuOWSWA" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
