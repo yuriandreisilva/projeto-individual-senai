@@ -26,15 +26,50 @@ SALAARCOIRIS = new Object();
 
 SALAARCOIRIS.emprestimo = new Object();
 
-// SALAARCOIRIS.aluno.buscarAluno();
 
 $(document).ready (function(){
 	SALAARCOIRIS.PATH = "/SalaArcoIris/rest/"
 
 		// INSERT - emprestimo
 		SALAARCOIRIS.emprestimo.cadastrarEmprestimo = function(){
-//            location.href="cadastrar.html";
-            // var emprestimo = new Object();
+		 
+			
+		var d = new Date();
+		var month = d.getMonth()+1;
+		var day = d.getDate();
+		
+		
+		var dataAtual = d.getFullYear() + '/' +
+	    (month<10 ? '0' : '') + month + '/' +
+	    (day<10 ? '0' : '') + day;
+	
+		
+		let dateDev = new Date(); 
+		dateDev.setDate(dateDev.getDate() + 7);
+		var month = dateDev.getMonth()+1;
+		day = dateDev.getDate();
+		
+		var devolucao = dateDev.getFullYear() + '/' +
+		(month<10 ? '0' : '') + month + '/' +
+		(day<10 ? '0' : '') + day;
+		
+		console.log("dataAtual: " + dataAtual);
+		console.log("devolucao: " + devolucao);
+			
+		var emprestimo = {
+//			emprestimo.push({
+				'idAluno': $('#idAluno').val(),
+				'idLivro': $('#idLivro').val(),
+				'data': dataAtual,
+				'devolucao': devolucao,
+				'status': 1,
+				'valorMulta': 0,
+		}			
+//		});
+        console.log(emprestimo)
+		
+		
+		
         }
 	
 	// READ --
@@ -135,11 +170,10 @@ $(document).ready (function(){
 					"</table>";
 			
 			
-			return tabela;
+//			return tabela;
 
 			$("#listaAlunos").html(tabela);
 		}	
-//		$("#idAluno").html(SALAARCOIRIS.emprestimo.exibirAluno(dados));	
 		
 	}
 	SALAARCOIRIS.emprestimo.buscarAluno();
@@ -150,6 +184,7 @@ $(document).ready (function(){
 			idAluno = document.querySelector('input[name="escolheAluno"]:checked').value;
 			nomeAluno = $("#nome"+idAluno).text();
 			cpfAluno = $("#cpf"+idAluno).text();
+				$('#idAluno').val(idAluno);
 				$('#campoAluno').val(nomeAluno);
 				$('#cpfAluno').val(cpfAluno);
 		}else{
@@ -226,7 +261,7 @@ $(document).ready (function(){
 					                .append($('<td class="col-xs-5 col-sm-5 col-md-5 col-lg-5" id="nome'+listaDeLivros[i].idLivro+'">').append(listaDeLivros[i].nomeLivro))
 					                .append($('<td class="col-xs-4 col-sm-2 col-md-4 col-lg-4" id="codigo'+listaDeLivros[i].idLivro+'">').append(listaDeLivros[i].codigoLivro))
 					                .append($('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">').append(listaDeLivros[i].qtdEstoque))
-					                .append(listaDeLivros[i].qtdEstoque>1?$('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><div class="radio text-center"><label><input type="checkbox" id="regular" name="escolheLivro" value="'+listaDeLivros[i].idLivro+'" data-livro="'+listaDeLivros[i].nomeLivro+'" data-codigo="'+listaDeLivros[i].codigoLivro+'""></label>').append()
+					                .append(listaDeLivros[i].qtdEstoque>=1?$('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><div class="radio text-center"><label><input type="checkbox" id="regular" name="escolheLivro" value="'+listaDeLivros[i].idLivro+'" data-livro="'+listaDeLivros[i].nomeLivro+'" data-codigo="'+listaDeLivros[i].codigoLivro+'""></label>').append()
 				                	:$('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><div class="radio text-center"><label><input type="checkbox" id="regular" name="escolheLivro" value="'+listaDeLivros[i].idLivro+'" disabled></label>').append())
 					               
 					        )
@@ -266,29 +301,9 @@ $(document).ready (function(){
 
 			$("#listaLivros").html(tabelaLivro);
 		}	
-
-		
+				
 	}
 	SALAARCOIRIS.emprestimo.buscarLivro();
-	
-//	SALAARCOIRIS.emprestimo.preencherLivro = function(){
-//	 	if (document.querySelector('input[name="escolheLivro"]:checked')){
-//	 		idLivro = document.querySelector('input[name="escolheLivro"]:checked').value;
-//	 		nomeLivro = $("#nome"+idLivro).text();
-//	 		codigoLivro = $("#codigo"+idLivro).text();
-//	 		
-//	 		if (click==1){
-//	 			$('#nomeLivro').val(nomeLivro);
-//	 			$('#codigoLivro').val(codigoLivro);
-//	 		}else{
-//	 			$('#nomeLivro'+click).val(nomeLivro);
-//	 			$('#codigoLivro'+click).val(codigoLivro);
-//	 		}
-//	 	}else{
-//	 		alertError('Selecione um livro!!!')
-//	 	}
-//	}
-//	
 	
 	
 	let livros = [];
@@ -322,7 +337,6 @@ $(document).ready (function(){
 			
 		})
 		
-//		$( "#adicionarLivros" ).append( "<div style='height: 100px; width: 100px; color: red;'>Hello</div>" );
 		var livrosEscolhidos =
 		
 		'<label for="formGroupExampleInput2">Livro(s)</label>';
@@ -330,6 +344,7 @@ $(document).ready (function(){
 			for (var i=0; i<livros.length; i++){
 			livrosEscolhidos+=
 			  '<div class="input-group mb-2" id="inputLivro'+livros[i].id+'">'+
+			  	  '<input name="idLivro" id="idLivro" type="hidden" value="'+livros[i].id+'">'+
 				  '<input name="nomeLivro" type="text" class="form-control col-7 mr-2" value="'+livros[i].livro+'" placeholder="Livro" disabled>'+
 			      '<input name="codigoLivro" type="text" class="form-control col-3 mr-2" value="'+livros[i].codigo+'" placeholder="Código Livro" disabled>'+
 			      '<input name="qtdLivro" type="number" class="form-control col-2 mr-2" placeholder="QTD" min="1" max="3">'+
@@ -349,7 +364,6 @@ $(document).ready (function(){
 		
 	} 
 	 
-
     });
 	
 	

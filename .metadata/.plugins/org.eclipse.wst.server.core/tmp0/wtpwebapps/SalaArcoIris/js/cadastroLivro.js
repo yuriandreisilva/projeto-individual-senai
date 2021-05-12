@@ -1,11 +1,11 @@
 function exibirMsgSuccessRedirecionar(){
 	// Um tipo de alert estilzado, importado para ficar mais interativo
 	Swal.fire({
-		  icon: 'success',
-		  title: 'Processo concluído com sucesso',
-		  showConfirmButton: false,
-		  timer: 1500
-		})
+		icon: 'success',
+		title: 'Processo concluído com sucesso',
+		showConfirmButton: false,
+		timer: 1500
+	})
 	// Função para atrasar o window.location (redirecionamento para listagem de cadastros)		
 	setTimeout(func, 1500);
 	function func() {
@@ -13,6 +13,14 @@ function exibirMsgSuccessRedirecionar(){
 	}
 }
 
+alertError = function(text) {
+	Swal.fire({
+		icon: 'error',
+		title: 'Oops...',
+		text: text,
+		// footer: 'Tente novamente'
+	})
+}
 function mostrarData(){
 	var data = document.getElementById('validaPublicacao').value; // pega o valor do input
 	console.log(data);
@@ -59,18 +67,12 @@ $(document).ready (function(){
 					}
 				},
 				error:function(info){
-					alertError('Erro ao cadastrar novo livro: ' + info.status + " - "+ info.statusText)
+					// alertError('Erro ao cadastrar novo livro: ' + info.status + " - "+ info.statusText)
+					alertError(info.status + " - "+ info.statusText)
 					console.log("Erro ao cadastrar um novo livro: "+ info.status + " - "+ info.statusText);	
 				}
 			});	
 	//	}
-	}
-	alertError = function(text) {
-		Swal.fire({
-			icon: 'error',
-			title: 'Oops...',
-			text: text,
-		})
 	}
 
 	

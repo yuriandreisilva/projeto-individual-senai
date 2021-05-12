@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="Livros"/>
+		<item key="selection" value="idLivro"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="idLivro"/>
+			<item value="console"/>
+			<item value="idAluno"/>
+			<item value="salvar"/>
+			<item value="swal2-validation-message"/>
+			<item value="próximo"/>
 			<item value="rmBook"/>
 			<item value="adicionarLivros"/>
-			<item value="adicionarLivro"/>
-			<item value="livros"/>
-			<item value="selecionar"/>
-			<item value="aria-hidden=&quot;true&quot;"/>
-			<item value="input-group-btn"/>
-			<item value="&quot;+"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>
