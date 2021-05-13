@@ -30,10 +30,34 @@ SALAARCOIRIS.emprestimo = new Object();
 $(document).ready (function(){
 	SALAARCOIRIS.PATH = "/SalaArcoIris/rest/"
 
-		// INSERT - emprestimo
-		SALAARCOIRIS.emprestimo.cadastrarEmprestimo = function(){
-		 
+		
+		SALAARCOIRIS.emprestimo.buscarUsuario = function(){
+			var email = sessionStorage.getItem('email');
+	//    alert(email)
+		    var valorBusca = email;
+			$.ajax({
+				type: "GET",
+				url: SALAARCOIRIS.PATH + "usuario/buscarU",
+				data: "valorBusca="+valorBusca,
+				success: function(dados){
+					dados = JSON.parse(dados);
+					var id = dados[0].idUsuario;
+				    sessionStorage.setItem('idUsuario', id );
+				},
+				error: function(info){
+					var a="Erro ao consultar: "+info.status+" - "+info.statusText;
+					var b = a.replace(/'/g, '');				
+				}
+			});
 			
+		}
+		// INSERT - emprestimo
+		SALAARCOIRIS.emprestimo.buscarUsuario()
+		SALAARCOIRIS.emprestimo.cadastrarEmprestimo = function(){
+					
+		idUsuario = parseInt(sessionStorage.getItem('idUsuario'))
+		idAluno = parseInt($('#idAluno').val())
+
 		var d = new Date();
 		var month = d.getMonth()+1;
 		var day = d.getDate();
@@ -53,24 +77,64 @@ $(document).ready (function(){
 		(month<10 ? '0' : '') + month + '/' +
 		(day<10 ? '0' : '') + day;
 		
-		console.log("dataAtual: " + dataAtual);
-		console.log("devolucao: " + devolucao);
-			
 		var emprestimo = {
-//			emprestimo.push({
-				'idAluno': $('#idAluno').val(),
-				'idLivro': $('#idLivro').val(),
 				'data': dataAtual,
 				'devolucao': devolucao,
 				'status': 1,
 				'valorMulta': 0,
-		}			
-//		});
-        console.log(emprestimo)
+				'idAluno': idAluno,
+				'idUsuario': idUsuario
+		}	
+
+		/*
+		 * inserir no bd o emprestimo
+		 * buscar o id do emprestimo para inserir no bd associativo
+		 */
+		qtdLivrosListados = sessionStorage.getItem('linhasLivros')
+        
+		let arrayIds = [];
+		let arrayQtds = [];
+		let livro = [];
+		console.log()
+			$('input[name="idLivro"]').each(function(){
+				arrayIds.push($(this).val())
+        	})	
+        	
+        	$('input[name="qtdLivro"]').each(function(){
+				arrayQtds.push($(this).val())
+        	})
+        	
+        	for (i = 0; i < qtdLivrosListados; i++ ) {
+				  livro.push({
+				    'id':  arrayIds[i],
+				    'qtd':  arrayQtds[i]
+				  })
+			}
+
+        	
+//        	if(!Array.prototype.hasOwnProperty('interpolate')) {
+//  Array.prototype.interpolate = function(other) {
+//    var limit = this.length < other.length ? other.length : this.length;
+//    var out = [];
+//  
+//    for(var i = 0; i < limit; i++) {
+//      if(this.length > 0) out.push(this.shift());
+//      if(other.length > 0) out.push(other.shift());
+//    }
+//    
+//    return out;
+//  }
+//}
+//
+//			teste = document.body.innerHTML = JSON.stringify(id.interpolate(qtd));
+//teste = JSON.stringify(id.interpolate(qtd));
+
+		console.log(livro);
+        	
+        	
+    	}
 		
 		
-		
-        }
 	
 	// READ --
 
@@ -337,17 +401,19 @@ $(document).ready (function(){
 			
 		})
 		
+//		console.log(livros.length)
+		var qtdLivros = livros.length;
+		sessionStorage.setItem('linhasLivros', qtdLivros );
 		var livrosEscolhidos =
 		
 		'<label for="formGroupExampleInput2">Livro(s)</label>';
-			
 			for (var i=0; i<livros.length; i++){
 			livrosEscolhidos+=
-			  '<div class="input-group mb-2" id="inputLivro'+livros[i].id+'">'+
+			  '<div class="input-group mb-2 inputsLivros" id="inputLivro'+livros[i].id+'">'+
 			  	  '<input name="idLivro" id="idLivro" type="hidden" value="'+livros[i].id+'">'+
 				  '<input name="nomeLivro" type="text" class="form-control col-7 mr-2" value="'+livros[i].livro+'" placeholder="Livro" disabled>'+
 			      '<input name="codigoLivro" type="text" class="form-control col-3 mr-2" value="'+livros[i].codigo+'" placeholder="Código Livro" disabled>'+
-			      '<input name="qtdLivro" type="number" class="form-control col-2 mr-2" placeholder="QTD" min="1" max="3">'+
+			      '<input name="qtdLivro" id="qtdLivro" data-qtd="" type="number" class="form-control col-2 mr-2" placeholder="QTD" min="1" max="3">'+
 						
 			      
 			      '<button type="button" class="btn btn-danger" id="inputLivro'+livros[i].id+'" onclick="removerCampos(this)">'+

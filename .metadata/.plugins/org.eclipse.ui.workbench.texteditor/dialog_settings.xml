@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="idLivro"/>
+		<item key="selection" value="sessionStorage.get"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="sessionStorage.get"/>
+			<item value="inputLivro"/>
+			<item value="qtdLivro"/>
+			<item value="data-livro"/>
+			<item value="idUsuario"/>
+			<item value="console.log"/>
+			<item value="[]"/>
 			<item value="idLivro"/>
-			<item value="console"/>
-			<item value="idAluno"/>
-			<item value="salvar"/>
-			<item value="swal2-validation-message"/>
-			<item value="próximo"/>
-			<item value="rmBook"/>
-			<item value="adicionarLivros"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>
