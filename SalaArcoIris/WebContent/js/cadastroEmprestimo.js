@@ -53,86 +53,108 @@ $(document).ready (function(){
 		}
 		// INSERT - emprestimo
 		SALAARCOIRIS.emprestimo.buscarUsuario()
+		
 		SALAARCOIRIS.emprestimo.cadastrarEmprestimo = function(){
 					
-		idUsuario = parseInt(sessionStorage.getItem('idUsuario'))
-		idAluno = parseInt($('#idAluno').val())
+			idUsuario = parseInt(sessionStorage.getItem('idUsuario'))
+			idAluno = parseInt($('#idAluno').val())
 
-		var d = new Date();
-		var month = d.getMonth()+1;
-		var day = d.getDate();
+			var d = new Date();
+			var month = d.getMonth()+1;
+			var day = d.getDate();
+			
+			
+			var dataAtual = d.getFullYear() + '/' +
+			(month<10 ? '0' : '') + month + '/' +
+			(day<10 ? '0' : '') + day;
 		
-		
-		var dataAtual = d.getFullYear() + '/' +
-	    (month<10 ? '0' : '') + month + '/' +
-	    (day<10 ? '0' : '') + day;
-	
-		
-		let dateDev = new Date(); 
-		dateDev.setDate(dateDev.getDate() + 7);
-		var month = dateDev.getMonth()+1;
-		day = dateDev.getDate();
-		
-		var devolucao = dateDev.getFullYear() + '/' +
-		(month<10 ? '0' : '') + month + '/' +
-		(day<10 ? '0' : '') + day;
-		
-		var emprestimo = {
-				'data': dataAtual,
-				'devolucao': devolucao,
-				'status': 1,
-				'valorMulta': 0,
-				'idAluno': idAluno,
-				'idUsuario': idUsuario
-		}	
+			
+			let dateDev = new Date(); 
+			dateDev.setDate(dateDev.getDate() + 7);
+			var month = dateDev.getMonth()+1;
+			day = dateDev.getDate();
+			
+			var devolucao = dateDev.getFullYear() + '/' +
+			(month<10 ? '0' : '') + month + '/' +
+			(day<10 ? '0' : '') + day;
+			
+			var emprestimo = {
+					'dataEmprestimo': dataAtual,
+					'dataDevolucao': devolucao,
+					'status': 1,
+					'valorMulta': 0,
+					'idAluno': idAluno,
+					'idUsuario': idUsuario
+			}	
+			
+			$.ajax({
+				type: "POST",
+				url: SALAARCOIRIS.PATH + "emprestimo/inserirE",
+				data:JSON.stringify(emprestimo),
+				success:function(retorno){
+					if(retorno === "true"){
+//						exibirMsgSuccessRedirecionar();
+						console.log('sucesso');
+						SALAARCOIRIS.emprestimo.buscarUltimoId();
+					}else {
+						alertError('Houve algum erro! Tente novamente')
+					}
+				},
+				error:function(info){
+					alertError('Erro ao cadastrar!')
+					console.log("Erro ao cadastrar um novo emprestimo: "+ info.status + " - "+ info.statusText);	
+				}
+			});
+			
 
-		/*
-		 * inserir no bd o emprestimo
-		 * buscar o id do emprestimo para inserir no bd associativo
-		 */
-		qtdLivrosListados = sessionStorage.getItem('linhasLivros')
-        
-		let arrayIds = [];
-		let arrayQtds = [];
-		let livro = [];
-		console.log()
-			$('input[name="idLivro"]').each(function(){
-				arrayIds.push($(this).val())
-        	})	
-        	
-        	$('input[name="qtdLivro"]').each(function(){
-				arrayQtds.push($(this).val())
-        	})
-        	
-        	for (i = 0; i < qtdLivrosListados; i++ ) {
-				  livro.push({
-				    'id':  arrayIds[i],
-				    'qtd':  arrayQtds[i]
-				  })
+			/*
+			* inserir no bd o emprestimo
+			* buscar o id do emprestimo para inserir no bd associativo
+			*/
+
+			SALAARCOIRIS.emprestimo.buscarUltimoId = function(){
+			
+				$.ajax({
+					type: "GET",
+					url: SALAARCOIRIS.PATH + "emprestimo/buscarUltimoId",
+					// data: "valorBusca="+valorBusca,
+					success: function(dados){
+						console.log(dados);
+						dados = JSON.parse(dados);
+						console.log(dados + ' 2');
+						alert()
+					},
+					error: function(info){
+						var a="Erro ao consultar os cadastros de aluno: "+info.status+" - "+info.statusText;
+						var b = a.replace(/'/g, '');				
+					}
+				});
+		
 			}
-
-        	
-//        	if(!Array.prototype.hasOwnProperty('interpolate')) {
-//  Array.prototype.interpolate = function(other) {
-//    var limit = this.length < other.length ? other.length : this.length;
-//    var out = [];
-//  
-//    for(var i = 0; i < limit; i++) {
-//      if(this.length > 0) out.push(this.shift());
-//      if(other.length > 0) out.push(other.shift());
-//    }
-//    
-//    return out;
-//  }
-//}
-//
-//			teste = document.body.innerHTML = JSON.stringify(id.interpolate(qtd));
-//teste = JSON.stringify(id.interpolate(qtd));
-
-		console.log(livro);
-        	
-        	
-    	}
+			
+			
+			qtdLivrosListados = sessionStorage.getItem('linhasLivros')
+			
+			let arrayIds = [];
+			let arrayQtds = [];
+			let livro = [];
+			console.log()
+				$('input[name="idLivro"]').each(function(){
+					arrayIds.push($(this).val())
+				})	
+				
+				$('input[name="qtdLivro"]').each(function(){
+					arrayQtds.push($(this).val()	)
+				})
+				
+				for (i = 0; i < qtdLivrosListados; i++ ) {
+					livro.push({
+						'id':  arrayIds[i],
+						'qtd':  arrayQtds[i]
+					})
+				}
+			
+		}
 		
 		
 	

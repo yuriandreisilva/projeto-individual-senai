@@ -32,8 +32,8 @@ INDEX VERSION 1.131+C:\Users\Yuri Andrei da Silva\Documents\Senai\ProjetoIndivid
 2980762343.index
 2167310551.index
 789697227.index
-2538486415.index
 3487968985.index
+2538486415.index
 1472199398.index
 188580978.index
 1296434829.index
@@ -50,9 +50,9 @@ INDEX VERSION 1.131+C:\Users\Yuri Andrei da Silva\Documents\Senai\ProjetoIndivid
 4219670136.index
 3358491135.index
 212532060.index
-2041277247.index
-3946508986.index
 2927524569.index
+3946508986.index
+2041277247.index
 690578072.index
 3119455041.index
 4081413164.index
