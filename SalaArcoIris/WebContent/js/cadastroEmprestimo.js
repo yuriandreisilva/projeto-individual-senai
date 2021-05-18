@@ -94,7 +94,7 @@ $(document).ready (function(){
 				success:function(retorno){
 					if(retorno === "true"){
 //						exibirMsgSuccessRedirecionar();
-						console.log('sucesso');
+						
 						SALAARCOIRIS.emprestimo.buscarUltimoId();
 					}else {
 						alertError('Houve algum erro! Tente novamente')
@@ -119,10 +119,10 @@ $(document).ready (function(){
 					url: SALAARCOIRIS.PATH + "emprestimo/buscarUltimoId",
 					// data: "valorBusca="+valorBusca,
 					success: function(dados){
-						console.log(dados);
 						dados = JSON.parse(dados);
-						console.log(dados + ' 2');
-						alert()
+						
+						var idEmprestimo = dados;
+				    	sessionStorage.setItem('idEmprestimo', idEmprestimo );
 					},
 					error: function(info){
 						var a="Erro ao consultar os cadastros de aluno: "+info.status+" - "+info.statusText;
@@ -131,14 +131,16 @@ $(document).ready (function(){
 				});
 		
 			}
+
+			// Inserir livro na tabela associativa
 			
 			
 			qtdLivrosListados = sessionStorage.getItem('linhasLivros')
-			
+			idEmprestimo = sessionStorage.getItem('idEmprestimo')
+		
 			let arrayIds = [];
 			let arrayQtds = [];
-			let livro = [];
-			console.log()
+			let livros = [];
 				$('input[name="idLivro"]').each(function(){
 					arrayIds.push($(this).val())
 				})	
@@ -148,11 +150,32 @@ $(document).ready (function(){
 				})
 				
 				for (i = 0; i < qtdLivrosListados; i++ ) {
-					livro.push({
+					livros.push({
+						'idEmprestimo': idEmprestimo,
 						'id':  arrayIds[i],
 						'qtd':  arrayQtds[i]
 					})
 				}
+				console.log(livros)
+				// livro =+'idEmprestimo':  teste;
+				
+				$.ajax({
+					type: "POST",
+					url: SALAARCOIRIS.PATH + "livroEmprestado/inserirLE",
+					data:JSON.stringify(livros),
+					success:function(retorno){
+						if(retorno === "true"){
+	//						exibirMsgSuccessRedirecionar();
+							console.log('sucessooo');
+						}else {
+							alertError('Houve algum erro! Tente novamente')
+						}
+					},
+					error:function(info){
+						alertError('Erro ao cadastrar!')
+						console.log("Erro ao cadastrar um novo livroEmprestado: "+ info.status + " - "+ info.statusText);	
+					}
+				});
 			
 		}
 		

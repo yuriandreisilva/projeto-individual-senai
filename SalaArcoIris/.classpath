@@ -43,5 +43,7 @@
 	<classpathentry kind="lib" path="C:/Users/Yuri Andrei da Silva/Documents/LibSalaArcoIris/WebContent/WEB-INF/lib/osgi-resource-locator-1.0.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Yuri Andrei da Silva/Documents/LibSalaArcoIris/WebContent/WEB-INF/lib/yasson-1.0.3.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_111/lib/rt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Yuri Andrei da Silva/Downloads/json-20210307.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Yuri Andrei da Silva/Downloads/json-simple-1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

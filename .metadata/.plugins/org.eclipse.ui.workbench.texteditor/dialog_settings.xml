@@ -8,14 +8,14 @@
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="chegando"/>
+			<item value="livroEmprestado"/>
 			<item value="buscarIdE"/>
 			<item value="buscarUltimoId"/>
 			<item value="emprestimo"/>
 			<item value="sessionStorage.get"/>
 			<item value="inputLivro"/>
 			<item value="qtdLivro"/>
-			<item value="data-livro"/>
-			<item value="idUsuario"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>

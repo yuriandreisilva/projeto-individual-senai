@@ -54,13 +54,12 @@ public class EmprestimoRest extends UtilRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarUltimoId() {
 		try {
-			// List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
 			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
-			System.out.println("chegando aqui");
+			
 			int id = jdbcEmprestimo.buscarUltimoId();
-			System.out.println(id);
+			
 			conec.fecharConexao();
 
 			return this.buildResponse(id);

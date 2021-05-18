@@ -14,4 +14,8 @@
 <fullyQualifiedTypeName name="br.com.salaarcoiris.bd.Conexao"/>
 <fullyQualifiedTypeName name="org.apache.commons.codec.binary.Base64"/>
 <fullyQualifiedTypeName name="java.util.Base64"/>
+<fullyQualifiedTypeName name="org.json.JSONArray"/>
+<fullyQualifiedTypeName name="com.mysql.cj.x.protobuf.MysqlxCrud.Collection"/>
+<fullyQualifiedTypeName name="com.google.gson.reflect.TypeToken"/>
+<fullyQualifiedTypeName name="com.mysql.cj.conf.ConnectionUrl.Type"/>
 </qualifiedTypeNameHistroy>

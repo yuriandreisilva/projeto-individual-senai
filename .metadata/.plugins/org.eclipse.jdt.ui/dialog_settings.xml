@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item key="org.eclipse.jdt.ui.last.selected.jre.kind2" value="0"/>
-	<item key="org.eclipse.jdt.ui.lastextjar" value="C:\Program Files\Java\jre1.8.0_111\lib"/>
+	<item key="org.eclipse.jdt.ui.lastextjar" value="C:\Users\Yuri Andrei da Silva\Downloads"/>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item key="group_libraries" value="true"/>
 		<item key="layout" value="2"/>
@@ -97,5 +97,14 @@
 			<item key="DIALOG_Y_ORIGIN" value="39"/>
 			<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 		</section>
+	</section>
+	<section name="ClasspathContainerSelectionPage">
+		<item key="index" value="8"/>
+	</section>
+	<section name="JarImportWizard">
+		<item key="org.eclipse.ltk.ui.refactoring.sortRefactorings" value="false"/>
+		<list key="org.eclipse.jdt.ui.refactoring.jarHistory">
+			<item value="C:\Users\Yuri Andrei da Silva\Downloads\json-20210307.jar"/>
+		</list>
 	</section>
 </section>
