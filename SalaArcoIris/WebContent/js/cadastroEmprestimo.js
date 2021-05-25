@@ -17,7 +17,7 @@ alertError = function(text){
 	Swal.fire({
 		icon: 'error',
 		title: 'Oops...',
-		text: text,
+		text: text
 	  })
 }
 
@@ -87,7 +87,7 @@ $(document).ready (function(){
 					'idAluno': idAluno,
 					'idUsuario': idUsuario
 			}	
-			console.log(emprestimo)
+
 			
 			if(validarCampos()){
 				$.ajax({
@@ -106,7 +106,7 @@ $(document).ready (function(){
 						console.log("Erro ao cadastrar um novo emprestimo: "+ info.status + " - "+ info.statusText);	
 					}
 				});
-			}
+			
 			
 
 			/*
@@ -162,7 +162,6 @@ $(document).ready (function(){
 					})
 				}
 				
-					
 				
 				$.ajax({
 					type: "POST",
@@ -180,19 +179,32 @@ $(document).ready (function(){
 						console.log("Erro ao cadastrar um novo livroEmprestado: "+ info.status + " - "+ info.statusText);	
 					}
 				});
+			}else{
+				alertError('É necessário preencher com um aluno e no mínimo um livro!!!')
+			}
 			
 		}
 		
 		function validarCampos(){
-			validacao = true;
+			validacao = false;
 			
+			campoLivro = document.getElementsByClassName('inputsLivros');
+
+			nomeAluno = document.getElementById('campoAluno').value;
 			
+			jQuery.fn.exists = function(){ return this.length > 0; }
+
+			if (($('input[name="nomeLivro"]').exists()) && (nomeAluno !== "")) {
+				validacao = true;
+			}
+			
+			return validacao;
 		}
 	
 	// READ --
 
 	SALAARCOIRIS.emprestimo.buscarAluno = function(){
-		
+
 		var valorBusca = $("#buscaAluno").val();
 		$.ajax({
 			type: "GET",
