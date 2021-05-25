@@ -53,17 +53,20 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 	public int buscarUltimoId() {
 		int idEmprestimo = 0; 
 
+		System.out.println("id antes do select sql " + idEmprestimo);
+		
 		String comando = "SELECT idEmprestimo FROM emprestimo_livro WHERE idEmprestimo=(SELECT max(idEmprestimo) FROM emprestimo_livro);";
 		try {
-
+			
 			Statement stmt = conexao.createStatement();
 			ResultSet rs = stmt.executeQuery(comando);
+			
 			
 			while (rs.next()) {
 				
 				idEmprestimo = rs.getInt("idEmprestimo");
-				
 			}
+			System.out.println(idEmprestimo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

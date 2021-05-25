@@ -29,7 +29,7 @@ public class EmprestimoRest extends UtilRest {
 	@Path("/inserirE")
 	@Consumes("application/*")
 	public Response inserirE(String emprestimoParam) {
-		// System.out.println(emprestimoParam);
+		 
 		try {
 			Emprestimo emprestimo = new Gson().fromJson(emprestimoParam, Emprestimo.class);
 			Conexao conec = new Conexao();
@@ -38,7 +38,6 @@ public class EmprestimoRest extends UtilRest {
 			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
 			boolean retorno = jdbcEmprestimo.inserirE(emprestimo);
 
-			// System.out.println(retorno);
 			conec.fecharConexao();
 
 			return this.buildResponse(retorno);
@@ -59,7 +58,7 @@ public class EmprestimoRest extends UtilRest {
 			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
 			
 			int id = jdbcEmprestimo.buscarUltimoId();
-			
+			System.out.println("id no rest: " + id);
 			conec.fecharConexao();
 
 			return this.buildResponse(id);

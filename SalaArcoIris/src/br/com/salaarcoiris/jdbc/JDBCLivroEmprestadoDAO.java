@@ -29,28 +29,34 @@ public class JDBCLivroEmprestadoDAO implements LivroEmprestadoDAO {
 	}
 
 	public boolean inserirLE(LivroEmprestado[] livroEmprestado) {
-		System.out.println("emprestimo: " + livroEmprestado[0].getIdEmprestimo());
-		System.out.println("primeiro livro: " + livroEmprestado[0].getId());
-		System.out.println("qtd: " + livroEmprestado.length);
-//		System.out.println("segundo: " + livroEmprestado.getIdLivro());
+		System.out.println(livroEmprestado);
 		
-
 		String comando = " INSERT INTO emprestimo_has_livro (emprestimo_livro_idEmprestimo, livro_idLivro, qtdLivro) "
 				+ "values (?,?,?);";
 
+		String updateLivro = "UPDATE sala_arco_iris.livro SET qtdEstoque = qtdEstoque - ? WHERE idLivro = ?;";
+		
 		PreparedStatement p;
-
+		
 		try {
+			
 			for (int i = 0; i < livroEmprestado.length; i++) {
-				  System.out.println("ID livros: " + livroEmprestado[i].getId());
+				  
 				  p = this.conexao.prepareStatement(comando);
-
 					p.setInt(1, livroEmprestado[i].getIdEmprestimo());
 					p.setInt(2, livroEmprestado[i].getId());
 					p.setInt(3, livroEmprestado[i].getQtd());
 
 					p.execute();
+					
+					p = this.conexao.prepareStatement(updateLivro);
+					p.setInt(1, livroEmprestado[i].getQtd());
+					p.setInt(2, livroEmprestado[i].getId());
+					
+					p.execute();
+
 			}
+			
 			
 
 		} catch (SQLException e) {

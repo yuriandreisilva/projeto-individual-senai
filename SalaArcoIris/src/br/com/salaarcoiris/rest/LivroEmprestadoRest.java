@@ -44,20 +44,20 @@ public class LivroEmprestadoRest extends UtilRest {
 	@Path("/inserirLE")
 	@Consumes("application/*")
 	public Response inserirLE(String livroEmprestadoParam) {
-		 System.out.println(livroEmprestadoParam);
+		
 		try {
 			LivroEmprestado[] livroEmprestado = new Gson().fromJson(livroEmprestadoParam, LivroEmprestado[].class);
-
+				
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
 			
 			JDBCLivroEmprestadoDAO jdbcEmprestimo = new JDBCLivroEmprestadoDAO(conexao);
 			boolean retorno  = jdbcEmprestimo.inserirLE(livroEmprestado);
 					
-			System.out.println(retorno);
+			
 			conec.fecharConexao();
 			
-			return this.buildResponse(livroEmprestadoParam);
+			return this.buildResponse(retorno);
 			
 
 		} catch (Exception e) {

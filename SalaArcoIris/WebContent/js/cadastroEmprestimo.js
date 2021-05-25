@@ -21,6 +21,7 @@ alertError = function(text){
 	  })
 }
 
+var livros = [];
 
 SALAARCOIRIS = new Object();
 
@@ -33,7 +34,7 @@ $(document).ready (function(){
 		
 		SALAARCOIRIS.emprestimo.buscarUsuario = function(){
 			var email = sessionStorage.getItem('email');
-	//    alert(email)
+
 		    var valorBusca = email;
 			$.ajax({
 				type: "GET",
@@ -86,25 +87,26 @@ $(document).ready (function(){
 					'idAluno': idAluno,
 					'idUsuario': idUsuario
 			}	
+			console.log(emprestimo)
 			
-			$.ajax({
-				type: "POST",
-				url: SALAARCOIRIS.PATH + "emprestimo/inserirE",
-				data:JSON.stringify(emprestimo),
-				success:function(retorno){
-					if(retorno === "true"){
-//						exibirMsgSuccessRedirecionar();
-						
-						SALAARCOIRIS.emprestimo.buscarUltimoId();
-					}else {
-						alertError('Houve algum erro! Tente novamente')
+			if(validarCampos()){
+				$.ajax({
+					type: "POST",
+					url: SALAARCOIRIS.PATH + "emprestimo/inserirE",
+					data:JSON.stringify(emprestimo),
+					success:function(retorno){
+						if(retorno === "true"){
+							SALAARCOIRIS.emprestimo.buscarUltimoId();
+						}else {
+							alertError('Houve algum erro! Tente novamente')
+						}
+					},
+					error:function(info){
+						alertError('Erro ao cadastrar!')
+						console.log("Erro ao cadastrar um novo emprestimo: "+ info.status + " - "+ info.statusText);	
 					}
-				},
-				error:function(info){
-					alertError('Erro ao cadastrar!')
-					console.log("Erro ao cadastrar um novo emprestimo: "+ info.status + " - "+ info.statusText);	
-				}
-			});
+				});
+			}
 			
 
 			/*
@@ -117,11 +119,10 @@ $(document).ready (function(){
 				$.ajax({
 					type: "GET",
 					url: SALAARCOIRIS.PATH + "emprestimo/buscarUltimoId",
-					// data: "valorBusca="+valorBusca,
 					success: function(dados){
 						dados = JSON.parse(dados);
-						
 						var idEmprestimo = dados;
+						console.log("idEmprestimo: " + idEmprestimo);
 				    	sessionStorage.setItem('idEmprestimo', idEmprestimo );
 					},
 					error: function(info){
@@ -137,38 +138,41 @@ $(document).ready (function(){
 			
 			qtdLivrosListados = sessionStorage.getItem('linhasLivros')
 			idEmprestimo = sessionStorage.getItem('idEmprestimo')
-		
+			// Há um atraso, por isso essa soma
+			idEmprestimo = parseInt(idEmprestimo) + 1;
+			
 			let arrayIds = [];
 			let arrayQtds = [];
-			let livros = [];
 				$('input[name="idLivro"]').each(function(){
 					arrayIds.push($(this).val())
 				})	
 				
-				$('input[name="qtdLivro"]').each(function(){
+
+				$('select[name="qtdLivro"]').each(function(){
 					arrayQtds.push($(this).val()	)
 				})
 				
+
+				let livrosSelecionados = [];
 				for (i = 0; i < qtdLivrosListados; i++ ) {
-					livros.push({
+					livrosSelecionados.push({
 						'idEmprestimo': idEmprestimo,
 						'id':  arrayIds[i],
 						'qtd':  arrayQtds[i]
 					})
 				}
-				console.log(livros)
-				// livro =+'idEmprestimo':  teste;
+				
+					
 				
 				$.ajax({
 					type: "POST",
 					url: SALAARCOIRIS.PATH + "livroEmprestado/inserirLE",
-					data:JSON.stringify(livros),
+					data:JSON.stringify(livrosSelecionados),
 					success:function(retorno){
 						if(retorno === "true"){
-	//						exibirMsgSuccessRedirecionar();
-							console.log('sucessooo');
+							exibirMsgSuccessRedirecionar();
 						}else {
-							alertError('Houve algum erro! Tente novamente')
+							alertError('Houve algum erro! Tente novamente!!!')
 						}
 					},
 					error:function(info){
@@ -179,7 +183,11 @@ $(document).ready (function(){
 			
 		}
 		
-		
+		function validarCampos(){
+			validacao = true;
+			
+			
+		}
 	
 	// READ --
 
@@ -222,7 +230,7 @@ $(document).ready (function(){
 					"<td>"+listaDeAlunos[i].cpfAluno+"</td>"+
 					"<td>" +
 						"<div class='radio text-center'>"+
-							"<label><input type='radio' id='regular' name='optradio' value='"+listaDeAlunos[i].idAluno+"'></label>"+
+							"<label><input type='radio' name='optradio' value='"+listaDeAlunos[i].idAluno+"'></label>"+
 						"</div>" +
                     "</td>"+
 				"</tr>";
@@ -245,7 +253,7 @@ $(document).ready (function(){
 					            $('<tr>')
 					                .append($('<td id="nome'+listaDeAlunos[i].idAluno+'">').append(listaDeAlunos[i].nomeAluno))
 					                .append($('<td id="cpf'+listaDeAlunos[i].idAluno+'">').append(listaDeAlunos[i].cpfAluno))
-					                .append($('<td><div class="radio text-center"><label><input type="radio" id="regular" name="escolheAluno" value="'+listaDeAlunos[i].idAluno+'" required></label>').append())
+					                .append($('<td><div class="radio text-center"><label><input type="radio" name="escolheAluno" value="'+listaDeAlunos[i].idAluno+'" required></label>').append())
 					        )
 				    }
 				    $('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeAlunos.length / tamanhoPagina));
@@ -346,7 +354,7 @@ $(document).ready (function(){
 					"<td>"+listaDeLivros[i].qtdEstoque+"</td>"+
 					"<td>" +
 						"<div class='radio text-center'>"+
-							"<label><input type='checkbox' id='regular' name='optradio' value='"+listaDeLivros[i].idLivro+"'></label>"+
+							"<label><input type='checkbox' name='optradio' value='"+listaDeLivros[i].idLivro+"'></label>"+
 						"</div>" +
                     "</td>"+
 				"</tr>";
@@ -370,8 +378,8 @@ $(document).ready (function(){
 					                .append($('<td class="col-xs-5 col-sm-5 col-md-5 col-lg-5" id="nome'+listaDeLivros[i].idLivro+'">').append(listaDeLivros[i].nomeLivro))
 					                .append($('<td class="col-xs-4 col-sm-2 col-md-4 col-lg-4" id="codigo'+listaDeLivros[i].idLivro+'">').append(listaDeLivros[i].codigoLivro))
 					                .append($('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">').append(listaDeLivros[i].qtdEstoque))
-					                .append(listaDeLivros[i].qtdEstoque>=1?$('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><div class="radio text-center"><label><input type="checkbox" id="regular" name="escolheLivro" value="'+listaDeLivros[i].idLivro+'" data-livro="'+listaDeLivros[i].nomeLivro+'" data-codigo="'+listaDeLivros[i].codigoLivro+'""></label>').append()
-				                	:$('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><div class="radio text-center"><label><input type="checkbox" id="regular" name="escolheLivro" value="'+listaDeLivros[i].idLivro+'" disabled></label>').append())
+					                .append(listaDeLivros[i].qtdEstoque>=1?$('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><div class="radio text-center"><label><input type="checkbox" name="escolheLivro" value="'+listaDeLivros[i].idLivro+'" data-qtd="'+listaDeLivros[i].qtdEstoque+'" data-livro="'+listaDeLivros[i].nomeLivro+'" data-codigo="'+listaDeLivros[i].codigoLivro+'""></label>').append()
+				                	:$('<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><div class="radio text-center"><label><input type="checkbox" name="escolheLivro" value="'+listaDeLivros[i].idLivro+'" disabled></label>').append())
 					               
 					        )
 				    }
@@ -415,7 +423,7 @@ $(document).ready (function(){
 	SALAARCOIRIS.emprestimo.buscarLivro();
 	
 	
-	let livros = [];
+	
 	SALAARCOIRIS.emprestimo.preencherLivros = function(){		
 		
 		$('input[name="escolheLivro"]:checked').each(function(){
@@ -433,14 +441,16 @@ $(document).ready (function(){
 					livros.push({
 						'id': $(this).val(),
 						'livro': $(this).attr('data-livro'),
-						'codigo': $(this).attr('data-codigo')
+						'codigo': $(this).attr('data-codigo'),
+						'qtd': $(this).attr('data-qtd')
 					})
 				}
 			}else {
 				livros.push({
 					'id': $(this).val(),
 					'livro': $(this).attr('data-livro'),
-					'codigo': $(this).attr('data-codigo')
+					'codigo': $(this).attr('data-codigo'),
+					'qtd': $(this).attr('data-qtd')
 				})
 			}
 			
@@ -450,18 +460,25 @@ $(document).ready (function(){
 		var qtdLivros = livros.length;
 		sessionStorage.setItem('linhasLivros', qtdLivros );
 		var livrosEscolhidos =
-		
 		'<label for="formGroupExampleInput2">Livro(s)</label>';
 			for (var i=0; i<livros.length; i++){
 			livrosEscolhidos+=
-			  '<div class="input-group mb-2 inputsLivros" id="inputLivro'+livros[i].id+'">'+
-			  	  '<input name="idLivro" id="idLivro" type="hidden" value="'+livros[i].id+'">'+
+			  '<div class="input-group mb-2 inputsLivros" id="'+livros[i].id+'">'+
+			  	  '<input name="idLivro" type="hidden" value="'+livros[i].id+'">'+
 				  '<input name="nomeLivro" type="text" class="form-control col-7 mr-2" value="'+livros[i].livro+'" placeholder="Livro" disabled>'+
 			      '<input name="codigoLivro" type="text" class="form-control col-3 mr-2" value="'+livros[i].codigo+'" placeholder="Código Livro" disabled>'+
-			      '<input name="qtdLivro" id="qtdLivro" data-qtd="" type="number" class="form-control col-2 mr-2" placeholder="QTD" min="1" max="3">'+
-						
+			      '<select name="qtdLivro" type="number" class="form-control col-2 mr-2" placeholder="QTD">';
+					total = livros[i].qtd;
+					qtd = 1;
+				      for (var j=0; j<total; j++){
+				    	  livrosEscolhidos+='<option value="'+qtd+'">'+qtd+'</option>';
+				    	  qtd += 1;
+				      }
+				
+				      
+				      livrosEscolhidos+='</select>'+	
 			      
-			      '<button type="button" class="btn btn-danger" id="inputLivro'+livros[i].id+'" onclick="removerCampos(this)">'+
+			      '<button type="button" class="btn btn-danger" id="'+livros[i].id+'" data-id="'+livros[i].id+'" onclick="removerCampos(this)">'+
 			          '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 20">'+
 			            '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'+
 			            '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>'+
@@ -473,15 +490,19 @@ $(document).ready (function(){
 		
 		$("#adicionarLivros").html(livrosEscolhidos);
 		
-	} 
-	 
-    });
 	
+	 
+		} 
+    });
 	
 	function removerCampos(value){
 		var node1 = document.getElementById(value.id);
+		livros = livros.filter((item) => {
+			return item.id != value.id;
+		})
 		node1.remove();
 
 	}
+	
 
 
