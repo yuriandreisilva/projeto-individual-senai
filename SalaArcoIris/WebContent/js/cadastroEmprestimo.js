@@ -22,6 +22,7 @@ alertError = function(text){
 }
 
 var livros = [];
+//var idEmprestimo = 0;
 
 SALAARCOIRIS = new Object();
 
@@ -96,7 +97,86 @@ $(document).ready (function(){
 					data:JSON.stringify(emprestimo),
 					success:function(retorno){
 						if(retorno === "true"){
-							SALAARCOIRIS.emprestimo.buscarUltimoId();
+							
+							/*
+							* inserir no bd o emprestimo
+							* buscar o id do emprestimo para inserir no bd associativo
+							*/
+
+							var idEmprestimo = (SALAARCOIRIS.emprestimo.buscarUltimoId = function(){
+								var id;
+								
+								$.ajax({
+									type: "GET",
+									url: SALAARCOIRIS.PATH + "emprestimo/buscarUltimoId",
+							        async: false,
+									success: function(dados){
+										dados = JSON.parse(dados);
+										id = parseInt(dados);
+										console.log("idEmprestimo: " + id);
+//										return id;		
+//											sessionStorage.setItem('idEmprestimo', idEmprestimo );
+									},
+									error: function(info){
+										var a="Erro ao consultar os cadastros de aluno: "+info.status+" - "+info.statusText;
+										var b = a.replace(/'/g, '');				
+									}
+								});
+								return id;
+							})();
+
+							// Inserir livro na tabela associativa
+							
+							
+							qtdLivrosListados = sessionStorage.getItem('linhasLivros')
+//							idEmprestimo = sessionStorage.getItem('idEmprestimo')
+							
+							// Há um atraso, por isso essa soma
+//							idEmprestimo = parseInt(idEmprestimo) + 1;
+							
+//							console.log("segundo: " + idEmprestimo)
+							
+							
+							
+							let arrayIds = [];
+							let arrayQtds = [];
+								$('input[name="idLivro"]').each(function(){
+									arrayIds.push($(this).val())
+								})	
+								
+
+								$('select[name="qtdLivro"]').each(function(){
+									arrayQtds.push($(this).val()	)
+								})
+								
+
+								let livrosSelecionados = [];
+								for (i = 0; i < qtdLivrosListados; i++ ) {
+									livrosSelecionados.push({
+										'idEmprestimo': parseInt(idEmprestimo),
+										'id':  arrayIds[i],
+										'qtd':  arrayQtds[i]
+									})
+								}
+								
+								
+								$.ajax({
+									type: "POST",
+									url: SALAARCOIRIS.PATH + "livroEmprestado/inserirLE",
+									data:JSON.stringify(livrosSelecionados),
+									success:function(retorno){
+										if(retorno === "true"){
+											exibirMsgSuccessRedirecionar();
+										}else {
+											alertError('Houve algum erro! Tente novamente!!!')
+										}
+									},
+									error:function(info){
+										alertError('Erro ao cadastrar!')
+										console.log("Erro ao cadastrar um novo livroEmprestado: "+ info.status + " - "+ info.statusText);	
+									}
+								});
+							
 						}else {
 							alertError('Houve algum erro! Tente novamente')
 						}
@@ -106,83 +186,9 @@ $(document).ready (function(){
 						console.log("Erro ao cadastrar um novo emprestimo: "+ info.status + " - "+ info.statusText);	
 					}
 				});
-			
-			
-
-			/*
-			* inserir no bd o emprestimo
-			* buscar o id do emprestimo para inserir no bd associativo
-			*/
-
-			SALAARCOIRIS.emprestimo.buscarUltimoId = function(){
-			
-				$.ajax({
-					type: "GET",
-					url: SALAARCOIRIS.PATH + "emprestimo/buscarUltimoId",
-					success: function(dados){
-						dados = JSON.parse(dados);
-						var idEmprestimo = dados;
-						console.log("idEmprestimo: " + idEmprestimo);
-				    	sessionStorage.setItem('idEmprestimo', idEmprestimo );
-					},
-					error: function(info){
-						var a="Erro ao consultar os cadastros de aluno: "+info.status+" - "+info.statusText;
-						var b = a.replace(/'/g, '');				
-					}
-				});
-		
-			}
-
-			// Inserir livro na tabela associativa
-			
-			
-			qtdLivrosListados = sessionStorage.getItem('linhasLivros')
-			idEmprestimo = sessionStorage.getItem('idEmprestimo')
-			// Há um atraso, por isso essa soma
-			idEmprestimo = parseInt(idEmprestimo) + 1;
-			
-			let arrayIds = [];
-			let arrayQtds = [];
-				$('input[name="idLivro"]').each(function(){
-					arrayIds.push($(this).val())
-				})	
-				
-
-				$('select[name="qtdLivro"]').each(function(){
-					arrayQtds.push($(this).val()	)
-				})
-				
-
-				let livrosSelecionados = [];
-				for (i = 0; i < qtdLivrosListados; i++ ) {
-					livrosSelecionados.push({
-						'idEmprestimo': idEmprestimo,
-						'id':  arrayIds[i],
-						'qtd':  arrayQtds[i]
-					})
-				}
-				
-				
-				$.ajax({
-					type: "POST",
-					url: SALAARCOIRIS.PATH + "livroEmprestado/inserirLE",
-					data:JSON.stringify(livrosSelecionados),
-					success:function(retorno){
-						if(retorno === "true"){
-							exibirMsgSuccessRedirecionar();
-						}else {
-							alertError('Houve algum erro! Tente novamente!!!')
-						}
-					},
-					error:function(info){
-						alertError('Erro ao cadastrar!')
-						console.log("Erro ao cadastrar um novo livroEmprestado: "+ info.status + " - "+ info.statusText);	
-					}
-				});
 			}else{
 				alertError('É necessário preencher com um aluno e no mínimo um livro!!!')
 			}
-			
 		}
 		
 		function validarCampos(){

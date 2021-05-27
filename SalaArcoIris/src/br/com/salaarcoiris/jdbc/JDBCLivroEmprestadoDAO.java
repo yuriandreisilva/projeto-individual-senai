@@ -29,7 +29,6 @@ public class JDBCLivroEmprestadoDAO implements LivroEmprestadoDAO {
 	}
 
 	public boolean inserirLE(LivroEmprestado[] livroEmprestado) {
-		System.out.println(livroEmprestado);
 		
 		String comando = " INSERT INTO emprestimo_has_livro (emprestimo_livro_idEmprestimo, livro_idLivro, qtdLivro) "
 				+ "values (?,?,?);";
