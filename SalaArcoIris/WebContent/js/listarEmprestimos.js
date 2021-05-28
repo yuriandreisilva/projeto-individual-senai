@@ -1,4 +1,12 @@
-SALAARCOIRIS.emprestimo.buscarE = function(){
+SALAARCOIRIS = new Object();
+
+SALAARCOIRIS.emprestimo = new Object();
+
+
+$(document).ready (function(){
+	SALAARCOIRIS.PATH = "/SalaArcoIris/rest/"
+
+		SALAARCOIRIS.emprestimo.buscarE = function(){
 		console.log('entrando')
 		var valorBusca = $("#buscaEmprestimo").val();
 		$.ajax({
@@ -121,4 +129,7 @@ SALAARCOIRIS.emprestimo.buscarE = function(){
 	
 			$("#listaEmprestimos").html(tabela);
 		}	
+	}
 		SALAARCOIRIS.emprestimo.buscarE();
+
+})
