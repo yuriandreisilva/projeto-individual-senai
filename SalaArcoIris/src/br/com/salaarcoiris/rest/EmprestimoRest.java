@@ -58,7 +58,6 @@ public class EmprestimoRest extends UtilRest {
 			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
 			
 			int id = jdbcEmprestimo.buscarUltimoId();
-			System.out.println("id no rest: " + id);
 			conec.fecharConexao();
 
 			return this.buildResponse(id);
@@ -72,13 +71,14 @@ public class EmprestimoRest extends UtilRest {
 	@Path("/buscarE")
 	@Consumes("application/*")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarE(@QueryParam("valorBusca") String nome) {
+	public Response buscarE(@QueryParam("valorBusca") String valorBusca) {
 		try {
 			List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
 			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
-			listaEmprestimos = jdbcEmprestimo.buscarE(nome);
+			listaEmprestimos = jdbcEmprestimo.buscarE(valorBusca);
+			
 			conec.fecharConexao();
 
 			String json = new Gson().toJson(listaEmprestimos);

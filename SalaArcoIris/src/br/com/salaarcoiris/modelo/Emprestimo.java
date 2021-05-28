@@ -14,6 +14,9 @@ public class Emprestimo implements Serializable {
 	private int idAluno;
 	private int idUsuario;
 
+    private int nomeAluno;
+    private int cpfAluno;
+
     public int getIdEmprestimo() {
         return  idEmprestimo;
     }
@@ -70,5 +73,19 @@ public class Emprestimo implements Serializable {
         this.idUsuario =  idUsuario;
     }
 
-	
+	public int getNomeAluno() {
+        return  nomeAluno;
+    }
+
+    public void setNomeAluno(int nomeAluno) {
+        this.nomeAluno =  nomeAluno;
+    }
+
+    public int getCpfAluno() {
+        return  cpfAluno;
+    }
+
+    public void setCpfAluno(int cpfAluno) {
+        this.cpfAluno =  cpfAluno;
+    }
 }

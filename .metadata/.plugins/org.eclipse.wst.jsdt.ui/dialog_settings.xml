@@ -4,4 +4,8 @@
 	</section>
 	<section name="JavaElementSearchActions">
 	</section>
+	<section name="org.eclipse.wst.jsdt.internal.ui.typehierarchy.QuickHierarchy">
+		<item key="org.eclipse.wst.jsdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_SIZE" value="false"/>
+		<item key="org.eclipse.wst.jsdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_LOCATION" value="false"/>
+	</section>
 </section>

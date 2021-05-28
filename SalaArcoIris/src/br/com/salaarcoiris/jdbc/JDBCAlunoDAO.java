@@ -54,7 +54,7 @@ public class JDBCAlunoDAO implements AlunoDAO {
 
 	public List<JsonObject> buscarA(String nome) {
 
-		String comando = "SELECT * " + "FROM aluno ";
+		String comando = "SELECT * FROM aluno ";
 		if (nome != "") {
 			comando += "WHERE aluno.nomeAluno LIKE '%" + nome + "%' ";
 		}

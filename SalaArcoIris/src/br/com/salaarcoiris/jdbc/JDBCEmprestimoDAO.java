@@ -71,13 +71,15 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 	}
 	
 	/* ************************************************************* */ 
-	public List<JsonObject> buscarE(String id) {
+	public List<JsonObject> buscarE(String valorBusca) {
 
-		String comando = "SELECT * " + "FROM emprestimo_livro ";
-		if (id != "") {
-			comando += "WHERE emprestimo_livro.idEmprestimo LIKE '%" + id + "%' ";
+		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
+		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
+		if (valorBusca != "") {
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%'";
 		}
-		comando += "ORDER BY emprestimo_livro.idEmprestimo ASC";
+		comando += " ORDER BY aluno.nomeAluno ASC;";
+		
 		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
 		JsonObject emprestimo = null;
 
@@ -93,8 +95,10 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				String dataDevolucao = rs.getString("dataDevolucao");
 				int status = rs.getInt("status");
 				float valorMulta = rs.getFloat("valorMulta");
-				int idAluno = rs.getInt("idAluno");
-				int idUsuario = rs.getInt("idUsuario");
+				int idAluno = rs.getInt("aluno_idAluno");
+				int idUsuario = rs.getInt("adm_usuario_idUsuario");
+				String nomeAluno = rs.getString("nomeAluno");
+				String cpfAluno = rs.getString("cpfAluno");
 				
 				emprestimo = new JsonObject();
 				emprestimo.addProperty("idEmprestimo", idEmprestimo);
@@ -104,9 +108,12 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				emprestimo.addProperty("valorMulta", valorMulta);
 				emprestimo.addProperty("idAluno", idAluno);
 				emprestimo.addProperty("idUsuario", idUsuario);
+				emprestimo.addProperty("nomeAluno", nomeAluno);
+				emprestimo.addProperty("cpfAluno", cpfAluno);
 
 				listaEmprestimos.add(emprestimo);
 			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
