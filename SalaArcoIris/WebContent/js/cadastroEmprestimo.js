@@ -64,19 +64,19 @@ $(document).ready (function(){
 			var d = new Date();
 			var month = d.getMonth()+1;
 			var day = d.getDate();
+			var year = d.getFullYear();
 			
-			
-			var dataAtual = d.getFullYear() + '/' +
+			var dataAtual = year + '/' +
 			(month<10 ? '0' : '') + month + '/' +
 			(day<10 ? '0' : '') + day;
 		
 			
-			let dateDev = new Date(); 
-			dateDev.setDate(dateDev.getDate() + 7);
-			var month = dateDev.getMonth()+1;
-			day = dateDev.getDate();
-			
-			var devolucao = dateDev.getFullYear() + '/' +
+			var  dataDevolucao = new Date(); 
+			dataDevolucao.setDate(dataDevolucao.getDate() + 7);
+			var month = dataDevolucao.getMonth()+1;
+			var day = dataDevolucao.getDate();
+
+			var devolucao = dataDevolucao.getFullYear() + '/' +
 			(month<10 ? '0' : '') + month + '/' +
 			(day<10 ? '0' : '') + day;
 			
@@ -543,8 +543,8 @@ $(document).ready (function(){
 					"<td>"+listaDeEmprestimos[i].cpfAluno+"</td>"+
 					"<td>"+listaDeEmprestimos[i].dataEmprestimo+"</td>"+
 					"<td>"+listaDeEmprestimos[i].status+"</td>"+
-					// listaDeEmprestimos[i].dataEmprestimo - dataAtual;
-					"<td>Fazer cálculo</td>"+
+					
+					"<td>teste</td>"+
 					"<td>"+"<a class='btn btn-warning' onclick=\"SALAARCOIRIS.emprestimo.exibirEditE('"+listaDeEmprestimos[i].idEmprestimo+"')\"><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'>"+
 							"<path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/>"+
 							"<path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z'/>"+
@@ -571,13 +571,81 @@ $(document).ready (function(){
 					$('table > tbody > tr').remove();
 					var tbody = $('table > tbody');
 					for (var i = pagina * tamanhoPagina; i < listaDeEmprestimos.length && i < (pagina + 1) *  tamanhoPagina; i++){
+						const data = listaDeEmprestimos[i].dataEmprestimo.split('-').reverse().join('/');
+
+						var  dataAtual = new Date();
+						var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
+
+
+						colunaDiasAtraso = 
+							'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-event" viewBox="0 0 16 16">'
+							+'<path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>'
+							+'<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>'
+							+'<path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>'
+							+'</svg>';
+						
+						switch (listaDeEmprestimos[i].status){
+							case 1:status = 
+								'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">'
+							    +'<title>Empréstimo em Andamento!</title>'
+								  +'<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'
+								  +'<path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>'
+							  +'</svg>'
+							  break;
+							case 2:status = 
+								'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">'
+								+'<title>Empréstimo Finalizado!</title>'
+							+'<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>'
+							+'</svg>';
+								break;
+							case 0: status = 
+								'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">'
+								+'<title>Empréstimo em Atraso!</title>'
+							  +'<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>'
+							  +'</svg>'
+							  break;
+							default:
+								status =
+									'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-info-circle-fill" viewBox="0 0 16 16">'
+									+'<title>Erro!</title>'
+							  +'<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>'
+							  +'</svg>';
+						}
+						
+						
+						
+						var diffDays = 0;
+						
+						const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+						// a and b are javascript Date objects
+						function dateDiffInDays(a, b) {
+						  // Discard the time and time-zone information.
+						  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+						  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+						  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+						}
+					    
+						
+						if (dataAtual>dataDevolucao){
+//							var timeDiff = Math.abs(dataDevolucao.getTime() - dataAtual.getTime());
+//							diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+//							
+//							colunaDiasAtraso = diffDays;
+							
+							colunaDiasAtraso = (dateDiffInDays(dataAtual, dataDevolucao) +1)* (-1);
+
+						}
+						
+						
 						tbody.append(
 								$('<tr>')
 									.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].nomeAluno+'">').append(listaDeEmprestimos[i].nomeAluno))
 									.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].cpfAluno+'">').append(listaDeEmprestimos[i].cpfAluno))
-									.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].dataEmprestimo+'">').append(listaDeEmprestimos[i].dataEmprestimo))
-									.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].status+'">').append(listaDeEmprestimos[i].status))
-									.append($('<td class="text-center" id="nomeDiasAtraso">').append('Fazer cálculo!!!'))
+									.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].dataEmprestimo+'">').append(data))
+									.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].status+'">').append(status))/* listaDeEmprestimos[i].status */ 
+									.append($('<td class="text-center" id="nomeDiasAtraso">').append(colunaDiasAtraso))
 									.append($('<td class="text-center">'+'<a class="btn btn-warning" onclick=\'SALAARCOIRIS.emprestimo.exibirEditE("'+listaDeEmprestimos[i].idEmprestimo+'")\'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">'+
 					                		  '<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>'+ 
 					                			  '<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>'+
