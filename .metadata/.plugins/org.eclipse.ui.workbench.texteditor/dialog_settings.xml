@@ -8,14 +8,14 @@
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="buscarE"/>
+			<item value="cpfAluno"/>
 			<item value="fill"/>
 			<item value="diaHoje"/>
 			<item value="dataDevolucao"/>
 			<item value="dataAtual"/>
 			<item value="diasAtraso"/>
 			<item value="idUsuario"/>
-			<item value="buscarA"/>
-			<item value="buscaEmprestimo"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>
