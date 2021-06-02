@@ -501,37 +501,13 @@ $(document).ready (function(){
 	 */
 	
 	SALAARCOIRIS.emprestimo.buscarE = function(){
-		console.log('entrando')
-//		const regex = /^[A-z]^/;
-
-		const cpf = document.querySelector("#buscaEmprestimo");
+		
 		var valorBusca = $("#buscaEmprestimo").val();
 		
-		
-		if (!isNaN(parseFloat(valorBusca)) && isFinite(valorBusca)) {
-			console.log('entrando no if de nro')
-//			cpf.addEventListener("keyup", () => {
-				
-//			  let value = cpf.value.replace(/[^0-9]/g, "").replace(/^([\d]{3})([\d]{3})?([\d]{3})?([\d]{2})?/, "$1.$2.$3-$4");
-				
-//			  cpf.value = value;
-
-				if (!isNaN(parseFloat(valorBusca)) && isFinite(valorBusca)){
-					if ($("#buscaEmprestimo").val() != "" || $("#buscaEmprestimo").val() != "..-"){
-//					$(document).ready(function($){
-							$('#buscaEmprestimo').mask('999.999.999-99', {reverse: false});
-							console.log('mascara maldita')
-							if ($("#buscaEmprestimo").val() === "..-"){
-								console.log('entrando ..-')
-								$("#buscaEmprestimo").val('A');
-								valorBusca = '';
-								console.log('valorBusca = '+ valorBusca)
-							}
-//					});
-					}
-				}
-					
-//			});
+		if (!isNaN(parseFloat(valorBusca)) && isFinite(valorBusca) ) {
+			$('#buscaEmprestimo').mask('999.999.999-99');
+		}else if ((valorBusca == "") || (valorBusca == "..-")){
+			$('#buscaEmprestimo').unmask();
 		}
 		
 		$.ajax({
