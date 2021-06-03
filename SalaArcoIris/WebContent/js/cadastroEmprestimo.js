@@ -516,188 +516,264 @@ $(document).ready (function(){
 			data: "valorBusca="+valorBusca,
 			success: function(dados){
 				dados = JSON.parse(dados);
-				$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
-				
+//				$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
+				SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
 			},
 			error: function(info){
 				var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
 				var b = a.replace(/'/g, '');				
 			}
 		});
+		
 	
-		SALAARCOIRIS.emprestimo.exibirEmprestimo = function(listaDeEmprestimos){
-			var tabela = 
-				"<br>"+
-				"<table class='table table-bordered'>"+
-					"<thead>"+
-						"<tr class='text-center'>"+	
-							"<th scope='col-lg-3'> Nome</th>"+
-							"<th scope='col-lg-2'> CPF</th>"+
-							"<th scope='col-lg-2'> Data Emp.</th>"+
-							"<th scope='col-lg-2'> Status</th>"+
-							"<th scope='col-lg-1'> Dias Atraso</th>"+
-							"<th scope='col-lg-1'> Editar</th>"+
-							"<th scope='col-lg-1'> Finalizar</th>"+
-						"</tr>"+
-					"</thead>"+
-					"<tbody>";
-	
-			if(listaDeEmprestimos != undefined && listaDeEmprestimos.length >0){
-	
-				for (var i=0; i<listaDeEmprestimos.length; i++){
-					tabela+="<tr>"+
-					"<th scope='row'>"+listaDeEmprestimos[i].nomeAluno+"</th>"+
-					"<td>"+listaDeEmprestimos[i].cpfAluno+"</td>"+
-					"<td>"+listaDeEmprestimos[i].dataEmprestimo+"</td>"+
-					"<td>"+listaDeEmprestimos[i].status+"</td>"+
-					
-					"<td>teste</td>"+
-					"<td>"+"<a class='btn btn-warning' onclick=\"SALAARCOIRIS.emprestimo.exibirEditE('"+listaDeEmprestimos[i].idEmprestimo+"')\"><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'>"+
-							"<path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/>"+
-							"<path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z'/>"+
-						"</svg></a>" +
-					"</td>"+
-					"<td>"+"<a class='btn btn-danger' onclick=\"SALAARCOIRIS.emprestimo.deletarE('"+listaDeEmprestimos[i].idEmprestimo+"')\"><svg xmlns='http://www.w3.org/2000/svg' width='16' height='20' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>"+
-						"<path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z'/>"+
-							"<path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/>"+
-							"</svg></a>" +
-					"</td>"+
-				"</tr>";
-				}
-	
-			}else if (listaDeEmprestimos == ""){
-				tabela += "<tr scope='row'><td colspan='6' style='text-align: center;'>Nenhum registro encontrado</td></tr>";
-			}
-			tabela +="</tbody" +
-					"</table>";
+		SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado = function(listaDeEmprestimos){
+			/* 
+			 * UPDATE Status
+			 * Verifica se empréstimo está atrasado e atualiza no BD
+			 */
 			
-			var tamanhoPagina = 5;
-			var pagina = 0;
+			for (var i=0; i<listaDeEmprestimos.length; i++){
+				var  dataAtual = new Date();
+				var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
 				
-				function paginar() {
-					$('table > tbody > tr').remove();
-					var tbody = $('table > tbody');
-					for (var i = pagina * tamanhoPagina; i < listaDeEmprestimos.length && i < (pagina + 1) *  tamanhoPagina; i++){
-						const data = listaDeEmprestimos[i].dataEmprestimo.split('-').reverse().join('/');
-
-						var  dataAtual = new Date();
-						var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
-
-
-						colunaDiasAtraso = 
-							'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-event" viewBox="0 0 16 16">'
-							+'<path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>'
-							+'<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>'
-							+'<path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>'
-							+'</svg>';
-						
-						switch (listaDeEmprestimos[i].status){
-							case 1:status = 
-								'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">'
-							    +'<title>Empréstimo em Andamento!</title>'
-								  +'<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'
-								  +'<path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>'
-							  +'</svg>'
-							  break;
-							case 2:status = 
-								'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">'
-								+'<title>Empréstimo Finalizado!</title>'
-							+'<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>'
-							+'</svg>';
-								break;
-							case 0: status = 
-								'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">'
-								+'<title>Empréstimo em Atraso!</title>'
-							  +'<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>'
-							  +'</svg>'
-							  break;
-							default:
-								status =
-									'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-info-circle-fill" viewBox="0 0 16 16">'
-									+'<title>Erro!</title>'
-							  +'<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>'
-							  +'</svg>';
-						}
-						
-						
-						
-						var diffDays = 0;
-						
-						const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-
-						// a and b are javascript Date objects
-						function dateDiffInDays(a, b) {
-						  // Discard the time and time-zone information.
-						  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-						  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-
-						  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-						}
-					    
-						
-						if (dataAtual>dataDevolucao){
-//							var timeDiff = Math.abs(dataDevolucao.getTime() - dataAtual.getTime());
-//							diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-//							
-//							colunaDiasAtraso = diffDays;
+				if ((listaDeEmprestimos[i].status == 2) && (dataAtual>dataDevolucao)){
+										
+					var emprestimo = new Object();
+					emprestimo.status = 0;
+					emprestimo.idEmprestimo = listaDeEmprestimos[i].idEmprestimo;
+					
+					$.ajax({
+						type: "PUT",
+						url: SALAARCOIRIS.PATH + "emprestimo/alterarStatus",
+						data:JSON.stringify(emprestimo),
+						success: function(retorno){
+//							console.log("Status atrasado: " + retorno)	
 							
-							colunaDiasAtraso = (dateDiffInDays(dataAtual, dataDevolucao) +1)* (-1);
-
+						},
+						error: function(info){
+							var a="Erro ao atualizar status de emprestimo: "+info.status+" - "+info.statusText;
+							var b = a.replace(/'/g, '');				
 						}
-						
-						
-						tbody.append(
-								$('<tr>')
-									.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].nomeAluno+'">').append(listaDeEmprestimos[i].nomeAluno))
-									.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].cpfAluno+'">').append(listaDeEmprestimos[i].cpfAluno))
-									.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].dataEmprestimo+'">').append(data))
-									.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].status+'">').append(status))/* listaDeEmprestimos[i].status */ 
-									.append($('<td class="text-center" id="nomeDiasAtraso">').append(colunaDiasAtraso))
-									.append($('<td class="text-center">'+'<a class="btn btn-warning" onclick=\'SALAARCOIRIS.emprestimo.exibirEditE("'+listaDeEmprestimos[i].idEmprestimo+'")\'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">'+
-					                		  '<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>'+ 
-					                			  '<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>'+
-					                			  '</svg></a>' +'</td>').append())
-					                .append($('<td class="text-center">'+'<a class="btn btn-danger" onclick=\'SALAARCOIRIS.emprestimo.deletarE("'+listaDeEmprestimos[i].idEmprestimo+'")\'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">'+
-					                		  '<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>'+
-					                			  '<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>'+
-					                			'</svg></a>' +'</td>').append())
-							)
-					}
-					$('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeEmprestimos.length / tamanhoPagina));
+					});
 					
 				}
+			}
+			
+			
+			// ******************************************************
+			
+			SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada = function(listaDeEmprestimos){
+				var valorBusca = $("#buscaEmprestimo").val();
 				
-				$(function() {
-					$('#proximo').click(function() {
-						if (pagina < listaDeEmprestimos.length / tamanhoPagina - 1) {
-							pagina++;
-							paginar();
-							ajustarBotoes();
-						}
-					});
-					$('#anterior').click(function() {
-						if (pagina > 0) {
-							pagina--;
-							paginar();
-							ajustarBotoes();
-						}
-					});
-					paginar();
-					ajustarBotoes();
+				if (!isNaN(parseFloat(valorBusca)) && isFinite(valorBusca) ) {
+					$('#buscaEmprestimo').mask('999.999.999-99');
+				}else if ((valorBusca == "") || (valorBusca == "..-")){
+					$('#buscaEmprestimo').unmask();
+				}
+				
+				$.ajax({
+					type: "GET",
+					url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
+					data: "valorBusca="+valorBusca,
+					success: function(dados){
+						dados = JSON.parse(dados);
+						$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
+						
+					},
+					error: function(info){
+						var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+						var b = a.replace(/'/g, '');				
+					}
 				});
 				
-				function ajustarBotoes() {
-					$('#proximo').prop('disabled', listaDeEmprestimos.length <= tamanhoPagina || pagina > listaDeEmprestimos.length / tamanhoPagina - 1);
-					$('#anterior').prop('disabled', listaDeEmprestimos.length <= tamanhoPagina || pagina == 0);
-				}
-			tabela +="</tbody" +
-					"</table>";
+				SALAARCOIRIS.emprestimo.exibirEmprestimo = function(listaDeEmprestimos){
+					var tabela = 
+						"<br>"+
+						"<table class='table table-bordered'>"+
+							"<thead>"+
+								"<tr class='text-center'>"+	
+									"<th scope='col-lg-3'> Nome</th>"+
+									"<th scope='col-lg-2'> CPF</th>"+
+									"<th scope='col-lg-2'> Data Emp.</th>"+
+									"<th scope='col-lg-2'> Status</th>"+
+									"<th scope='col-lg-1'> Dias Atraso</th>"+
+									"<th scope='col-lg-1'> Editar</th>"+
+									"<th scope='col-lg-1'> Finalizar</th>"+
+								"</tr>"+
+							"</thead>"+
+							"<tbody>";
 			
+					if(listaDeEmprestimos != undefined && listaDeEmprestimos.length >0){
 			
-				return tabela;
-	
-			$("#listaEmprestimos").html(tabela);
-		}	
+						for (var i=0; i<listaDeEmprestimos.length; i++){
+							tabela+="<tr>"+
+							"<th scope='row'>"+listaDeEmprestimos[i].nomeAluno+"</th>"+
+							"<td>"+listaDeEmprestimos[i].cpfAluno+"</td>"+
+							"<td>"+listaDeEmprestimos[i].dataEmprestimo+"</td>"+
+							"<td>"+listaDeEmprestimos[i].status+"</td>"+
+							
+							"<td>teste</td>"+
+							"<td>"+"<a class='btn btn-warning' onclick=\"SALAARCOIRIS.emprestimo.exibirEditE('"+listaDeEmprestimos[i].idEmprestimo+"')\"><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'>"+
+									"<path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/>"+
+									"<path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z'/>"+
+								"</svg></a>" +
+							"</td>"+
+							"<td>"+"<a class='btn btn-danger' onclick=\"SALAARCOIRIS.emprestimo.deletarE('"+listaDeEmprestimos[i].idEmprestimo+"')\"><svg xmlns='http://www.w3.org/2000/svg' width='16' height='20' fill='currentColor' class='bi bi-trash' viewBox='0 0 16 16'>"+
+								"<path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z'/>"+
+									"<path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/>"+
+									"</svg></a>" +
+							"</td>"+
+						"</tr>";
+						}
+			
+					}else if (listaDeEmprestimos == ""){
+						tabela += "<tr scope='row'><td colspan='6' style='text-align: center;'>Nenhum registro encontrado</td></tr>";
+					}
+					tabela +="</tbody" +
+							"</table>";
+					
+					var tamanhoPagina = 5;
+					var pagina = 0;
+						
+						function paginar() {
+							$('table > tbody > tr').remove();
+							var tbody = $('table > tbody');
+							for (var i = pagina * tamanhoPagina; i < listaDeEmprestimos.length && i < (pagina + 1) *  tamanhoPagina; i++){
+								const data = listaDeEmprestimos[i].dataEmprestimo.split('-').reverse().join('/');
+
+								colunaDiasAtraso = 
+									'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-event" viewBox="0 0 16 16">'
+									+'<path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>'
+									+'<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>'
+									+'<path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>'
+									+'</svg>';
+								var  dataAtual = new Date();
+								var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
+								
+								var diffDays = 0;
+								
+								const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+								// a and b are javascript Date objects
+								function dateDiffInDays(a, b) {
+								  // Discard the time and time-zone information.
+								  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+								  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+								  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+								}
+							    
+								
+								if (dataAtual>dataDevolucao){
+//									var timeDiff = Math.abs(dataDevolucao.getTime() - dataAtual.getTime());
+//									diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+//									
+//									colunaDiasAtraso = diffDays;
+									
+									colunaDiasAtraso = (dateDiffInDays(dataAtual, dataDevolucao)+2)* (-1);
+									
+								}
+								
+								switch (listaDeEmprestimos[i].status){
+									case 1:status =
+										'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">'
+									    +'<title>Empréstimo em Andamento!</title>'
+										  +'<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'
+										  +'<path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>'
+									  +'</svg>'
+									  break;
+									case 2:status = 
+										'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">'
+										+'<title>Empréstimo Finalizado!</title>'
+									+'<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>'
+									+'</svg>';
+										break;
+									case 0: status = 
+										'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">'
+										+'<title>Empréstimo em Atraso!</title>'
+									  +'<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>'
+									  +'</svg>'
+									  break;
+									default:
+										status =
+											'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-info-circle-fill" viewBox="0 0 16 16">'
+											+'<title>Erro!</title>'
+									  +'<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>'
+									  +'</svg>';
+								}
+								
+								
+								
+								
+								
+								
+								tbody.append(
+										$('<tr>')
+											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].nomeAluno+'">').append(listaDeEmprestimos[i].nomeAluno))
+											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].cpfAluno+'">').append(listaDeEmprestimos[i].cpfAluno))
+											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].dataEmprestimo+'">').append(data))
+											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].status+'">').append(status))/* listaDeEmprestimos[i].status */ 
+											.append($('<td class="text-center" id="nomeDiasAtraso">').append(colunaDiasAtraso))
+											.append($('<td class="text-center">'+'<button class="btn btn-warning" id="button-edit-'+listaDeEmprestimos[i].idEmprestimo+'" onclick=\'SALAARCOIRIS.emprestimo.exibirEditE("'+listaDeEmprestimos[i].idEmprestimo+'")\'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">'+
+							                		  '<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>'+ 
+							                			  '<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>'+
+							                			  '</svg></button>' +'</td>').append())
+							                .append($('<td class="text-center">'+'<button class="btn btn-danger" id="button-quit-'+listaDeEmprestimos[i].idEmprestimo+'" onclick=\'SALAARCOIRIS.emprestimo.deletarE("'+listaDeEmprestimos[i].idEmprestimo+'")\'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">'+
+							                		  '<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>'+
+							                			  '<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>'+
+							                			'</svg></button>' +'</td>').append())
+							                		
+
+									)
+									if (listaDeEmprestimos[i].status == 2){		
+			                			$('#button-quit-'+listaDeEmprestimos[i].idEmprestimo+'').attr('disabled', 'true');
+			                			$('#button-edit-'+listaDeEmprestimos[i].idEmprestimo+'').attr('class', 'btn btn-secondary');
+			                		}
+							}
+							$('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeEmprestimos.length / tamanhoPagina));
+							
+						}
+						
+						$(function() {
+							$('#proximo').click(function() {
+								if (pagina < listaDeEmprestimos.length / tamanhoPagina - 1) {
+									pagina++;
+									paginar();
+									ajustarBotoes();
+								}
+							});
+							$('#anterior').click(function() {
+								if (pagina > 0) {
+									pagina--;
+									paginar();
+									ajustarBotoes();
+								}
+							});
+							paginar();
+							ajustarBotoes();
+						});
+						
+						function ajustarBotoes() {
+							$('#proximo').prop('disabled', listaDeEmprestimos.length <= tamanhoPagina || pagina > listaDeEmprestimos.length / tamanhoPagina - 1);
+							$('#anterior').prop('disabled', listaDeEmprestimos.length <= tamanhoPagina || pagina == 0);
+						}
+					tabela +="</tbody" +
+							"</table>";
+					
+					
+						return tabela;
+			
+					$("#listaEmprestimos").html(tabela);
+				}	
+				
+			}
+			SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada(); 
+		}
+		
+		
+		
+		
+		
 	}
 		SALAARCOIRIS.emprestimo.buscarE();
 

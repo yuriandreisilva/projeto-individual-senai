@@ -78,7 +78,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		if (valorBusca != "") {
 			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%'";
 		}
-		comando += " ORDER BY aluno.nomeAluno ASC;";
+		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
 		
 		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
 		JsonObject emprestimo = null;
@@ -120,6 +120,26 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		}
 		return listaEmprestimos;
 	}
+	
+	public boolean alterarStatus(Emprestimo emprestimo) {
+ 		String comando = "UPDATE emprestimo_livro SET status=? WHERE idEmprestimo=?";
+ 		
+ 		PreparedStatement p;
+ 		try {
+
+ 			p = this.conexao.prepareStatement(comando);
+
+ 			p.setInt(1, emprestimo.getStatus());
+ 			p.setInt(2, emprestimo.getIdEmprestimo());
+ 			
+ 			p.executeUpdate();
+
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
+ 			return false;
+ 		}
+ 		return true;
+ 	}
 
 
 // 	// DELETE - emprestimo
