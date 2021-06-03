@@ -536,7 +536,7 @@ $(document).ready (function(){
 				var  dataAtual = new Date();
 				var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
 				
-				if ((listaDeEmprestimos[i].status == 2) && (dataAtual>dataDevolucao)){
+				if ((listaDeEmprestimos[i].status == 1) && (dataAtual>dataDevolucao)){
 										
 					var emprestimo = new Object();
 					emprestimo.status = 0;
