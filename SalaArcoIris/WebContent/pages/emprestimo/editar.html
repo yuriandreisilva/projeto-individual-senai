@@ -46,7 +46,35 @@
 				onclick="document.getElementById('id01').style.display='none'"
 				class="w3-button w3-display-topright">&times;
 			</span>
-		<!-- MODAL FORM EDITAR-->
+			
+		</div>
+	</div>
+</div>
+
+<div id="id02" class="w3-modal">
+	<div class="w3-modal-content">
+		<div class="w3-container">
+			<span
+				onclick="document.getElementById('id02').style.display='none'"
+				class="w3-button w3-display-topright">&times;
+			</span>
+			<form class="mt-4 mb-4" name="frmQuitarEmprestimo" method="POST">
+	            <input type="hidden" id="idEmprestimo">
+	            <div class="form-row">
+	                <div class="form-group col-md-12 col-lg-12">
+	                    <label for="nomeLivro">Deseja mesmo quitar?</label>
+	                </div>
+	            </div>
+	            <div class="form-row">    
+	               <div class="form-group col-md-4">
+	                   <label for="nomeLivro">Valor multa:</label>
+	                   <input name="valorMulta" type="text" class="form-control" id="valorMulta" disabled>
+	               </div>
+	            </div>
+	                
+	            <a type="button" class="btn btn-secondary mr-2" onclick="document.getElementById('id02').style.display='none'">Cancelar</a>
+	            <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado())>Quitar</a>  
+            </form> 
 		</div>
 	</div>
 </div>

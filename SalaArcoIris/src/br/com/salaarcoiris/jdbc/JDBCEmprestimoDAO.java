@@ -140,6 +140,26 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
  		}
  		return true;
  	}
+	
+	public boolean quitarE(Emprestimo emprestimo) {
+ 		String comando = "UPDATE emprestimo_livro SET status=? WHERE idEmprestimo=?";
+	
+ 		PreparedStatement p;
+ 		try {
+
+ 			p = this.conexao.prepareStatement(comando);
+
+ 			p.setInt(1, 2);
+ 			p.setInt(2, emprestimo.getIdEmprestimo());
+ 			
+ 			p.executeUpdate();
+
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
+ 			return false;
+ 		}
+ 		return true;
+ 	}
 
 
 // 	// DELETE - emprestimo
