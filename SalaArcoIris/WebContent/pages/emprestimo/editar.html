@@ -52,28 +52,30 @@
 </div>
 
 <div id="id02" class="w3-modal">
-	<div class="w3-modal-content">
-		<div class="w3-container">
+	<div class="w3-modal-content col-6 d-flex justify-content-center">
+		<div class="w3-container col-12">
 			<span
 				onclick="document.getElementById('id02').style.display='none'"
 				class="w3-button w3-display-topright">&times;
 			</span>
 			<form class="mt-4 mb-4" name="frmQuitarEmprestimo" method="POST">
 	            <input type="hidden" id="idEmprestimo">
-	            <div class="form-row">
+	            <input type="hidden" id="paginaAtual">
+	            <div class="form-row text-center">
 	                <div class="form-group col-md-12 col-lg-12">
-	                    <label for="nomeLivro">Deseja mesmo quitar?</label>
+	                    <label for="nomeLivro">Deseja mesmo finalizar?</label>
 	                </div>
 	            </div>
-	            <div class="form-row">    
-	               <div class="form-group col-md-4">
+	            <div class="form-row" id="row-multa">    
+	               <div class="form-group col-md-6">
 	                   <label for="nomeLivro">Valor multa:</label>
 	                   <input name="valorMulta" type="text" class="form-control" id="valorMulta" disabled>
 	               </div>
 	            </div>
-	                
-	            <a type="button" class="btn btn-secondary mr-2" onclick="document.getElementById('id02').style.display='none'">Cancelar</a>
-	            <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado())>Quitar</a>  
+	            <div class="form-row">    
+		            <a type="button" class="btn btn-secondary mr-2" onclick="document.getElementById('id02').style.display='none'">Cancelar</a>
+		            <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado())>Finalizar</a>
+	            </div>  
             </form> 
 		</div>
 	</div>

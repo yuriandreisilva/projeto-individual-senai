@@ -587,6 +587,7 @@ $(document).ready (function(){
 				});
 				
 				SALAARCOIRIS.emprestimo.exibirEmprestimo = function(listaDeEmprestimos){
+					
 					var tabela = 
 						"<br>"+
 						"<table class='table table-bordered'>"+
@@ -634,7 +635,7 @@ $(document).ready (function(){
 					
 					var tamanhoPagina = 5;
 					var pagina = 0;
-						
+					
 						function paginar() {
 							$('table > tbody > tr').remove();
 							var tbody = $('table > tbody');
@@ -710,8 +711,8 @@ $(document).ready (function(){
 									  +'<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>'
 									  +'</svg>';
 								}
+								console.log("identificando página " + (pagina +1))
 								
-								console.log(colunaDiasAtrasoParam)
 								tbody.append(
 										$('<tr>')
 											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].nomeAluno+'">').append(listaDeEmprestimos[i].nomeAluno))
@@ -723,7 +724,7 @@ $(document).ready (function(){
 							                		  '<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>'+ 
 							                			  '<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>'+
 							                			  '</svg></button>' +'</td>').append())
-							                .append($('<td class="text-center">'+'<button class="btn btn-danger" id="button-quit-'+listaDeEmprestimos[i].idEmprestimo+'" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick=\'SALAARCOIRIS.emprestimo.quitarE("'+listaDeEmprestimos[i].idEmprestimo +'" , "'+colunaDiasAtrasoParam+'")\'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">'+
+							                .append($('<td class="text-center">'+'<button class="btn btn-danger" id="button-quit-'+listaDeEmprestimos[i].idEmprestimo+'" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick=\'SALAARCOIRIS.emprestimo.quitarE("'+listaDeEmprestimos[i].idEmprestimo +'" , "'+colunaDiasAtrasoParam+'" , "'+pagina+'")\'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">'+
 							                		  '<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>'+
 							                			  '<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>'+
 							                			'</svg></button>' +'</td>').append())
@@ -736,7 +737,8 @@ $(document).ready (function(){
 			                		}
 							}
 							$('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeEmprestimos.length / tamanhoPagina));
-							
+//							console.log("identificando página " + pagina)
+
 						}
 						
 						$(function() {
@@ -765,7 +767,6 @@ $(document).ready (function(){
 					tabela +="</tbody" +
 							"</table>";
 					
-					
 						return tabela;
 			
 					$("#listaEmprestimos").html(tabela);
@@ -783,19 +784,30 @@ $(document).ready (function(){
 		SALAARCOIRIS.emprestimo.buscarE();
 		
 		SALAARCOIRIS.emprestimo.quitarE= function(idEmprestimo, colunaDiasAtrasoParam){
-	
+		console.log(colunaDiasAtrasoParam)
+			if (colunaDiasAtrasoParam == 0){
+//				rowMulta = document.querySelector('row-multa');
+//				rowMulta.setAttribute('hidden', 'hidden');
+	            document.getElementById('row-multa').style.display = 'none';
+
+			}else{
+				document.getElementById('row-multa').style.display = 'block';
+			}
+			
 			document.getElementById('id02').style.display='block';
 			
-			document.frmQuitarEmprestimo.idEmprestimo.value = idEmprestimo;	
-			document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ colunaDiasAtrasoParam * 0.50;
+			document.frmQuitarEmprestimo.idEmprestimo.value = idEmprestimo;
+			valorMulta = colunaDiasAtrasoParam * 0.50;
+			valorMulta = valorMulta.toString().replace(".", ",")
+			
+			document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
 			
 			console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
 		}
 		
 		SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado= function(){
 			
-			idEmprestimo = document.frmQuitarEmprestimo.idEmprestimo.value;	
-			console.log(idEmprestimo + "quitarEmprestimoConfirmado")
+			idEmprestimo = document.frmQuitarEmprestimo.idEmprestimo.value;
 			
 			var emprestimo = new Object();
 			emprestimo.idEmprestimo = idEmprestimo;
@@ -805,7 +817,7 @@ $(document).ready (function(){
 				url: SALAARCOIRIS.PATH + "emprestimo/quitarE",
 				data:JSON.stringify(emprestimo),
 				success: function(msg){
-					SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada();
+//					SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada(paginaAtual);
 					exibirMsgSuccessRedirecionar();
 				},
 				error: function(info){
