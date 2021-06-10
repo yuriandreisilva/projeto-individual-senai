@@ -557,21 +557,21 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_hWb8NnwyEeuBquspuOWSWA" elementId="org.eclipse.ui.editorss" selectedElement="_WLEaoaerEeuq8YeiywP0Ug">
-      <children xsi:type="basic:PartStack" xmi:id="_WLEaoaerEeuq8YeiywP0Ug" elementId="PartStack@5043e5a7" selectedElement="_FELnIMilEeuF9J-nHT4xNw">
+      <children xsi:type="basic:PartStack" xmi:id="_WLEaoaerEeuq8YeiywP0Ug" elementId="PartStack@5043e5a7" selectedElement="_RttrIL88Eeu5q5D8sGurfw">
         <tags>active</tags>
         <children xsi:type="basic:Part" xmi:id="_RttrIL88Eeu5q5D8sGurfw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="cadastroEmprestimo.js" iconURI="platform:/plugin/org.eclipse.wst.jsdt.ui/icons/full/obj16/jcu_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.wst.jsdt.ui.CompilationUnitEditor&quot; name=&quot;cadastroEmprestimo.js&quot; partName=&quot;cadastroEmprestimo.js&quot; title=&quot;cadastroEmprestimo.js&quot; tooltip=&quot;SalaArcoIris/WebContent/js/cadastroEmprestimo.js&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/SalaArcoIris/WebContent/js/cadastroEmprestimo.js&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;5&quot; selectionOffset=&quot;31551&quot; selectionTopPixel=&quot;14806&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.wst.jsdt.ui.CompilationUnitEditor&quot; name=&quot;cadastroEmprestimo.js&quot; partName=&quot;cadastroEmprestimo.js&quot; title=&quot;cadastroEmprestimo.js&quot; tooltip=&quot;SalaArcoIris/WebContent/js/cadastroEmprestimo.js&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/SalaArcoIris/WebContent/js/cadastroEmprestimo.js&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;130&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;26068&quot; selectionTopPixel=&quot;13269&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>removeOnHide</tags>
           <tags>org.eclipse.wst.jsdt.ui.CompilationUnitEditor</tags>
+          <tags>active</tags>
+          <tags>activeOnClose</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_FELnIMilEeuF9J-nHT4xNw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="editar.html" iconURI="platform:/plugin/org.eclipse.wst.html.ui/icons/full/obj16/sourceEditor.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.wst.html.core.htmlsource.source&quot; name=&quot;editar.html&quot; partName=&quot;editar.html&quot; title=&quot;editar.html&quot; tooltip=&quot;SalaArcoIris/WebContent/pages/emprestimo/editar.html&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/SalaArcoIris/WebContent/pages/emprestimo/editar.html&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;2911&quot; selectionTopPixel=&quot;988&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.wst.html.core.htmlsource.source&quot; name=&quot;editar.html&quot; partName=&quot;editar.html&quot; title=&quot;editar.html&quot; tooltip=&quot;SalaArcoIris/WebContent/pages/emprestimo/editar.html&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/SalaArcoIris/WebContent/pages/emprestimo/editar.html&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;2269&quot; selectionTopPixel=&quot;1034&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>removeOnHide</tags>
           <tags>org.eclipse.wst.html.core.htmlsource.source</tags>
-          <tags>active</tags>
-          <tags>activeOnClose</tags>
         </children>
       </children>
     </sharedElements>
@@ -913,7 +913,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_hWcjHXwyEeuBquspuOWSWA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_k81v0MlrEeucrZDYh8AbSA" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_hWnjyXwyEeuBquspuOWSWA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_oCTKQMl-EeuDvaSDwBwCZw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_hWnjyXwyEeuBquspuOWSWA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_hWcjKnwyEeuBquspuOWSWA" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -941,7 +941,7 @@
       <children xsi:type="menu:ToolBar" xmi:id="_hWcjeXwyEeuBquspuOWSWA" elementId="org.eclipse.search.searchActionSet">
         <tags>Draggable</tags>
       </children>
-      <children xsi:type="menu:ToolBar" xmi:id="_hWcjfnwyEeuBquspuOWSWA" elementId="org.eclipse.ui.edit.text.actionSet.presentation" visible="false">
+      <children xsi:type="menu:ToolBar" xmi:id="_hWcjfnwyEeuBquspuOWSWA" elementId="org.eclipse.ui.edit.text.actionSet.presentation">
         <tags>Draggable</tags>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_hWcjgXwyEeuBquspuOWSWA" elementId="org.eclipse.wst.server.ui.internal.webbrowser.actionSet" visible="false">
@@ -956,7 +956,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_hWdKBHwyEeuBquspuOWSWA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_k8_g2MlrEeucrZDYh8AbSA" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_hWnja3wyEeuBquspuOWSWA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_oCZQ4Ml-EeuDvaSDwBwCZw" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_hWnja3wyEeuBquspuOWSWA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_hWdKD3wyEeuBquspuOWSWA" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>

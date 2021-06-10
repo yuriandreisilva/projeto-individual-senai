@@ -61,7 +61,7 @@
 			<form class="mt-4 mb-4" name="frmQuitarEmprestimo" method="POST">
 	            <input type="hidden" id="idEmprestimo">
 	            <input type="hidden" id="paginaAtual">
-	            <div class="form-row text-center">
+	            <div class="form-row ">
 	                <div class="form-group col-md-12 col-lg-12">
 	                    <label for="nomeLivro">Deseja mesmo finalizar?</label>
 	                </div>
@@ -72,9 +72,9 @@
 	                   <input name="valorMulta" type="text" class="form-control" id="valorMulta" disabled>
 	               </div>
 	            </div>
-	            <div class="form-row">    
+	            <div class="form-row text-center">    
 		            <a type="button" class="btn btn-secondary mr-2" onclick="document.getElementById('id02').style.display='none'">Cancelar</a>
-		            <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado())>Finalizar</a>
+		            <a type="submit" id="finalizarEmp" class="btn btn-primary" onclick=(SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado())>Finalizar</a>
 	            </div>  
             </form> 
 		</div>

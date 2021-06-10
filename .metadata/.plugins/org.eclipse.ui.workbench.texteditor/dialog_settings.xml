@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="QuitarE"/>
+		<item key="selection" value="Editar"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="editar"/>
+			<item value="exibirMsgSuccessRedirecionar"/>
+			<item value="paginar"/>
 			<item value="form-row"/>
 			<item value="0.50"/>
 			<item value="paginaAtual"/>
 			<item value="ultimaPagina"/>
 			<item value="(pagina)"/>
-			<item value="w3-modal"/>
-			<item value="valorMulta"/>
-			<item value="id01"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>
