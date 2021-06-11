@@ -13,9 +13,18 @@ public class Emprestimo implements Serializable {
 	private float valorMulta;
 	private int idAluno;
 	private int idUsuario;
-
     private int nomeAluno;
-    private int cpfAluno;
+    private String cpfAluno;
+    private String codigoLivro;
+    private int qtdLivro;
+    
+    public int getQtdLivro() {
+        return  qtdLivro;
+    }
+
+    public void setQtdLivro(int qtdLivro) {
+        this.qtdLivro =  qtdLivro;
+    }
 
     public int getIdEmprestimo() {
         return  idEmprestimo;
@@ -81,11 +90,19 @@ public class Emprestimo implements Serializable {
         this.nomeAluno =  nomeAluno;
     }
 
-    public int getCpfAluno() {
+    public String getCpfAluno() {
         return  cpfAluno;
     }
 
-    public void setCpfAluno(int cpfAluno) {
+    public void setCpfAluno(String cpfAluno) {
         this.cpfAluno =  cpfAluno;
+    }
+    
+    public String getCodigoLivro() {
+        return  codigoLivro;
+    }
+
+    public void setCodigoLivro(String codigoLivro) {
+        this.codigoLivro =  codigoLivro;
     }
 }

@@ -344,19 +344,7 @@ $(document).ready (function(){
 	}
 	SALAARCOIRIS.aluno.buscarAluno();
 
-	SALAARCOIRIS.aluno.deletarA = function(idAluno){
-		
-		$.ajax({
-			type:"DELETE",
-			url: SALAARCOIRIS.PATH +"aluno/excluir/"+idAluno,
-			success: function(msg){
-				SALAARCOIRIS.aluno.buscarAluno();
-			},
-			error: function(info){
-				console.log("Erro ao excluir livro: " + info.status + " - " + info.statusText);
-			}
-		});
-	}
+	
 		
 	SALAARCOIRIS.aluno.exibirEditA = function(idAluno){
 		document.getElementById('id01').style.display='block';
@@ -387,6 +375,20 @@ $(document).ready (function(){
 		});	
 		
 	}
+	
+	SALAARCOIRIS.aluno.deletarA = function(idAluno){
+			
+			$.ajax({
+				type:"DELETE",
+				url: SALAARCOIRIS.PATH +"aluno/excluir/"+idAluno,
+				success: function(msg){
+					SALAARCOIRIS.aluno.buscarAluno();
+				},
+				error: function(info){
+					console.log("Erro ao excluir livro: " + info.status + " - " + info.statusText);
+				}
+			});
+		}
 	
 	SALAARCOIRIS.aluno.alterarA= function(){
 		

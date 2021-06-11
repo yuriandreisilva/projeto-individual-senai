@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="Editar"/>
+		<item key="selection" value="adicionarLivros"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="livrosEscolhidos"/>
+			<item value="quitarE"/>
+			<item value="cpfAluno"/>
 			<item value="editar"/>
 			<item value="exibirMsgSuccessRedirecionar"/>
 			<item value="paginar"/>
 			<item value="form-row"/>
 			<item value="0.50"/>
-			<item value="paginaAtual"/>
-			<item value="ultimaPagina"/>
-			<item value="(pagina)"/>
 		</list>
 		<list key="replacehistory">
 			<item value="alterarL"/>

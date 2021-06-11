@@ -713,7 +713,7 @@ $(document).ready (function(){
 											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].status+'">').append(status))/* listaDeEmprestimos[i].status */ 
 											.append($('<td class="text-center"><input type="hidden" id="nomeDiasAtraso'+listaDeEmprestimos[i].idEmprestimo+'"></input>').append(colunaDiasAtraso))
 											
-							                .append($('<td class="text-center">'+'<button class="btn btn-danger" id="button-quit-'+listaDeEmprestimos[i].idEmprestimo+'" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick=\'SALAARCOIRIS.emprestimo.quitarE("'+listaDeEmprestimos[i].idEmprestimo +'" , "'+colunaDiasAtrasoParam+'")\'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">'+
+							                .append($('<td class="text-center">'+'<button class="btn btn-danger" id="button-quit-'+listaDeEmprestimos[i].idEmprestimo+'" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick=\'SALAARCOIRIS.emprestimo.quitarE("'+listaDeEmprestimos[i].idEmprestimo +'")\'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">'+
 							                		  '<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>'+
 							                			  '<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>'+
 							                			'</svg></button>' +'</td>').append())
@@ -769,24 +769,77 @@ $(document).ready (function(){
 	}
 		SALAARCOIRIS.emprestimo.buscarE();
 		
-		SALAARCOIRIS.emprestimo.quitarE= function(idEmprestimo, colunaDiasAtrasoParam, pagina){
-		console.log(colunaDiasAtrasoParam)
-			if (colunaDiasAtrasoParam == 0){
-	            document.getElementById('row-multa').style.display = 'none';
-
-			}else{
-				document.getElementById('row-multa').style.display = 'block';
-			}
+		SALAARCOIRIS.emprestimo.quitarE = function(idEmprestimo){
+			valorBusca = idEmprestimo;
 			
-			document.getElementById('id02').style.display='block';
+			console.log(idEmprestimo)
+				document.getElementById('id02').style.display='block';
+				$.ajax({
+					type:"GET",
+					url: SALAARCOIRIS.PATH +"emprestimo/buscarEmprestimoEspecifico",
+					data: "valorBusca="+valorBusca,
+					success: function(emprestimo){
+						emprestimo = JSON.parse(emprestimo);
+console.log(emprestimo[0].nomeAluno)
+						//						document.frmEditaAluno.idAluno.value = aluno.idAluno;
+						var livrosEscolhidos =
+							'<label for="formGroupExampleInput2">'+emprestimo.nomeAluno+'</label>';
+//								for (var i=0; i<livros.length; i++){
+//								livrosEscolhidos+=
+//								  '<div class="input-group mb-2 inputsLivros" id="'+livros[i].id+'">'+
+//								  	  '<input name="idLivro" type="hidden" value="'+livros[i].id+'">'+
+//									  '<input name="nomeLivro" type="text" class="form-control col-7 mr-2" value="'+livros[i].livro+'" placeholder="Livro" disabled>'+
+//								      '<input name="codigoLivro" type="text" class="form-control col-3 mr-2" value="'+livros[i].codigo+'" placeholder="Código Livro" disabled>'+
+//								      '<select name="qtdLivro" type="number" class="form-control col-2 mr-2" placeholder="QTD">';
+//										total = livros[i].qtd;
+//										qtd = 1;
+//									      for (var j=0; j<total; j++){
+//									    	  livrosEscolhidos+='<option value="'+qtd+'">'+qtd+'</option>';
+//									    	  qtd += 1;
+//									      }
+//									
+//									      
+//									      livrosEscolhidos+='</select>'+	
+//								      
+//								      '<button type="button" class="btn btn-danger" id="'+livros[i].id+'" data-id="'+livros[i].id+'" onclick="removerCampos(this)">'+
+//								          '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 20">'+
+//								            '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'+
+//								            '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>'+
+//								          '</svg>'+
+//								        '</button>'+
+//								 
+//							      '</div>';
+//								}
+							
+							$("#id02").html(livrosEscolhidos);
+							 
+						
+						
+						
+					},
+					error: function(info){
+						console.log("Erro ao buscar cadastro para responsável: "+info.status+" - "+info.statusText);
+					}
+					
+				});	
+				
 			
-			document.frmQuitarEmprestimo.idEmprestimo.value = idEmprestimo;
-			valorMulta = colunaDiasAtrasoParam * 0.50;
-			valorMulta = valorMulta.toString().replace(".", ",")
-			
-			document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
-			
-			console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
+//			if (colunaDiasAtrasoParam == 0){
+//	            document.getElementById('row-multa').style.display = 'none';
+//
+//			}else{
+//				document.getElementById('row-multa').style.display = 'block';
+//			}
+//			
+//			document.getElementById('id02').style.display='block';
+//			
+//			document.frmQuitarEmprestimo.idEmprestimo.value = idEmprestimo;
+//			valorMulta = colunaDiasAtrasoParam * 0.50;
+//			valorMulta = valorMulta.toString().replace(".", ",")
+//			
+//			document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
+//			
+//			console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
 		}
 		
 		SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado= function(){

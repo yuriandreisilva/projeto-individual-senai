@@ -143,6 +143,28 @@ public class EmprestimoRest extends UtilRest {
  			return this.buildErrorResponse(e.getMessage());
  		}
  	}
+ 	
+ 	@GET
+	@Path("/buscarEmprestimoEspecifico")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarEmprestimoEspecifico(@QueryParam("valorBusca") int valorBusca) {
+		try {
+			List<JsonObject> dadosEmprestimo = new ArrayList<JsonObject>();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+			dadosEmprestimo = jdbcEmprestimo.buscarEmprestimoEspecifico(valorBusca);
+			
+			conec.fecharConexao();
+
+			String json = new Gson().toJson(dadosEmprestimo);
+			return this.buildResponse(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
 
 // 	@DELETE
 // 	@Path("/excluir/{idEmprestimo}")

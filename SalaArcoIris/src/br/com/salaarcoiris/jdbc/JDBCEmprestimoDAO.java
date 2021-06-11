@@ -160,6 +160,60 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
  		}
  		return true;
  	}
+	
+	public List<JsonObject> buscarEmprestimoEspecifico(int valorBusca) {
+
+		String comando ="SELECT emprestimo_has_livro.*, emprestimo_livro.dataEmprestimo, emprestimo_livro.dataDevolucao, "
+		+"emprestimo_livro.status, aluno.nomeAluno, aluno.cpfAluno, livro.codigoLivro, livro.idLivro, livro.nomeLivro "
+		+"FROM emprestimo_has_livro " 
+		+"INNER JOIN emprestimo_livro ON emprestimo_livro.idEmprestimo = emprestimo_has_livro.emprestimo_livro_idEmprestimo "
+		+"INNER JOIN livro ON livro.idLivro = emprestimo_has_livro.livro_idLivro "
+		+"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno "
+		+"WHERE idEmprestimo = "+ valorBusca +";";
+		
+		List<JsonObject> dadosEmprestimo = new ArrayList<JsonObject>();
+		JsonObject emprestimo = null;
+
+		try {
+
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+
+			while (rs.next()) {
+				
+				String nomeAluno = rs.getString("nomeAluno");
+				String cpfAluno = rs.getString("cpfAluno");
+				String dataEmprestimo = rs.getString("dataEmprestimo");
+				String dataDevolucao = rs.getString("dataDevolucao");
+				int status = rs.getInt("status");
+				String nomeLivro = rs.getString("nomeLivro");
+				String codigoLivro = rs.getString("codigoLivro");
+				int qtdLivro = rs.getInt("qtdLivro");
+				int idLivro = rs.getInt("livro_idLivro");
+				int idEmprestimo = rs.getInt("emprestimo_livro_idEmprestimo");
+						
+				
+				emprestimo = new JsonObject();
+				emprestimo.addProperty("nomeAluno", nomeAluno);
+				emprestimo.addProperty("cpfAluno", cpfAluno);
+				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
+				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("status", status);
+				emprestimo.addProperty("nomeLivro", nomeLivro);
+				emprestimo.addProperty("codigoLivro", codigoLivro);
+				emprestimo.addProperty("qtdLivro", qtdLivro);
+				emprestimo.addProperty("livro_idLivro", idLivro);
+				emprestimo.addProperty("emprestimo_livro_idEmprestimo", idEmprestimo);
+				
+				dadosEmprestimo.add(emprestimo);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dadosEmprestimo;
+	}
 
 
 // 	// DELETE - emprestimo

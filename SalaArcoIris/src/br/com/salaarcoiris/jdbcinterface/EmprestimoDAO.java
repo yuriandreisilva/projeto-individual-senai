@@ -10,6 +10,7 @@ public interface EmprestimoDAO {
 	public List<JsonObject>buscarE(String valorBusca);
 	public boolean alterarStatus(Emprestimo emprestimo);
 	public boolean quitarE(Emprestimo emprestimo);
+	public List<JsonObject>buscarEmprestimoEspecifico(int valorBusca);
 	// public boolean deletarE(int idEmprestimo);
 	// public Emprestimo checkIdE(int idEmprestimo);
 	// public boolean alterarE(Emprestimo emprestimo);
