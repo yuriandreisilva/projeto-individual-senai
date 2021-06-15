@@ -771,76 +771,102 @@ $(document).ready (function(){
 		
 		SALAARCOIRIS.emprestimo.quitarE = function(idEmprestimo){
 			valorBusca = idEmprestimo;
-			
-			console.log(idEmprestimo)
-				document.getElementById('id02').style.display='block';
+
 				$.ajax({
 					type:"GET",
 					url: SALAARCOIRIS.PATH +"emprestimo/buscarEmprestimoEspecifico",
 					data: "valorBusca="+valorBusca,
 					success: function(emprestimo){
-						emprestimo = JSON.parse(emprestimo);
-console.log(emprestimo[0].nomeAluno)
+						dados = JSON.parse(emprestimo);
+						$("#emprestimoEspecifico").html(SALAARCOIRIS.emprestimo.exibirEmprestimoEspecifico(dados));
 						//						document.frmEditaAluno.idAluno.value = aluno.idAluno;
-						var livrosEscolhidos =
-							'<label for="formGroupExampleInput2">'+emprestimo.nomeAluno+'</label>';
-//								for (var i=0; i<livros.length; i++){
-//								livrosEscolhidos+=
-//								  '<div class="input-group mb-2 inputsLivros" id="'+livros[i].id+'">'+
-//								  	  '<input name="idLivro" type="hidden" value="'+livros[i].id+'">'+
-//									  '<input name="nomeLivro" type="text" class="form-control col-7 mr-2" value="'+livros[i].livro+'" placeholder="Livro" disabled>'+
-//								      '<input name="codigoLivro" type="text" class="form-control col-3 mr-2" value="'+livros[i].codigo+'" placeholder="Código Livro" disabled>'+
-//								      '<select name="qtdLivro" type="number" class="form-control col-2 mr-2" placeholder="QTD">';
-//										total = livros[i].qtd;
-//										qtd = 1;
-//									      for (var j=0; j<total; j++){
-//									    	  livrosEscolhidos+='<option value="'+qtd+'">'+qtd+'</option>';
-//									    	  qtd += 1;
-//									      }
-//									
-//									      
-//									      livrosEscolhidos+='</select>'+	
-//								      
-//								      '<button type="button" class="btn btn-danger" id="'+livros[i].id+'" data-id="'+livros[i].id+'" onclick="removerCampos(this)">'+
-//								          '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 20">'+
-//								            '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>'+
-//								            '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>'+
-//								          '</svg>'+
-//								        '</button>'+
-//								 
-//							      '</div>';
-//								}
-							
-							$("#id02").html(livrosEscolhidos);
-							 
-						
-						
-						
 					},
 					error: function(info){
 						console.log("Erro ao buscar cadastro para responsável: "+info.status+" - "+info.statusText);
 					}
 					
 				});	
-				
-			
-//			if (colunaDiasAtrasoParam == 0){
-//	            document.getElementById('row-multa').style.display = 'none';
-//
-//			}else{
-//				document.getElementById('row-multa').style.display = 'block';
-//			}
-//			
-//			document.getElementById('id02').style.display='block';
-//			
-//			document.frmQuitarEmprestimo.idEmprestimo.value = idEmprestimo;
-//			valorMulta = colunaDiasAtrasoParam * 0.50;
-//			valorMulta = valorMulta.toString().replace(".", ",")
-//			
-//			document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
-//			
-//			console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
+				SALAARCOIRIS.emprestimo.exibirEmprestimoEspecifico = function (emprestimo){
+//					if (colunaDiasAtrasoParam == 0){
+//		            document.getElementById('row-multa').style.display = 'none';
+		//
+//				}else{
+//					document.getElementById('row-multa').style.display = 'block';
+//				}
+//				
+//				document.getElementById('id02').style.display='block';
+//				
+//				document.frmQuitarEmprestimo.idEmprestimo.value = idEmprestimo;
+//				valorMulta = colunaDiasAtrasoParam * 0.50;
+//				valorMulta = valorMulta.toString().replace(".", ",")
+//				
+//				document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
+//				
+//				console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
+					console.log("Entrando em exibirEmprestimoEspecifico()"+ emprestimo)
+					console.log(emprestimo[0].nomeAluno)
+					const dataEmprestimo = emprestimo[0].dataEmprestimo.split('-').reverse().join('/');
+					const dataDevolucao = emprestimo[0].dataDevolucao.split('-').reverse().join('/');
+					var emprestimoEspecifico =
+						"<form>"
+							+"<fieldset disabled>"
+								+"<legend>Disabled fieldset example</legend>"
+								+"<div class='mb-3'>"
+									+"<label for='disabledTextInput' class='form-label'>Aluno</label>"
+									+"<div class='row'>"
+										+"<input type='text' id='nomeAluno' class='form-control col-5 mx-3' value='"+emprestimo[0].nomeAluno+"'>"
+										+"<input type='text' id='cpfAluno' class='form-control col-5 mx-3' value='"+emprestimo[0].cpfAluno+"'>"
+									+"</div>"
+								+"</div>"
+								+"<div class='mb-3'>"
+									+"<div class='row'>"	
+										
+										//https://getbootstrap.com/docs/5.0/forms/layout/
+									+"</div>"
+									+"<div class='row'>"
+										+"<label for='disabledTextInput' class='form-label col-5'>Data Emprestimo</label>"
+										+"<label for='disabledTextInput' class='form-label col-6'>Data Devolução</label>"
+										+"<input type='text' id='dataEmprestimo' class='form-control col-5 mx-3' value='"+dataEmprestimo+"'>"
+										+"<input type='text' id='dataDevolucao' class='form-control col-5 mx-3' value='"+dataDevolucao+"'>"
+									+"</div>"
+								+"</div>"
+								+"<div class='mb-3'>"
+							    	+"<div class='form-check'>"
+							    		+"<input class='form-check-input' type='checkbox' id='disabledFieldsetCheck' disabled>"
+							    		+"<label class='form-check-label' for='disabledFieldsetCheck'>"
+							    			+"Can't check this"
+							    		+"</label>"
+							    	+"</div>"
+							    +"</div>"
+							    +"<button type='submit' class='btn btn-primary'>Submit</button>"
+						    +"</fieldset>"
+					    +"</form>"
+						+"<table class='table'>"
+						+"<thead>"
+							+"<tr>"	
+								+"<th scope='col'> Livro</th>"
+								+"<th scope='col'> Código (SKU)</th>"
+							+"</tr>"
+						+"</thead>"
+						+"<tbody>";
+							for (var i=0; i<emprestimo.length; i++){
+							emprestimoEspecifico+=
+								"<tr>"
+								+"<th scope='row'>"+emprestimo[i].nomeLivro+"</th>"
+								+"<td>"+emprestimo[i].codigoLivro+"</td>";
+							}
+							emprestimoEspecifico +=
+							"</tbody" +
+							"</table>";	
+						return emprestimoEspecifico;
+						$("#emprestimoEspecifico").html(emprestimoEspecifico);
+						
+				}
+				document.getElementById('id02').style.display='block';
+
 		}
+		
+		
 		
 		SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado= function(){
 			
