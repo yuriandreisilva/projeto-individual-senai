@@ -97,8 +97,10 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				float valorMulta = rs.getFloat("valorMulta");
 				int idAluno = rs.getInt("aluno_idAluno");
 				int idUsuario = rs.getInt("adm_usuario_idUsuario");
+				int prorrogacoes = rs.getInt("prorrogacoes");
 				String nomeAluno = rs.getString("nomeAluno");
 				String cpfAluno = rs.getString("cpfAluno");
+				
 				
 				emprestimo = new JsonObject();
 				emprestimo.addProperty("idEmprestimo", idEmprestimo);
@@ -108,8 +110,10 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				emprestimo.addProperty("valorMulta", valorMulta);
 				emprestimo.addProperty("idAluno", idAluno);
 				emprestimo.addProperty("idUsuario", idUsuario);
+				emprestimo.addProperty("prorrogacoes", prorrogacoes);
 				emprestimo.addProperty("nomeAluno", nomeAluno);
 				emprestimo.addProperty("cpfAluno", cpfAluno);
+				
 
 				listaEmprestimos.add(emprestimo);
 			}
@@ -164,7 +168,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 	
 	public boolean prorrogarE(Emprestimo emprestimo) {
 		
- 		String comando = "UPDATE emprestimo_livro SET dataDevolucao=? WHERE idEmprestimo=?";
+ 		String comando = "UPDATE emprestimo_livro SET dataDevolucao=?, prorrogacoes=? WHERE idEmprestimo=?";
  		
  		PreparedStatement p;
  		try {
@@ -172,7 +176,8 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
  			p = this.conexao.prepareStatement(comando);
 
  			p.setString(1, emprestimo.getDataDevolucao());
- 			p.setInt(2, emprestimo.getIdEmprestimo());
+ 			p.setInt(2, emprestimo.getProrrogacoes());
+ 			p.setInt(3, emprestimo.getIdEmprestimo());
  			
  			p.executeUpdate();
 
@@ -186,7 +191,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 	public List<JsonObject> buscarEmprestimoEspecifico(int valorBusca) {
 
 		String comando ="SELECT emprestimo_has_livro.*, emprestimo_livro.dataEmprestimo, emprestimo_livro.dataDevolucao, "
-		+"emprestimo_livro.status, aluno.nomeAluno, aluno.cpfAluno, livro.codigoLivro, livro.idLivro, livro.nomeLivro "
+		+"emprestimo_livro.status, emprestimo_livro.prorrogacoes, aluno.nomeAluno, aluno.cpfAluno, livro.codigoLivro, livro.idLivro, livro.nomeLivro "
 		+"FROM emprestimo_has_livro " 
 		+"INNER JOIN emprestimo_livro ON emprestimo_livro.idEmprestimo = emprestimo_has_livro.emprestimo_livro_idEmprestimo "
 		+"INNER JOIN livro ON livro.idLivro = emprestimo_has_livro.livro_idLivro "
@@ -213,6 +218,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				int qtdLivro = rs.getInt("qtdLivro");
 				int idLivro = rs.getInt("livro_idLivro");
 				int idEmprestimo = rs.getInt("emprestimo_livro_idEmprestimo");
+				int prorrogacoes = rs.getInt("prorrogacoes");
 						
 				
 				emprestimo = new JsonObject();
@@ -226,6 +232,8 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				emprestimo.addProperty("qtdLivro", qtdLivro);
 				emprestimo.addProperty("livro_idLivro", idLivro);
 				emprestimo.addProperty("emprestimo_livro_idEmprestimo", idEmprestimo);
+				emprestimo.addProperty("prorrogacoes", prorrogacoes);
+				
 				
 				dadosEmprestimo.add(emprestimo);
 			}

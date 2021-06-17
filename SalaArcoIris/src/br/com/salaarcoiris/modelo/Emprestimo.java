@@ -17,6 +17,9 @@ public class Emprestimo implements Serializable {
     private String cpfAluno;
     private String codigoLivro;
     private int qtdLivro;
+    private int prorrogacoes;
+    
+    
     
     public int getQtdLivro() {
         return  qtdLivro;
@@ -105,4 +108,12 @@ public class Emprestimo implements Serializable {
     public void setCodigoLivro(String codigoLivro) {
         this.codigoLivro =  codigoLivro;
     }
+
+	public int getProrrogacoes() {
+		return prorrogacoes;
+	}
+
+	public void setProrrogacoes(int prorrogacoes) {
+		this.prorrogacoes = prorrogacoes;
+	}
 }

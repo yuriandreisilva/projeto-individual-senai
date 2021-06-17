@@ -13,6 +13,17 @@ function exibirMsgSuccessRedirecionar(msg){
 	}
 }
 
+function msgSuccessSimple(msg){
+	// Um tipo de alert estilzado, importado para ficar mais interativo
+	Swal.fire({
+		  icon: 'success',
+		  title: 'Processo realizado com sucesso!',
+		  text: msg,
+		  showConfirmButton: false,
+		  timer: 1500
+		})
+}
+
 alertError = function(text){
 	Swal.fire({
 		icon: 'error',
@@ -845,7 +856,7 @@ $(document).ready (function(){
 							+"</div>"
 							+"<div class='col-3 mb-4'>"
 								+"<button class='btn btn-primary btn-block' "
-								+"onclick=\"SALAARCOIRIS.emprestimo.prorrogar('"+idEmprestimo+"' , '"+emprestimo[0].dataDevolucao+"' , '"+colunaDiasAtrasoParam+"')\">Prorrogar</button>"
+								+"onclick=\"SALAARCOIRIS.emprestimo.prorrogar('"+idEmprestimo+"' , '"+emprestimo[0].dataDevolucao+"' , '"+emprestimo[0].prorrogacoes+"' , '"+colunaDiasAtrasoParam+"')\">Prorrogar</button>"
 							+"</div>"
 							+"<div class='col-3 mb-4'>"
 								+"<button type='submit' class='btn btn-success btn-block'>Finalizar</button>"
@@ -862,48 +873,54 @@ $(document).ready (function(){
 				
 
 		}
-		SALAARCOIRIS.emprestimo.prorrogar = function (idEmprestimo, dataDevolucao, colunaDiasAtrasoParam){
-			console.log(idEmprestimo)
-			console.log(dataDevolucao)
-			console.log(colunaDiasAtrasoParam)
+		SALAARCOIRIS.emprestimo.prorrogar = function (idEmprestimo, dataDevolucao, prorrogacoes, colunaDiasAtrasoParam){
 			
-				if (colunaDiasAtrasoParam == 0){
-		           console.log("Prorrogar 7 dias") 
-		           
-		           var novaData = new Date(dataDevolucao)
-//		           Date.parse(dataDevolucao)
-
-		           novaData.setDate(novaData.getDate() + 7);
-					var month = novaData.getMonth()+1;
-					var day = novaData.getDate();
-		
-					var devolucao = novaData.getFullYear() + '/' +
-					(month<10 ? '0' : '') + month + '/' +
-					(day<10 ? '0' : '') + day;
-		           	
-		           	console.log("nova data " + devolucao)
-		           
-		           var emprestimo = new Object();
-					emprestimo.idEmprestimo = idEmprestimo;
-					emprestimo.dataDevolucao = devolucao;
-					
-					$.ajax({
-						type:"PUT",
-						url: SALAARCOIRIS.PATH + "emprestimo/prorrogarE",
-						data:JSON.stringify(emprestimo),
-						success: function(msg){
-							SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada();
-							document.getElementById('id02').style.display='none';
-
-						},
-						error: function(info){
-							console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
-						}
-					});
-		           
-		           
+			switch (parseInt(prorrogacoes)){
+				// Pode prorrogar até 3x
+				case 0: prorrogar = 1;
+					break;
+				case 1: prorrogar = 2;
+					break;
+				case 2: prorrogar = 3;
+					break;
+				default: prorrogar = false;
+			}
+			console.log(prorrogar)
+				if (colunaDiasAtrasoParam != 0){
+					alertError('Seu empréstimo está atrasado! Por favor, cancele a operação ou finalize seu empréstimo.')
+		        }else if (!prorrogar){
+					alertError('Seu empréstimo já foi prorrogado 3x! Por favor, cancele a operação ou finalize seu empréstimo.')
 				}else{
-					alertError('Seu empréstimo está atrasado! Por favor, cancele ou finalize pagando a multa')
+					
+					var novaData = new Date(dataDevolucao)
+
+			           novaData.setDate(novaData.getDate() + 7);
+						var month = novaData.getMonth()+1;
+						var day = novaData.getDate();
+			
+						var devolucao = novaData.getFullYear() + '/' +
+						(month<10 ? '0' : '') + month + '/' +
+						(day<10 ? '0' : '') + day;
+			           	
+			           
+			           var emprestimo = new Object();
+						emprestimo.idEmprestimo = idEmprestimo;
+						emprestimo.dataDevolucao = devolucao;
+						emprestimo.prorrogacoes = prorrogar;
+						
+						$.ajax({
+							type:"PUT",
+							url: SALAARCOIRIS.PATH + "emprestimo/prorrogarE",
+							data:JSON.stringify(emprestimo),
+							success: function(msg){
+								SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada();
+								document.getElementById('id02').style.display='none';
+								msgSuccessSimple('Agora você já pode ler por mais um tempo')
+							},
+							error: function(info){
+								console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
+							}
+						});
 				}
 		}
 		
