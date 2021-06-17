@@ -144,6 +144,33 @@ public class EmprestimoRest extends UtilRest {
  		}
  	}
  	
+ 	@PUT
+ 	@Path("/prorrogarE")
+ 	@Consumes("application/*")
+ 	public Response prorrogarE(String emprestimoParam) {
+ 		try {
+ 			
+ 			Emprestimo emprestimo = new Gson().fromJson(emprestimoParam, Emprestimo.class);
+ 			Conexao conec = new Conexao();
+ 			Connection conexao = conec.abrirConexao();
+ 			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+
+ 			boolean retorno = jdbcEmprestimo.prorrogarE(emprestimo);
+
+ 			String msg = "";
+ 			if (retorno) {
+ 				msg = "Cadastro alterado com sucesso!";
+ 			} else {
+ 				msg = "Erro ao alterar cadastro";
+ 			}
+ 			conec.fecharConexao();
+ 			return this.buildResponse(msg);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 			return this.buildErrorResponse(e.getMessage());
+ 		}
+ 	}
+ 	
  	@GET
 	@Path("/buscarEmprestimoEspecifico")
 	@Consumes("application/*")

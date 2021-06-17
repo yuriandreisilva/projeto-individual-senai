@@ -21,8 +21,10 @@ alertError = function(text){
 	  })
 }
 
+
 var livros = [];
 var pagina = 0;
+var colunaDiasAtrasoParam;
 
 SALAARCOIRIS = new Object();
 
@@ -713,7 +715,9 @@ $(document).ready (function(){
 											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].status+'">').append(status))/* listaDeEmprestimos[i].status */ 
 											.append($('<td class="text-center"><input type="hidden" id="nomeDiasAtraso'+listaDeEmprestimos[i].idEmprestimo+'"></input>').append(colunaDiasAtraso))
 											
-							                .append($('<td class="text-center">'+'<button class="btn btn-danger" id="button-quit-'+listaDeEmprestimos[i].idEmprestimo+'" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick=\'SALAARCOIRIS.emprestimo.quitarE("'+listaDeEmprestimos[i].idEmprestimo +'")\'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">'+
+							                .append($('<td class="text-center">'+'<button class="btn btn-danger" id="button-quit-'+listaDeEmprestimos[i].idEmprestimo+'" data-bs-toggle="modal" data-bs-target="#exampleModal"'
+							                		+'onclick=\'SALAARCOIRIS.emprestimo.quitarE("'+listaDeEmprestimos[i].idEmprestimo +'", "'+colunaDiasAtrasoParam+'")\'>'
+							                		+'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">'+
 							                		  '<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>'+
 							                			  '<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>'+
 							                			'</svg></button>' +'</td>').append())
@@ -769,16 +773,19 @@ $(document).ready (function(){
 	}
 		SALAARCOIRIS.emprestimo.buscarE();
 		
-		SALAARCOIRIS.emprestimo.quitarE = function(idEmprestimo){
+		SALAARCOIRIS.emprestimo.quitarE = function(idEmprestimo, colunaDiasAtrasoParam){
 			valorBusca = idEmprestimo;
-
+			console.log("1º dias atraso = " + colunaDiasAtrasoParam)
+			console.log("idEmprestimo = " + valorBusca)
+			colunaDiasAtrasoParam = colunaDiasAtrasoParam
 				$.ajax({
 					type:"GET",
 					url: SALAARCOIRIS.PATH +"emprestimo/buscarEmprestimoEspecifico",
 					data: "valorBusca="+valorBusca,
 					success: function(emprestimo){
-						dados = JSON.parse(emprestimo);
-						$("#emprestimoEspecifico").html(SALAARCOIRIS.emprestimo.exibirEmprestimoEspecifico(dados));
+						emprestimoDetalhado = JSON.parse(emprestimo);
+						console.log(emprestimoDetalhado)
+						$("#emprestimoEspecifico").html(SALAARCOIRIS.emprestimo.exibirEmprestimoEspecifico(emprestimoDetalhado, colunaDiasAtrasoParam));
 						//						document.frmEditaAluno.idAluno.value = aluno.idAluno;
 					},
 					error: function(info){
@@ -786,89 +793,134 @@ $(document).ready (function(){
 					}
 					
 				});	
-				SALAARCOIRIS.emprestimo.exibirEmprestimoEspecifico = function (emprestimo){
-//					if (colunaDiasAtrasoParam == 0){
-//		            document.getElementById('row-multa').style.display = 'none';
-		//
-//				}else{
-//					document.getElementById('row-multa').style.display = 'block';
-//				}
-//				
-//				document.getElementById('id02').style.display='block';
-//				
-//				document.frmQuitarEmprestimo.idEmprestimo.value = idEmprestimo;
-//				valorMulta = colunaDiasAtrasoParam * 0.50;
-//				valorMulta = valorMulta.toString().replace(".", ",")
-//				
-//				document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
-//				
-//				console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
-					console.log("Entrando em exibirEmprestimoEspecifico()"+ emprestimo)
-					console.log(emprestimo[0].nomeAluno)
+				SALAARCOIRIS.emprestimo.exibirEmprestimoEspecifico = function (emprestimo, colunaDiasAtrasoParam){
+
+					const idEmprestimo = emprestimo[0].emprestimo_livro_idEmprestimo;
 					const dataEmprestimo = emprestimo[0].dataEmprestimo.split('-').reverse().join('/');
 					const dataDevolucao = emprestimo[0].dataDevolucao.split('-').reverse().join('/');
 					var emprestimoEspecifico =
-						"<form>"
-							+"<fieldset disabled>"
-								+"<legend>Disabled fieldset example</legend>"
-								+"<div class='mb-3'>"
-									+"<label for='disabledTextInput' class='form-label'>Aluno</label>"
-									+"<div class='row'>"
-										+"<input type='text' id='nomeAluno' class='form-control col-5 mx-3' value='"+emprestimo[0].nomeAluno+"'>"
-										+"<input type='text' id='cpfAluno' class='form-control col-5 mx-3' value='"+emprestimo[0].cpfAluno+"'>"
-									+"</div>"
-								+"</div>"
-								+"<div class='mb-3'>"
-									+"<div class='row'>"	
-										
-										//https://getbootstrap.com/docs/5.0/forms/layout/
-									+"</div>"
-									+"<div class='row'>"
-										+"<label for='disabledTextInput' class='form-label col-5'>Data Emprestimo</label>"
-										+"<label for='disabledTextInput' class='form-label col-6'>Data Devolução</label>"
-										+"<input type='text' id='dataEmprestimo' class='form-control col-5 mx-3' value='"+dataEmprestimo+"'>"
-										+"<input type='text' id='dataDevolucao' class='form-control col-5 mx-3' value='"+dataDevolucao+"'>"
-									+"</div>"
-								+"</div>"
-								+"<div class='mb-3'>"
-							    	+"<div class='form-check'>"
-							    		+"<input class='form-check-input' type='checkbox' id='disabledFieldsetCheck' disabled>"
-							    		+"<label class='form-check-label' for='disabledFieldsetCheck'>"
-							    			+"Can't check this"
-							    		+"</label>"
-							    	+"</div>"
-							    +"</div>"
-							    +"<button type='submit' class='btn btn-primary'>Submit</button>"
-						    +"</fieldset>"
-					    +"</form>"
-						+"<table class='table'>"
-						+"<thead>"
-							+"<tr>"	
-								+"<th scope='col'> Livro</th>"
-								+"<th scope='col'> Código (SKU)</th>"
-							+"</tr>"
-						+"</thead>"
-						+"<tbody>";
-							for (var i=0; i<emprestimo.length; i++){
-							emprestimoEspecifico+=
-								"<tr>"
-								+"<th scope='row'>"+emprestimo[i].nomeLivro+"</th>"
-								+"<td>"+emprestimo[i].codigoLivro+"</td>";
-							}
-							emprestimoEspecifico +=
-							"</tbody" +
-							"</table>";	
+						"<br>"
+						+"<form id='emprestimoEspecifico' class='row g-3 mt-2'>"
+							+"<div class='col-md-6'>"
+								+"<label for='labelNome' class='form-label'>Nome Aluno</label>"
+								+"<input type='text' class='form-control' id='nomeAluno' value='"+emprestimo[0].nomeAluno+"' disabled>"
+							+"</div>"
+							+"<div class='col-md-6'>"
+								 +"<label for='cpfAluno' class='form-label'>CPF</label>"
+								 +"<input type='text' class='form-control' id='cpfAluno' value='"+emprestimo[0].cpfAluno+"' disabled>"
+							+"</div>"
+					  	
+							+"<div class='col-md-6 mt-2'>"
+								+"<label for='dataEmprestimo' class='form-label'>Data Empréstimo</label>"
+								+"<input type='text' class='form-control' id='dataEmprestimo' value='"+dataEmprestimo+"' disabled>"
+							+"</div>"
+							+"<div class='col-md-6 mt-2'>"
+								 +"<label for='dataDevolucao' class='form-label'>Data Devolução</label>"
+								 +"<input type='text' class='form-control' id='dataDevolucao' value='"+dataDevolucao+"' disabled>"
+							+"</div>"
+						+"</form>"
+						
+						+"<div class='table-responsive'>"
+							+"<table class='table mt-3 table-bordered rounded-3'>"
+							+"<thead>"
+								+"<tr>"	
+									+"<th scope='col'> Nome Livro</th>"
+									+"<th scope='col'> Código (SKU)</th>"
+								+"</tr>"
+							+"</thead>"
+							+"<tbody>";
+								for (var i=0; i<emprestimo.length; i++){
+								emprestimoEspecifico+=
+									"<tr>"
+									+"<th scope='row'>"+emprestimo[i].nomeLivro+"</th>"
+									+"<td>"+emprestimo[i].codigoLivro+"</td>";
+								}
+								emprestimoEspecifico +=
+								"</tbody>"
+								+"</table>"
+						+"</div>"
+						+"<div class='row g-3 justify-content-center'>"
+							+"<div class='col-3 mb-4'>"
+								+"<button class='btn btn-secondary btn-block' onclick='fecharModal()'>Cancelar</button>"
+							+"</div>"
+							+"<div class='col-3 mb-4'>"
+								+"<button class='btn btn-primary btn-block' "
+								+"onclick=\"SALAARCOIRIS.emprestimo.prorrogar('"+idEmprestimo+"' , '"+emprestimo[0].dataDevolucao+"' , '"+colunaDiasAtrasoParam+"')\">Prorrogar</button>"
+							+"</div>"
+							+"<div class='col-3 mb-4'>"
+								+"<button type='submit' class='btn btn-success btn-block'>Finalizar</button>"
+							+"</div>"
+						+"</div>";
+							
+							
 						return emprestimoEspecifico;
 						$("#emprestimoEspecifico").html(emprestimoEspecifico);
 						
 				}
-				document.getElementById('id02').style.display='block';
+				abrirModal();
+				
+				
 
 		}
+		SALAARCOIRIS.emprestimo.prorrogar = function (idEmprestimo, dataDevolucao, colunaDiasAtrasoParam){
+			console.log(idEmprestimo)
+			console.log(dataDevolucao)
+			console.log(colunaDiasAtrasoParam)
+			
+				if (colunaDiasAtrasoParam == 0){
+		           console.log("Prorrogar 7 dias") 
+		           
+		           var novaData = new Date(dataDevolucao)
+//		           Date.parse(dataDevolucao)
+
+		           novaData.setDate(novaData.getDate() + 7);
+					var month = novaData.getMonth()+1;
+					var day = novaData.getDate();
+		
+					var devolucao = novaData.getFullYear() + '/' +
+					(month<10 ? '0' : '') + month + '/' +
+					(day<10 ? '0' : '') + day;
+		           	
+		           	console.log("nova data " + devolucao)
+		           
+		           var emprestimo = new Object();
+					emprestimo.idEmprestimo = idEmprestimo;
+					emprestimo.dataDevolucao = devolucao;
+					
+					$.ajax({
+						type:"PUT",
+						url: SALAARCOIRIS.PATH + "emprestimo/prorrogarE",
+						data:JSON.stringify(emprestimo),
+						success: function(msg){
+							SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada();
+							document.getElementById('id02').style.display='none';
+
+						},
+						error: function(info){
+							console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
+						}
+					});
+		           
+		           
+				}else{
+					alertError('Seu empréstimo está atrasado! Por favor, cancele ou finalize pagando a multa')
+				}
+		}
+		
+//		
+//		document.getElementById('id02').style.display='block';
+//		
+//		document.frmQuitarEmprestimo.idEmprestimo.value = idEmprestimo;
+//		valorMulta = colunaDiasAtrasoParam * 0.50;
+//		valorMulta = valorMulta.toString().replace(".", ",")
+//		
+//		document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
+//		
+//		console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
 		
 		
 		
-		SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado= function(){
+		SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado = function(){
 			
 			idEmprestimo = document.frmQuitarEmprestimo.idEmprestimo.value;
 			
@@ -900,6 +952,14 @@ $(document).ready (function(){
 		})
 		node1.remove();
 
+	}
+	
+	function fecharModal(){
+		document.getElementById('id02').style.display='none';
+	}
+	
+	function abrirModal(){
+		document.getElementById('id02').style.display='block';
 	}
 	
 	
