@@ -924,41 +924,38 @@ $(document).ready (function(){
 				}
 		}
 		
-//		
-//		document.getElementById('id02').style.display='block';
-//		
-//		document.frmQuitarEmprestimo.idEmprestimo.value = idEmprestimo;
-//		valorMulta = colunaDiasAtrasoParam * 0.50;
-//		valorMulta = valorMulta.toString().replace(".", ",")
-//		
-//		document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
-//		
-//		console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
-		
-		
-		
-		SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado = function(){
+		SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado = function(idEmprestimo, colunaDiasAtrasoParam){
 			
-			idEmprestimo = document.frmQuitarEmprestimo.idEmprestimo.value;
+			if (colunaDiasAtrasoParam > 0){
+	
+//				valorMulta = colunaDiasAtrasoParam * 0.50;
+//				valorMultaMensagem = valorMulta.toString().replace(".", ",")
+//				
+//				document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
+//				
+//				console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
+			}else {
+				console.log("prorroga!!!")
+			}
 			
 			var emprestimo = new Object();
 			emprestimo.idEmprestimo = idEmprestimo;
-			
-			$.ajax({
-				type:"PUT",
-				url: SALAARCOIRIS.PATH + "emprestimo/quitarE",
-				data:JSON.stringify(emprestimo),
-				success: function(msg){
-					SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada();
-					document.getElementById('id02').style.display='none';
-//					exibirMsgSuccessRedirecionar();
-				},
-				error: function(info){
-					console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
-				}
-			});
-		}
 
+			
+//			$.ajax({
+//				type:"PUT",
+//				url: SALAARCOIRIS.PATH + "emprestimo/quitarE",
+//				data:JSON.stringify(emprestimo),
+//				success: function(msg){
+//					SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada();
+//					document.getElementById('id02').style.display='none';
+//					msgSuccessSimple('Empréstimo finalizado.')
+//				},
+//				error: function(info){
+//					console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
+//				}
+//			});
+		}
 
 });
 	
