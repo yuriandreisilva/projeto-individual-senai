@@ -22,6 +22,7 @@ import com.google.gson.JsonObject;
 import br.com.salaarcoiris.bd.Conexao;
 import br.com.salaarcoiris.jdbc.JDBCLivroDAO;
 import br.com.salaarcoiris.modelo.Livro;
+import br.com.salaarcoiris.modelo.LivroEmprestado;
 
 //INDICA O OBJETO POR LOCAL: LIVRO
 @Path("livro")
@@ -146,6 +147,26 @@ public class LivroRest extends UtilRest {
 			JDBCLivroDAO jdbcLivro = new JDBCLivroDAO(conexao);
 
 			boolean retorno = jdbcLivro.alterarL(livro);
+
+			conec.fecharConexao();
+			return this.buildResponse(retorno);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	@PUT
+	@Path("/alterarEstoque")
+	@Consumes("application/*")
+	public Response alterarEstoque(String livroParam) {
+		try {
+			Livro[] livro = new Gson().fromJson(livroParam, Livro[].class);
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCLivroDAO jdbcLivro = new JDBCLivroDAO(conexao);
+
+			boolean retorno = jdbcLivro.alterarEstoque(livro);
 
 			conec.fecharConexao();
 			return this.buildResponse(retorno);

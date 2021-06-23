@@ -66,26 +66,26 @@ public class LivroEmprestadoRest extends UtilRest {
 		}
 	}
 
-// 	@GET
-// 	@Path("/buscarLE")
-// 	@Consumes("application/*")
-// 	@Produces(MediaType.APPLICATION_JSON)
-// 	public Response buscarLE(@QueryParam("valorBusca") String nome) {
-// 		try {
-// 			List<JsonObject> listaLivroEmprestados = new ArrayList<JsonObject>();
-// 			Conexao conec = new Conexao();
-// 			Connection conexao = conec.abrirConexao();
-// 			JDBCLivroEmprestadoDAO jdbcLivroEmprestado = new JDBCLivroEmprestadoDAO(conexao);
-// 			listaLivroEmprestados = jdbcLivroEmprestado.buscarLE(nome);
-// 			conec.fecharConexao();
+ 	@GET
+ 	@Path("/buscarLE")
+ 	@Consumes("application/*")
+ 	@Produces(MediaType.APPLICATION_JSON)
+ 	public Response buscarLE(@QueryParam("valorBusca") String id) {
+ 		try {
+ 			List<JsonObject> listaLivroEmprestados = new ArrayList<JsonObject>();
+ 			Conexao conec = new Conexao();
+ 			Connection conexao = conec.abrirConexao();
+ 			JDBCLivroEmprestadoDAO jdbcLivroEmprestado = new JDBCLivroEmprestadoDAO(conexao);
+ 			listaLivroEmprestados = jdbcLivroEmprestado.buscarLE(id);
+ 			conec.fecharConexao();
 
-// 			String json = new Gson().toJson(listaLivroEmprestados);
-// 			return this.buildResponse(json);
-// 		} catch (Exception e) {
-// 			e.printStackTrace();
-// 			return this.buildErrorResponse(e.getMessage());
-// 		}
-// 	}
+ 			String json = new Gson().toJson(listaLivroEmprestados);
+ 			return this.buildResponse(json);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 			return this.buildErrorResponse(e.getMessage());
+ 		}
+ 	}
 
 // 	@DELETE
 // 	@Path("/excluir/{idLivroEmprestado}")

@@ -786,8 +786,8 @@ $(document).ready (function(){
 		
 		SALAARCOIRIS.emprestimo.quitarE = function(idEmprestimo, colunaDiasAtrasoParam){
 			valorBusca = idEmprestimo;
-			console.log("1º dias atraso = " + colunaDiasAtrasoParam)
-			console.log("idEmprestimo = " + valorBusca)
+//			console.log("1º dias atraso = " + colunaDiasAtrasoParam)
+//			console.log("idEmprestimo = " + valorBusca)
 			colunaDiasAtrasoParam = colunaDiasAtrasoParam
 				$.ajax({
 					type:"GET",
@@ -809,6 +809,7 @@ $(document).ready (function(){
 					const idEmprestimo = emprestimo[0].emprestimo_livro_idEmprestimo;
 					const dataEmprestimo = emprestimo[0].dataEmprestimo.split('-').reverse().join('/');
 					const dataDevolucao = emprestimo[0].dataDevolucao.split('-').reverse().join('/');
+					idModal = "id02";
 					var emprestimoEspecifico =
 						"<br>"
 						+"<form id='emprestimoEspecifico' class='row g-3 mt-2'>"
@@ -852,14 +853,15 @@ $(document).ready (function(){
 						+"</div>"
 						+"<div class='row g-3 justify-content-center'>"
 							+"<div class='col-3 mb-4'>"
-								+"<button class='btn btn-secondary btn-block' onclick='fecharModal()'>Cancelar</button>"
+								+"<button class='btn btn-secondary btn-block' onclick='fecharModal(idModal)'>Cancelar</button>"
 							+"</div>"
 							+"<div class='col-3 mb-4'>"
 								+"<button class='btn btn-primary btn-block' "
 								+"onclick=\"SALAARCOIRIS.emprestimo.prorrogar('"+idEmprestimo+"' , '"+emprestimo[0].dataDevolucao+"' , '"+emprestimo[0].prorrogacoes+"' , '"+colunaDiasAtrasoParam+"')\">Prorrogar</button>"
 							+"</div>"
 							+"<div class='col-3 mb-4'>"
-								+"<button type='submit' class='btn btn-success btn-block'>Finalizar</button>"
+								+"<button class='btn btn-success btn-block' "
+								+"onclick=\"SALAARCOIRIS.emprestimo.verificarMulta('"+idEmprestimo+"' , '"+colunaDiasAtrasoParam+"')\">Finalizar</button>"
 							+"</div>"
 						+"</div>";
 							
@@ -868,7 +870,8 @@ $(document).ready (function(){
 						$("#emprestimoEspecifico").html(emprestimoEspecifico);
 						
 				}
-				abrirModal();
+				id = 'id02';
+				abrirModal(id);
 				
 				
 
@@ -885,7 +888,7 @@ $(document).ready (function(){
 					break;
 				default: prorrogar = false;
 			}
-			console.log(prorrogar)
+//			console.log(prorrogar)
 				if (colunaDiasAtrasoParam != 0){
 					alertError('Seu empréstimo está atrasado! Por favor, cancele a operação ou finalize seu empréstimo.')
 		        }else if (!prorrogar){
@@ -924,23 +927,57 @@ $(document).ready (function(){
 				}
 		}
 		
-		SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado = function(idEmprestimo, colunaDiasAtrasoParam){
-			
+		SALAARCOIRIS.emprestimo.verificarMulta = function(idEmprestimo, colunaDiasAtrasoParam){
+			console.log('entrando e : '+ colunaDiasAtrasoParam)
+			idEmprestimo = idEmprestimo;
+			let valorMulta = 0;
 			if (colunaDiasAtrasoParam > 0){
-	
-//				valorMulta = colunaDiasAtrasoParam * 0.50;
-//				valorMultaMensagem = valorMulta.toString().replace(".", ",")
+				idModal = 'id03';				
+				valorMulta = colunaDiasAtrasoParam * 0.50;
+				valorMultaMensagem = valorMulta.toString().replace(".", ",")
+				
+				let modalMulta = 
+//				+"<form id='modalMulta' class='row g-3 mt-2'>"
+					+"<div class='col-md-12 col-lg-12'>"
+						+"<label for='labelNome' class='form-label'>Valor multa:</label>"
+						+"<input type='text' class='form-control' id='nomeAluno' value='R$ "+valorMultaMensagem+"' disabled>"
+						+"<label for='labelNome' class='form-label'>Deseja quitar a multa?</label>"
+					+"</div>"
+					+"<div class='row g-3 justify-content-center'>"
+					+"<div class='col-3 mb-4'>"
+						+"<button class='btn btn-secondary btn-block' onclick=\"document.getElementById('id03').style.display='none'\">Cancelar</button>"
+					+"</div>"
+					+"<div class='col-3 mb-4'>"
+						+"<button type='submit' class='btn btn-success btn-block'" 
+						+"onclick=\"SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado('"+idEmprestimo+"' , '"+valorMulta+"')\">Finalizar</button>"
+					+"</div>"
+					+"</div>";
+//				+"</form>";
+				
+//				return modalMulta;
+				$("#modalMulta").html(modalMulta);
+				abrirModal(idModal);
 //				
 //				document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
 //				
 //				console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
 			}else {
-				console.log("prorroga!!!")
+				SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado(idEmprestimo, valorMulta)
 			}
 			
+			
+		}
+		
+		SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado = function(idEmprestimo, valorMulta){
+			
+
+			// Update Livros:
+			SALAARCOIRIS.emprestimo.buscarEstoqueLivros(idEmprestimo);
+			
+			// Update Status Empréstimo
 			var emprestimo = new Object();
 			emprestimo.idEmprestimo = idEmprestimo;
-
+//			console.log('quitarEmprestimoConfirmado()' + idEmprestimo + ' / ' + valorMulta)
 			
 //			$.ajax({
 //				type:"PUT",
@@ -956,6 +993,51 @@ $(document).ready (function(){
 //				}
 //			});
 		}
+		SALAARCOIRIS.emprestimo.buscarEstoqueLivros = function(idEmprestimo){
+						
+			$.ajax({
+				type:"GET",
+				url: SALAARCOIRIS.PATH +"livroEmprestado/buscarLE",
+				data: "valorBusca="+idEmprestimo,
+				success: function(qtdLivroDevolvida){
+					qtd = JSON.parse(qtdLivroDevolvida);
+					SALAARCOIRIS.emprestimo.atualizarEstoqueLivros(qtd)
+				},
+				error: function(info){
+					console.log("Erro ao buscar cadastro para responsável: "+info.status+" - "+info.statusText);
+				}
+				
+			});
+			SALAARCOIRIS.emprestimo.atualizarEstoqueLivros = function(qtdEstoqueLivros){
+				
+				console.log(qtdEstoqueLivros);
+				
+				var livro = new Object();
+				
+				for (var i=0; i<qtdEstoqueLivros.length; i++){
+					console.log(qtdEstoqueLivros[i].livro_idLivro)
+					console.log(qtdEstoqueLivros[i].qtdLivro)
+					livro.idLivro =+ qtdEstoqueLivros[i].livro_idLivro;
+					livro.qtdEstoque =+ qtdEstoqueLivros[i].qtdLivro;
+				}
+				
+				
+				console.log(livro)
+//				
+//				$.ajax({
+//					type:"PUT",
+//					url: SALAARCOIRIS.PATH + "livro/alterarEstoque",
+//					data:JSON.stringify(livrosUpdate),
+//					success: function(msg){
+//						console.log('alterado estoque')
+//					},
+//					error: function(info){
+//						console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
+//					}
+//				});
+			}
+			
+		}
 
 });
 	
@@ -968,14 +1050,12 @@ $(document).ready (function(){
 
 	}
 	
+	function abrirModal(id){
+		document.getElementById(id).style.display='block';
+	}
 	function fecharModal(){
-		document.getElementById('id02').style.display='none';
+		document.getElementById(id).style.display='none';
 	}
-	
-	function abrirModal(){
-		document.getElementById('id02').style.display='block';
-	}
-	
 	
 
 	

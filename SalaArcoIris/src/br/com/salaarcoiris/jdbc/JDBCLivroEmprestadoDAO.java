@@ -66,52 +66,37 @@ public class JDBCLivroEmprestadoDAO implements LivroEmprestadoDAO {
 		return true;
 	}
 
-// 	public List<JsonObject> buscarLE(String nome) {
+ 	public List<JsonObject> buscarLE(String id) {
 
-// 		String comando = "SELECT * " + "FROM emprestimo_has_livro ";
-// 		if (nome != "") {
-// 			comando += "WHERE emprestimo_has_livro.nomeLivroEmprestado LIKE '%" + nome + "%' ";
-// 		}
-// 		comando += "ORDER BY emprestimo_has_livro.nomeLivroEmprestado ASC";
-// 		List<JsonObject> listaLivroEmprestados = new ArrayList<JsonObject>();
-// 		JsonObject livroEmprestado = null;
+ 		String comando = "SELECT livro_idLivro, qtdLivro FROM emprestimo_has_livro WHERE emprestimo_livro_idEmprestimo = '" + id + "';";
+// 		SELECT livro_idLivro, qtdLivro FROM emprestimo_has_livro WHERE emprestimo_livro_idEmprestimo = 165;
+ 		
+ 		List<JsonObject> listaLivroEmprestados = new ArrayList<JsonObject>();
+ 		JsonObject livroEmprestado = null;
 
-// 		try {
+ 		try {
 
-// 			Statement stmt = conexao.createStatement();
-// 			ResultSet rs = stmt.executeQuery(comando);
+ 			Statement stmt = conexao.createStatement();
+ 			ResultSet rs = stmt.executeQuery(comando);
 
-// 			while (rs.next()) {
+ 			while (rs.next()) {
 
-// 				int id = rs.getInt("idLivroEmprestado");
-// 				String cpfLivroEmprestado = rs.getString("cpfLivroEmprestado");
-// 				String nomeLivroEmprestado = rs.getString("nomeLivroEmprestado");
-// 				String dataNasc = rs.getString("dataNasc");
-// 				String email = rs.getString("email");
-// 				int senha = rs.getInt("senha");
-// 				String statusResp = rs.getString("statusResp");
-// 				String nomeResp = rs.getString("nomeResp");
-// 				String dataNascResp = rs.getString("dataNascResp");
+ 				int livro_idLivro = rs.getInt("livro_idLivro");
+ 				int qtdLivro = rs.getInt("qtdLivro");
+ 				
 
-// 				livroEmprestado = new JsonObject();
-// 				livroEmprestado.addProperty("idLivroEmprestado", id);
-// 				livroEmprestado.addProperty("cpfLivroEmprestado", cpfLivroEmprestado);
-// 				livroEmprestado.addProperty("nomeLivroEmprestado", nomeLivroEmprestado);
-// 				livroEmprestado.addProperty("dataNasc", dataNasc);
-// 				livroEmprestado.addProperty("email", email);
-// 				livroEmprestado.addProperty("senha", senha);
-// 				livroEmprestado.addProperty("statusResp", statusResp);
-// 				livroEmprestado.addProperty("nomeResp", nomeResp);
-// 				livroEmprestado.addProperty("dataNascResp", dataNascResp);
+ 				livroEmprestado = new JsonObject();
+ 				livroEmprestado.addProperty("livro_idLivro", livro_idLivro);
+ 				livroEmprestado.addProperty("qtdLivro", qtdLivro);
+ 				
+ 				listaLivroEmprestados.add(livroEmprestado);
+ 			}
 
-// 				listaLivroEmprestados.add(livroEmprestado);
-// 			}
-
-// 		} catch (Exception e) {
-// 			e.printStackTrace();
-// 		}
-// 		return listaLivroEmprestados;
-// 	}
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}
+ 		return listaLivroEmprestados;
+ 	}
 
 // 	// DELETE - livroEmprestado
 

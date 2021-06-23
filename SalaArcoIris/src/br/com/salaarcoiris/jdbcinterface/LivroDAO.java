@@ -3,6 +3,7 @@ package br.com.salaarcoiris.jdbcinterface;
 import java.util.List;
 import com.google.gson.JsonObject;
 import br.com.salaarcoiris.modelo.Livro;
+import br.com.salaarcoiris.modelo.LivroEmprestado;
 
 // INTERFACE PARA PADRONIZAR O PROJETO
 // OBRIGARÁ O JDBC A TRABALHAR DESTA FORMA
@@ -13,5 +14,6 @@ public interface LivroDAO {
 	public boolean deletarL(int idLivro);
 	public Livro checkIdL(int idLivro);
 	public boolean alterarL(Livro livro);
+	public boolean alterarEstoque(Livro[] livro);
 	
 }
