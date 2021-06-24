@@ -6,6 +6,7 @@
 	<div class="head">    
 		<!-- importa head -->
 	</div>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
 </head>
 
 <header>
@@ -25,8 +26,21 @@
 				<div class="input-group mb-3">
 					<input type="text" class="form-control mx-1" placeholder="Pesquisar" aria-label="Pesquisar username" aria-describedby="button-addon2" id="buscaEmprestimo" onkeyup="SALAARCOIRIS.emprestimo.buscarE()">
 					<a href="cadastrar.html" class="btn btn-primary mx-1">Cadastrar novo</a>
+					
 				</div>
 			</div>
+		</div>
+		
+		
+		<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+		  <input type="checkbox" class="btn-check" id="status1" autocomplete="off">
+		  <label class="btn btn-outline-primary" for="status1">Em andamento</label>
+		
+		  <input type="checkbox" class="btn-check" id="status0" autocomplete="off">
+		  <label class="btn btn-outline-primary" for="status0">Atrasados</label>
+		
+		  <input type="checkbox" class="btn-check" id="status2" autocomplete="off">
+		  <label class="btn btn-outline-primary" for="status2">Finalizados</label>
 		</div>
 		<!-- Importação lista de empmréstimos -->
 		<div class="container-fluid" id="listaEmprestimos"></div>
@@ -38,6 +52,7 @@
 		</div>
 	</div>
 </main>
+
 
 <div id="id01" class="w3-modal">
 	<div class="w3-modal-content">

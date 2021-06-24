@@ -173,29 +173,27 @@ public class JDBCLivroDAO implements LivroDAO {
 		return true;
 	}
 	
-	public boolean alterarEstoque(Livro livro) {
+	public boolean alterarEstoque(Livro[] livro) {
 		String comando = "UPDATE livro SET qtdEstoque = qtdEstoque + ?  where idLivro = ?;";
 		PreparedStatement p;
+		
+		
 		try {
 
-			p = this.conexao.prepareStatement(comando);
-
-			p.setInt(1, livro.getQtdEstoque());
-			p.setInt(2, livro.getIdLivro());
-			
-
-			p.executeUpdate();
+			for (int i = 0; i < livro.length; i++) {
+				p = this.conexao.prepareStatement(comando);
+	
+				p.setInt(1, livro[i].getQtdEstoque());
+				p.setInt(2, livro[i].getIdLivro());
+				
+	
+				p.executeUpdate();
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public boolean alterarEstoque(Livro[] livro) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

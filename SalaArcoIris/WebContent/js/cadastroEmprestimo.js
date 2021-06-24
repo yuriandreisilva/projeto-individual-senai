@@ -163,7 +163,6 @@ $(document).ready (function(){
 									})
 								}
 								
-								
 								$.ajax({
 									type: "POST",
 									url: SALAARCOIRIS.PATH + "livroEmprestado/inserirLE",
@@ -231,7 +230,7 @@ $(document).ready (function(){
 		SALAARCOIRIS.emprestimo.exibirAluno = function(listaDeAlunos){
 			var tabela = 
 				"<br>"+
-				"<table class='table table-bordered'>"+
+				"<table class='table table-responsive table-bordered'>"+
 					"<thead>"+
 						"<tr class='text-center'>"+	
 							"<th scope='col'> Nome</th>"+
@@ -353,7 +352,7 @@ $(document).ready (function(){
 			
 			var tabelaLivro = 
 				"<br>"+
-				"<table class='table table-bordered'>"+
+				"<table class='table table-responsive table-bordered'>"+
 					"<thead>"+
 						"<tr>"+	
 							"<th scope='col-xs-5 col-sm-5 col-md-5 col-lg-5'> Livro</th>"+
@@ -576,6 +575,9 @@ $(document).ready (function(){
 			// ******************************************************
 			
 			SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada = function(listaDeEmprestimos){
+				
+				
+				
 				var valorBusca = $("#buscaEmprestimo").val();
 				
 				if (!isNaN(parseFloat(valorBusca)) && isFinite(valorBusca) ) {
@@ -600,10 +602,11 @@ $(document).ready (function(){
 				});
 				
 				SALAARCOIRIS.emprestimo.exibirEmprestimo = function(listaDeEmprestimos){
-					
-					var tabela = 
-						"<br>"+
-						"<table class='table table-bordered'>"+
+					console.log($('#status1').value)
+					if( $("#id_element").is(":checked") == true){ value = "checked"	}else{value= "not-check"} 
+
+					var tabela = "<br>"+
+						"<table class='table table-responsive-sm table-bordered'>"+
 							"<thead>"+
 								"<tr class='text-center'>"+	
 									"<th scope='col-lg-3'> Nome</th>"+
@@ -618,6 +621,8 @@ $(document).ready (function(){
 			
 					if(listaDeEmprestimos != undefined && listaDeEmprestimos.length >0){
 			
+						
+						
 						for (var i=0; i<listaDeEmprestimos.length; i++){
 							tabela+="<tr>"+
 							"<th scope='row'>"+listaDeEmprestimos[i].nomeAluno+"</th>"+
@@ -833,11 +838,12 @@ $(document).ready (function(){
 						+"</form>"
 						
 						+"<div class='table-responsive'>"
-							+"<table class='table mt-3 table-bordered rounded-3'>"
+							+"<table class='table mt-3 table-bordered table-responsive rounded-3'>"
 							+"<thead>"
 								+"<tr>"	
 									+"<th scope='col'> Nome Livro</th>"
 									+"<th scope='col'> Código (SKU)</th>"
+									+"<th scope='col'> Estoque</th>"
 								+"</tr>"
 							+"</thead>"
 							+"<tbody>";
@@ -845,7 +851,8 @@ $(document).ready (function(){
 								emprestimoEspecifico+=
 									"<tr>"
 									+"<th scope='row'>"+emprestimo[i].nomeLivro+"</th>"
-									+"<td>"+emprestimo[i].codigoLivro+"</td>";
+									+"<td>"+emprestimo[i].codigoLivro+"</td>"
+									+"<td>"+emprestimo[i].qtdLivro+"</td>";
 								}
 								emprestimoEspecifico +=
 								"</tbody>"
@@ -974,24 +981,26 @@ $(document).ready (function(){
 			// Update Livros:
 			SALAARCOIRIS.emprestimo.buscarEstoqueLivros(idEmprestimo);
 			
+
 			// Update Status Empréstimo
 			var emprestimo = new Object();
 			emprestimo.idEmprestimo = idEmprestimo;
 //			console.log('quitarEmprestimoConfirmado()' + idEmprestimo + ' / ' + valorMulta)
+			$.ajax({
+				type:"PUT",
+				url: SALAARCOIRIS.PATH + "emprestimo/quitarE",
+				data:JSON.stringify(emprestimo),
+				success: function(msg){
+					SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada();
+					document.getElementById('id02').style.display='none';
+					document.getElementById('id03').style.display='none';
+					msgSuccessSimple('Empréstimo finalizado.')
+				},
+				error: function(info){
+					console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
+				}
+			});
 			
-//			$.ajax({
-//				type:"PUT",
-//				url: SALAARCOIRIS.PATH + "emprestimo/quitarE",
-//				data:JSON.stringify(emprestimo),
-//				success: function(msg){
-//					SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada();
-//					document.getElementById('id02').style.display='none';
-//					msgSuccessSimple('Empréstimo finalizado.')
-//				},
-//				error: function(info){
-//					console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
-//				}
-//			});
 		}
 		SALAARCOIRIS.emprestimo.buscarEstoqueLivros = function(idEmprestimo){
 						
@@ -1010,31 +1019,25 @@ $(document).ready (function(){
 			});
 			SALAARCOIRIS.emprestimo.atualizarEstoqueLivros = function(qtdEstoqueLivros){
 				
-				console.log(qtdEstoqueLivros);
-				
-				var livro = new Object();
-				
-				for (var i=0; i<qtdEstoqueLivros.length; i++){
-					console.log(qtdEstoqueLivros[i].livro_idLivro)
-					console.log(qtdEstoqueLivros[i].qtdLivro)
-					livro.idLivro =+ qtdEstoqueLivros[i].livro_idLivro;
-					livro.qtdEstoque =+ qtdEstoqueLivros[i].qtdLivro;
-				}
-				
-				
-				console.log(livro)
-//				
-//				$.ajax({
-//					type:"PUT",
-//					url: SALAARCOIRIS.PATH + "livro/alterarEstoque",
-//					data:JSON.stringify(livrosUpdate),
-//					success: function(msg){
-//						console.log('alterado estoque')
-//					},
-//					error: function(info){
-//						console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
-//					}
-//				});
+				let livros = [];
+				qtdEstoqueLivros.map(item => {
+					  livros.push({
+					    'idLivro': item.livro_idLivro,
+					    'qtdEstoque': item.qtdLivro
+					  });
+					});
+
+				$.ajax({
+					type:"PUT",
+					url: SALAARCOIRIS.PATH + "livro/alterarEstoque",
+					data:JSON.stringify(livros),
+					success: function(msg){
+						console.log('alterado estoque')
+					},
+					error: function(info){
+						console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);
+					}
+				});
 			}
 			
 		}
