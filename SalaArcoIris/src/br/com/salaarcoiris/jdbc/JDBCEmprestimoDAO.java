@@ -125,6 +125,331 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		return listaEmprestimos;
 	}
 	
+	/* ************************************************************* */ 
+	public List<JsonObject>buscarEmprestimoAndamento(String valorBusca) {
+
+		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
+		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
+		if (valorBusca != "") {
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=1";
+		}
+		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
+		
+		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+		JsonObject emprestimo = null;
+
+		try {
+
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+
+			while (rs.next()) {
+
+				int idEmprestimo = rs.getInt("idEmprestimo");
+				String dataEmprestimo = rs.getString("dataEmprestimo");
+				String dataDevolucao = rs.getString("dataDevolucao");
+				int status = rs.getInt("status");
+				float valorMulta = rs.getFloat("valorMulta");
+				int idAluno = rs.getInt("aluno_idAluno");
+				int idUsuario = rs.getInt("adm_usuario_idUsuario");
+				int prorrogacoes = rs.getInt("prorrogacoes");
+				String nomeAluno = rs.getString("nomeAluno");
+				String cpfAluno = rs.getString("cpfAluno");
+				
+				
+				emprestimo = new JsonObject();
+				emprestimo.addProperty("idEmprestimo", idEmprestimo);
+				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
+				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("status", status);
+				emprestimo.addProperty("valorMulta", valorMulta);
+				emprestimo.addProperty("idAluno", idAluno);
+				emprestimo.addProperty("idUsuario", idUsuario);
+				emprestimo.addProperty("prorrogacoes", prorrogacoes);
+				emprestimo.addProperty("nomeAluno", nomeAluno);
+				emprestimo.addProperty("cpfAluno", cpfAluno);
+				
+
+				listaEmprestimos.add(emprestimo);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaEmprestimos;
+	}
+	/* ************************************************************* */ 
+	public List<JsonObject>buscarEmprestimoAtrasado(String valorBusca) {
+
+		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
+		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
+		if (valorBusca != "") {
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=0";
+		}
+		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
+		
+		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+		JsonObject emprestimo = null;
+
+		try {
+
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+
+			while (rs.next()) {
+
+				int idEmprestimo = rs.getInt("idEmprestimo");
+				String dataEmprestimo = rs.getString("dataEmprestimo");
+				String dataDevolucao = rs.getString("dataDevolucao");
+				int status = rs.getInt("status");
+				float valorMulta = rs.getFloat("valorMulta");
+				int idAluno = rs.getInt("aluno_idAluno");
+				int idUsuario = rs.getInt("adm_usuario_idUsuario");
+				int prorrogacoes = rs.getInt("prorrogacoes");
+				String nomeAluno = rs.getString("nomeAluno");
+				String cpfAluno = rs.getString("cpfAluno");
+				
+				
+				emprestimo = new JsonObject();
+				emprestimo.addProperty("idEmprestimo", idEmprestimo);
+				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
+				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("status", status);
+				emprestimo.addProperty("valorMulta", valorMulta);
+				emprestimo.addProperty("idAluno", idAluno);
+				emprestimo.addProperty("idUsuario", idUsuario);
+				emprestimo.addProperty("prorrogacoes", prorrogacoes);
+				emprestimo.addProperty("nomeAluno", nomeAluno);
+				emprestimo.addProperty("cpfAluno", cpfAluno);
+				
+
+				listaEmprestimos.add(emprestimo);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaEmprestimos;
+	}
+	/* ************************************************************* */ 
+	public List<JsonObject>buscarEmprestimoFinalizado(String valorBusca) {
+
+		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
+		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
+		if (valorBusca != "") {
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=2";
+		}
+		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
+		
+		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+		JsonObject emprestimo = null;
+
+		try {
+
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+
+			while (rs.next()) {
+
+				int idEmprestimo = rs.getInt("idEmprestimo");
+				String dataEmprestimo = rs.getString("dataEmprestimo");
+				String dataDevolucao = rs.getString("dataDevolucao");
+				int status = rs.getInt("status");
+				float valorMulta = rs.getFloat("valorMulta");
+				int idAluno = rs.getInt("aluno_idAluno");
+				int idUsuario = rs.getInt("adm_usuario_idUsuario");
+				int prorrogacoes = rs.getInt("prorrogacoes");
+				String nomeAluno = rs.getString("nomeAluno");
+				String cpfAluno = rs.getString("cpfAluno");
+				
+				
+				emprestimo = new JsonObject();
+				emprestimo.addProperty("idEmprestimo", idEmprestimo);
+				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
+				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("status", status);
+				emprestimo.addProperty("valorMulta", valorMulta);
+				emprestimo.addProperty("idAluno", idAluno);
+				emprestimo.addProperty("idUsuario", idUsuario);
+				emprestimo.addProperty("prorrogacoes", prorrogacoes);
+				emprestimo.addProperty("nomeAluno", nomeAluno);
+				emprestimo.addProperty("cpfAluno", cpfAluno);
+				
+
+				listaEmprestimos.add(emprestimo);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaEmprestimos;
+	}
+	/* ************************************************************* */ 
+	public List<JsonObject>buscarEmprestimoAndamentoAtrasado(String valorBusca) {
+
+		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
+		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
+		if (valorBusca != "") {
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=1 OR status=0";
+		}
+		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
+		
+		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+		JsonObject emprestimo = null;
+
+		try {
+
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+
+			while (rs.next()) {
+
+				int idEmprestimo = rs.getInt("idEmprestimo");
+				String dataEmprestimo = rs.getString("dataEmprestimo");
+				String dataDevolucao = rs.getString("dataDevolucao");
+				int status = rs.getInt("status");
+				float valorMulta = rs.getFloat("valorMulta");
+				int idAluno = rs.getInt("aluno_idAluno");
+				int idUsuario = rs.getInt("adm_usuario_idUsuario");
+				int prorrogacoes = rs.getInt("prorrogacoes");
+				String nomeAluno = rs.getString("nomeAluno");
+				String cpfAluno = rs.getString("cpfAluno");
+				
+				
+				emprestimo = new JsonObject();
+				emprestimo.addProperty("idEmprestimo", idEmprestimo);
+				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
+				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("status", status);
+				emprestimo.addProperty("valorMulta", valorMulta);
+				emprestimo.addProperty("idAluno", idAluno);
+				emprestimo.addProperty("idUsuario", idUsuario);
+				emprestimo.addProperty("prorrogacoes", prorrogacoes);
+				emprestimo.addProperty("nomeAluno", nomeAluno);
+				emprestimo.addProperty("cpfAluno", cpfAluno);
+				
+
+				listaEmprestimos.add(emprestimo);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaEmprestimos;
+	}
+	/* ************************************************************* */ 
+	public List<JsonObject>buscarEmprestimoAndamentoFinalizado(String valorBusca) {
+
+		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
+		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
+		if (valorBusca != "") {
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=1 OR status=2";
+		}
+		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
+		
+		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+		JsonObject emprestimo = null;
+
+		try {
+
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+
+			while (rs.next()) {
+
+				int idEmprestimo = rs.getInt("idEmprestimo");
+				String dataEmprestimo = rs.getString("dataEmprestimo");
+				String dataDevolucao = rs.getString("dataDevolucao");
+				int status = rs.getInt("status");
+				float valorMulta = rs.getFloat("valorMulta");
+				int idAluno = rs.getInt("aluno_idAluno");
+				int idUsuario = rs.getInt("adm_usuario_idUsuario");
+				int prorrogacoes = rs.getInt("prorrogacoes");
+				String nomeAluno = rs.getString("nomeAluno");
+				String cpfAluno = rs.getString("cpfAluno");
+				
+				
+				emprestimo = new JsonObject();
+				emprestimo.addProperty("idEmprestimo", idEmprestimo);
+				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
+				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("status", status);
+				emprestimo.addProperty("valorMulta", valorMulta);
+				emprestimo.addProperty("idAluno", idAluno);
+				emprestimo.addProperty("idUsuario", idUsuario);
+				emprestimo.addProperty("prorrogacoes", prorrogacoes);
+				emprestimo.addProperty("nomeAluno", nomeAluno);
+				emprestimo.addProperty("cpfAluno", cpfAluno);
+				
+
+				listaEmprestimos.add(emprestimo);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaEmprestimos;
+	}
+	/* ************************************************************* */ 
+	public List<JsonObject>buscarEmprestimoAtrasadoFinalizado(String valorBusca) {
+
+		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
+		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
+		if (valorBusca != "") {
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=0 OR status=2";
+		}
+		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
+		
+		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+		JsonObject emprestimo = null;
+
+		try {
+
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+
+			while (rs.next()) {
+
+				int idEmprestimo = rs.getInt("idEmprestimo");
+				String dataEmprestimo = rs.getString("dataEmprestimo");
+				String dataDevolucao = rs.getString("dataDevolucao");
+				int status = rs.getInt("status");
+				float valorMulta = rs.getFloat("valorMulta");
+				int idAluno = rs.getInt("aluno_idAluno");
+				int idUsuario = rs.getInt("adm_usuario_idUsuario");
+				int prorrogacoes = rs.getInt("prorrogacoes");
+				String nomeAluno = rs.getString("nomeAluno");
+				String cpfAluno = rs.getString("cpfAluno");
+				
+				
+				emprestimo = new JsonObject();
+				emprestimo.addProperty("idEmprestimo", idEmprestimo);
+				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
+				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("status", status);
+				emprestimo.addProperty("valorMulta", valorMulta);
+				emprestimo.addProperty("idAluno", idAluno);
+				emprestimo.addProperty("idUsuario", idUsuario);
+				emprestimo.addProperty("prorrogacoes", prorrogacoes);
+				emprestimo.addProperty("nomeAluno", nomeAluno);
+				emprestimo.addProperty("cpfAluno", cpfAluno);
+				
+
+				listaEmprestimos.add(emprestimo);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaEmprestimos;
+	}
+	
 	public boolean alterarStatus(Emprestimo emprestimo) {
  		String comando = "UPDATE emprestimo_livro SET status=? WHERE idEmprestimo=?";
  		
@@ -147,7 +472,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 	
 	public boolean quitarE(Emprestimo emprestimo) {
 		
- 		String comando = "UPDATE emprestimo_livro SET status=? WHERE idEmprestimo=?";
+ 		String comando = "UPDATE emprestimo_livro SET status=?, valorMulta=? WHERE idEmprestimo=?";
 	
  		PreparedStatement p;
  		try {
@@ -155,7 +480,8 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
  			p = this.conexao.prepareStatement(comando);
 
  			p.setInt(1, 2);
- 			p.setInt(2, emprestimo.getIdEmprestimo());
+ 			p.setFloat(2, emprestimo.getValorMulta());
+ 			p.setInt(3, emprestimo.getIdEmprestimo());
  			
  			p.executeUpdate();
 

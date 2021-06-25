@@ -230,7 +230,7 @@ $(document).ready (function(){
 		SALAARCOIRIS.emprestimo.exibirAluno = function(listaDeAlunos){
 			var tabela = 
 				"<br>"+
-				"<table class='table table-responsive table-bordered'>"+
+				"<table class='table table-responsive-sm table-bordered'>"+
 					"<thead>"+
 						"<tr class='text-center'>"+	
 							"<th scope='col'> Nome</th>"+
@@ -352,7 +352,7 @@ $(document).ready (function(){
 			
 			var tabelaLivro = 
 				"<br>"+
-				"<table class='table table-responsive table-bordered'>"+
+				"<table class='table table-responsive-sm table-bordered'>"+
 					"<thead>"+
 						"<tr>"+	
 							"<th scope='col-xs-5 col-sm-5 col-md-5 col-lg-5'> Livro</th>"+
@@ -514,6 +514,7 @@ $(document).ready (function(){
 	
 	SALAARCOIRIS.emprestimo.buscarE = function(){
 		
+		
 		var valorBusca = $("#buscaEmprestimo").val();
 		
 		if (!isNaN(parseFloat(valorBusca)) && isFinite(valorBusca) ) {
@@ -522,20 +523,127 @@ $(document).ready (function(){
 			$('#buscaEmprestimo').unmask();
 		}
 		
-		$.ajax({
-			type: "GET",
-			url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
-			data: "valorBusca="+valorBusca,
-			success: function(dados){
-				dados = JSON.parse(dados);
-//				$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
-				SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
-			},
-			error: function(info){
-				var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-				var b = a.replace(/'/g, '');				
-			}
-		});
+		// 1: Em andamento
+		// 2: Finalizado
+		// 0: Atrasado
+		
+		if ((($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == true)) ||
+			(($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == false)))
+		{ 
+			console.log('Mostra TODOS os empréstimos') 
+			// Busca todos
+			$.ajax({
+				type: "GET",
+				url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
+				data: "valorBusca="+valorBusca,
+				success: function(dados){
+					dados = JSON.parse(dados);
+					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
+				},
+				error: function(info){
+					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+					var b = a.replace(/'/g, '');				
+				}
+			});
+		}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == false)){ 
+			console.log('Mostra empréstimos EM ANDAMENTO(1) e FINALIZADOS(2)')
+			// Busca todos
+			$.ajax({
+				type: "GET",
+				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAndamentoFinalizado",
+				data: "valorBusca="+valorBusca,
+				success: function(dados){
+					dados = JSON.parse(dados);
+					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
+				},
+				error: function(info){
+					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+					var b = a.replace(/'/g, '');				
+				}
+			});
+		}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == true)){ 
+			console.log('Mostra empréstimos EM ANDAMENTO(1) e ATRASADOS(0)')
+			// Busca todos
+			$.ajax({
+				type: "GET",
+				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAndamentoAtrasado",
+				data: "valorBusca="+valorBusca,
+				success: function(dados){
+					dados = JSON.parse(dados);
+					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
+				},
+				error: function(info){
+					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+					var b = a.replace(/'/g, '');				
+				}
+			});
+		}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == false)){ 
+			console.log('Mostra empréstimos EM ANDAMENTO(1) apenas!')
+			// Busca todos
+			$.ajax({
+				type: "GET",
+				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAndamento",
+				data: "valorBusca="+valorBusca,
+				success: function(dados){
+					dados = JSON.parse(dados);
+					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
+				},
+				error: function(info){
+					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+					var b = a.replace(/'/g, '');				
+				}
+			});
+		}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == true)){ 
+			console.log('Mostra empréstimos FINALIZADOS(2) e ATRASADOS(0)')
+			// Busca todos
+			$.ajax({
+				type: "GET",
+				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAtrasadoFinalizado",
+				data: "valorBusca="+valorBusca,
+				success: function(dados){
+					dados = JSON.parse(dados);
+					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
+				},
+				error: function(info){
+					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+					var b = a.replace(/'/g, '');				
+				}
+			});
+		}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == false)){ 
+			console.log('Mostra empréstimos FINALIZADOS(2) apenas!')
+			// Busca todos
+			$.ajax({
+				type: "GET",
+				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoFinalizado",
+				data: "valorBusca="+valorBusca,
+				success: function(dados){
+					dados = JSON.parse(dados);
+					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
+				},
+				error: function(info){
+					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+					var b = a.replace(/'/g, '');				
+				}
+			});
+		}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == true)){ 
+			console.log('Mostra empréstimos ATRASDOS(0) apenas!')
+			// Busca todos
+			$.ajax({
+				type: "GET",
+				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAtrasado",
+				data: "valorBusca="+valorBusca,
+				success: function(dados){
+					dados = JSON.parse(dados);
+					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
+				},
+				error: function(info){
+					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+					var b = a.replace(/'/g, '');				
+				}
+			});
+		};
+		
+		
 		
 	
 		SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado = function(listaDeEmprestimos){
@@ -577,7 +685,6 @@ $(document).ready (function(){
 			SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada = function(listaDeEmprestimos){
 				
 				
-				
 				var valorBusca = $("#buscaEmprestimo").val();
 				
 				if (!isNaN(parseFloat(valorBusca)) && isFinite(valorBusca) ) {
@@ -586,24 +693,151 @@ $(document).ready (function(){
 					$('#buscaEmprestimo').unmask();
 				}
 				
-				$.ajax({
-					type: "GET",
-					url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
-					data: "valorBusca="+valorBusca,
-					success: function(dados){
-						dados = JSON.parse(dados);
-						$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
-						
-					},
-					error: function(info){
-						var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-						var b = a.replace(/'/g, '');				
-					}
-				});
+				// 1: Em andamento
+				// 2: Finalizado
+				// 0: Atrasado
+				
+				if ((($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == true)) ||
+					(($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == false)))
+				{ 
+					console.log('Mostra TODOS os empréstimos') 
+					// Busca todos
+					$.ajax({
+						type: "GET",
+						url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
+						data: "valorBusca="+valorBusca,
+						success: function(dados){
+							dados = JSON.parse(dados);
+							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
+						},
+						error: function(info){
+							var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+							var b = a.replace(/'/g, '');				
+						}
+					});
+				}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == false)){ 
+					console.log('Mostra empréstimos EM ANDAMENTO(1) e FINALIZADOS(2)')
+					// Busca todos
+					$.ajax({
+						type: "GET",
+						url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAndamentoFinalizado",
+						data: "valorBusca="+valorBusca,
+						success: function(dados){
+							dados = JSON.parse(dados);
+							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
+						},
+						error: function(info){
+							var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+							var b = a.replace(/'/g, '');				
+						}
+					});
+				}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == true)){ 
+					console.log('Mostra empréstimos EM ANDAMENTO(1) e ATRASADOS(0)')
+					// Busca todos
+					$.ajax({
+						type: "GET",
+						url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAndamentoAtrasado",
+						data: "valorBusca="+valorBusca,
+						success: function(dados){
+							dados = JSON.parse(dados);
+							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
+						},
+						error: function(info){
+							var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+							var b = a.replace(/'/g, '');				
+						}
+					});
+				}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == false)){ 
+					console.log('Mostra empréstimos EM ANDAMENTO(1) apenas!')
+					// Busca todos
+					$.ajax({
+						type: "GET",
+						url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAndamento",
+						data: "valorBusca="+valorBusca,
+						success: function(dados){
+							dados = JSON.parse(dados);
+							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
+						},
+						error: function(info){
+							var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+							var b = a.replace(/'/g, '');				
+						}
+					});
+				}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == true)){ 
+					console.log('Mostra empréstimos FINALIZADOS(2) e ATRASADOS(0)')
+					// Busca todos
+					$.ajax({
+						type: "GET",
+						url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAtrasadoFinalizado",
+						data: "valorBusca="+valorBusca,
+						success: function(dados){
+							dados = JSON.parse(dados);
+							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
+						},
+						error: function(info){
+							var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+							var b = a.replace(/'/g, '');				
+						}
+					});
+				}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == false)){ 
+					console.log('Mostra empréstimos FINALIZADOS(2) apenas!')
+					// Busca todos
+					$.ajax({
+						type: "GET",
+						url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoFinalizado",
+						data: "valorBusca="+valorBusca,
+						success: function(dados){
+							dados = JSON.parse(dados);
+							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
+						},
+						error: function(info){
+							var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+							var b = a.replace(/'/g, '');				
+						}
+					});
+				}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == true)){ 
+					console.log('Mostra empréstimos ATRASDOS(0) apenas!')
+					// Busca todos
+					$.ajax({
+						type: "GET",
+						url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAtrasado",
+						data: "valorBusca="+valorBusca,
+						success: function(dados){
+							dados = JSON.parse(dados);
+							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
+						},
+						error: function(info){
+							var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+							var b = a.replace(/'/g, '');				
+						}
+					});
+				};
+				
+//				var valorBusca = $("#buscaEmprestimo").val();
+//				
+//				if (!isNaN(parseFloat(valorBusca)) && isFinite(valorBusca) ) {
+//					$('#buscaEmprestimo').mask('999.999.999-99');
+//				}else if ((valorBusca == "") || (valorBusca == "..-")){
+//					$('#buscaEmprestimo').unmask();
+//				}
+//								
+//				$.ajax({
+//					type: "GET",
+//					url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
+//					data: "valorBusca="+valorBusca,
+//					success: function(dados){
+//						dados = JSON.parse(dados);
+//						$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
+//						
+//					},
+//					error: function(info){
+//						var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+//						var b = a.replace(/'/g, '');				
+//					}
+//				});
 				
 				SALAARCOIRIS.emprestimo.exibirEmprestimo = function(listaDeEmprestimos){
-					console.log($('#status1').value)
-					if( $("#id_element").is(":checked") == true){ value = "checked"	}else{value= "not-check"} 
+					
 
 					var tabela = "<br>"+
 						"<table class='table table-responsive-sm table-bordered'>"+
@@ -838,7 +1072,7 @@ $(document).ready (function(){
 						+"</form>"
 						
 						+"<div class='table-responsive'>"
-							+"<table class='table mt-3 table-bordered table-responsive rounded-3'>"
+							+"<table class='table mt-3 table-bordered table-responsive-sm rounded-3'>"
 							+"<thead>"
 								+"<tr>"	
 									+"<th scope='col'> Nome Livro</th>"
@@ -985,7 +1219,8 @@ $(document).ready (function(){
 			// Update Status Empréstimo
 			var emprestimo = new Object();
 			emprestimo.idEmprestimo = idEmprestimo;
-//			console.log('quitarEmprestimoConfirmado()' + idEmprestimo + ' / ' + valorMulta)
+			emprestimo.valorMulta = valorMulta;
+			console.log('quitarEmprestimoConfirmado()' + idEmprestimo + ' / ' + valorMulta)
 			$.ajax({
 				type:"PUT",
 				url: SALAARCOIRIS.PATH + "emprestimo/quitarE",

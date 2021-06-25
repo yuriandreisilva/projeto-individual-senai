@@ -89,6 +89,140 @@ public class EmprestimoRest extends UtilRest {
 			return this.buildErrorResponse(e.getMessage());
 		}
 	}
+	
+	@GET
+	@Path("/buscarEmprestimoAndamento")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarEmprestimoAndamento(@QueryParam("valorBusca") String valorBusca) {
+		try {
+			List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+			listaEmprestimos = jdbcEmprestimo.buscarEmprestimoAndamento(valorBusca);
+			
+			conec.fecharConexao();
+
+			String json = new Gson().toJson(listaEmprestimos);
+			return this.buildResponse(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	@GET
+	@Path("/buscarEmprestimoAtrasado")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarEmprestimoAtrasado(@QueryParam("valorBusca") String valorBusca) {
+		try {
+			List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+			listaEmprestimos = jdbcEmprestimo.buscarEmprestimoAtrasado(valorBusca);
+			
+			conec.fecharConexao();
+
+			String json = new Gson().toJson(listaEmprestimos);
+			return this.buildResponse(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	@GET
+	@Path("/buscarEmprestimoFinalizado")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarEmprestimoFinalizado(@QueryParam("valorBusca") String valorBusca) {
+		try {
+			List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+			listaEmprestimos = jdbcEmprestimo.buscarEmprestimoFinalizado(valorBusca);
+			
+			conec.fecharConexao();
+
+			String json = new Gson().toJson(listaEmprestimos);
+			return this.buildResponse(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	@GET
+	@Path("/buscarEmprestimoAndamentoAtrasado")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarEmprestimoAndamentoAtrasado(@QueryParam("valorBusca") String valorBusca) {
+		try {
+			List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+			listaEmprestimos = jdbcEmprestimo.buscarEmprestimoAndamentoAtrasado(valorBusca);
+			
+			conec.fecharConexao();
+
+			String json = new Gson().toJson(listaEmprestimos);
+			return this.buildResponse(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	@GET
+	@Path("/buscarEmprestimoAndamentoFinalizado")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarEmprestimoAndamentoFinalizado(@QueryParam("valorBusca") String valorBusca) {
+		try {
+			List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+			listaEmprestimos = jdbcEmprestimo.buscarEmprestimoAndamentoFinalizado(valorBusca);
+			
+			conec.fecharConexao();
+
+			String json = new Gson().toJson(listaEmprestimos);
+			return this.buildResponse(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	@GET
+	@Path("/buscarEmprestimoAtrasadoFinalizado")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarEmprestimoAtrasadoFinalizado(@QueryParam("valorBusca") String valorBusca) {
+		try {
+			List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+			listaEmprestimos = jdbcEmprestimo.buscarEmprestimoAtrasadoFinalizado(valorBusca);
+			
+			conec.fecharConexao();
+
+			String json = new Gson().toJson(listaEmprestimos);
+			return this.buildResponse(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	
 		
  	@PUT
  	@Path("/alterarStatus")
@@ -122,7 +256,6 @@ public class EmprestimoRest extends UtilRest {
  	@Consumes("application/*")
  	public Response quitarE(String emprestimoParam) {
  		try {
-// 			System.out.println(idEmprestimo +" chegando");
  			Emprestimo emprestimo = new Gson().fromJson(emprestimoParam, Emprestimo.class);
  			Conexao conec = new Conexao();
  			Connection conexao = conec.abrirConexao();
