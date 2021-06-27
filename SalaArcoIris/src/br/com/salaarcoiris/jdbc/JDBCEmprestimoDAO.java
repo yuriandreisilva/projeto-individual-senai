@@ -131,7 +131,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
 		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
 		if (valorBusca != "") {
-			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=1";
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' AND emprestimo_livro.status=1 OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND emprestimo_livro.status=1";
 		}
 		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
 		
@@ -185,7 +185,8 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
 		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
 		if (valorBusca != "") {
-			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=0";
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' AND emprestimo_livro.status=0 OR "
+					+ "aluno.cpfAluno LIKE '%" + valorBusca + "%' AND emprestimo_livro.status=0";
 		}
 		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
 		
@@ -239,7 +240,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
 		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
 		if (valorBusca != "") {
-			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=2";
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' AND status=2 OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=2";
 		}
 		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
 		
@@ -293,7 +294,10 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
 		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
 		if (valorBusca != "") {
-			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=1 OR status=0";
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' AND status=1 OR "+
+		"aluno.nomeAluno LIKE '%" + valorBusca + "%' AND status=0 OR "+
+		"aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=1 OR "+
+		"aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=0";
 		}
 		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
 		
@@ -347,7 +351,10 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
 		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
 		if (valorBusca != "") {
-			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=1 OR status=2";
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' AND status=1 OR "+
+		"aluno.nomeAluno LIKE '%" + valorBusca + "%' AND status=2 OR "+
+		"aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=1 OR "+
+		"aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=2";
 		}
 		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
 		
@@ -401,9 +408,12 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
 		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
 		if (valorBusca != "") {
-			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' OR aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=0 OR status=2";
+			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' AND status=2 OR "+
+		"aluno.nomeAluno LIKE '%" + valorBusca + "%' AND status=0 OR "+
+		"aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=2 OR "+
+		"aluno.cpfAluno LIKE '%" + valorBusca + "%' AND status=0 ";
 		}
-		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
+		comando += "ORDER BY emprestimo_livro.dataEmprestimo DESC;";
 		
 		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
 		JsonObject emprestimo = null;
