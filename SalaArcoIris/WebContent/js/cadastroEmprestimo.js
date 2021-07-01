@@ -34,7 +34,7 @@ alertError = function(text){
 
 
 var livros = [];
-var pagina = 0;
+
 var colunaDiasAtrasoParam;
 
 SALAARCOIRIS = new Object();
@@ -260,7 +260,7 @@ $(document).ready (function(){
 			tabela +="</tbody" +
 					"</table>";
 			
-			var tamanhoPagina = 5;
+			var tamanhoPagina = 10;
 			var pagina = 0;
 				
 				function paginar() {
@@ -523,139 +523,24 @@ $(document).ready (function(){
 			$('#buscaEmprestimo').unmask();
 		}
 		
-//		$.ajax({
-//			type: "GET",
-//			url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
-//			data: "valorBusca="+valorBusca,
-//			success: function(dados){
-//				dados = JSON.parse(dados);
-//				SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
-//			},
-//			error: function(info){
-//				var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-//				var b = a.replace(/'/g, '');				
-//			}
-//		});
+		$.ajax({
+			type: "GET",
+			url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
+			data: "valorBusca="+valorBusca,
+			success: function(dados){
+				dados = JSON.parse(dados);
+				SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
+			},
+			error: function(info){
+				var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
+				var b = a.replace(/'/g, '');				
+			}
+		});
 		
 		// 1: Em andamento
 		// 2: Finalizado
 		// 0: Atrasado
 		
-		if ((($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == true)) ||
-			(($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == false)))
-		{ 
-			console.log('Mostra TODOS os empréstimos') 
-			// Busca todos
-			$.ajax({
-				type: "GET",
-				url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
-				data: "valorBusca="+valorBusca,
-				success: function(dados){
-					dados = JSON.parse(dados);
-					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
-				},
-				error: function(info){
-					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-					var b = a.replace(/'/g, '');				
-				}
-			});
-		}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == false)){ 
-			console.log('Mostra empréstimos EM ANDAMENTO(1) e FINALIZADOS(2)')
-			// Busca todos
-			$.ajax({
-				type: "GET",
-				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAndamentoFinalizado",
-				data: "valorBusca="+valorBusca,
-				success: function(dados){
-					dados = JSON.parse(dados);
-					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
-				},
-				error: function(info){
-					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-					var b = a.replace(/'/g, '');				
-				}
-			});
-		}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == true)){ 
-			console.log('Mostra empréstimos EM ANDAMENTO(1) e ATRASADOS(0)')
-			// Busca todos
-			$.ajax({
-				type: "GET",
-				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAndamentoAtrasado",
-				data: "valorBusca="+valorBusca,
-				success: function(dados){
-					dados = JSON.parse(dados);
-					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
-				},
-				error: function(info){
-					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-					var b = a.replace(/'/g, '');				
-				}
-			});
-		}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == false)){ 
-			console.log('Mostra empréstimos EM ANDAMENTO(1) apenas!')
-			// Busca todos
-			$.ajax({
-				type: "GET",
-				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAndamento",
-				data: "valorBusca="+valorBusca,
-				success: function(dados){
-					dados = JSON.parse(dados);
-					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
-				},
-				error: function(info){
-					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-					var b = a.replace(/'/g, '');				
-				}
-			});
-		}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == true)){ 
-			console.log('Mostra empréstimos FINALIZADOS(2) e ATRASADOS(0)')
-			// Busca todos
-			$.ajax({
-				type: "GET",
-				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAtrasadoFinalizado",
-				data: "valorBusca="+valorBusca,
-				success: function(dados){
-					dados = JSON.parse(dados);
-					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
-				},
-				error: function(info){
-					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-					var b = a.replace(/'/g, '');				
-				}
-			});
-		}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == false)){ 
-			console.log('Mostra empréstimos FINALIZADOS(2) apenas!')
-			// Busca todos
-			$.ajax({
-				type: "GET",
-				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoFinalizado",
-				data: "valorBusca="+valorBusca,
-				success: function(dados){
-					dados = JSON.parse(dados);
-					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
-				},
-				error: function(info){
-					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-					var b = a.replace(/'/g, '');				
-				}
-			});
-		}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == true)){ 
-			console.log('Mostra empréstimos ATRASDOS(0) apenas!')
-			// Busca todos
-			$.ajax({
-				type: "GET",
-				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAtrasado",
-				data: "valorBusca="+valorBusca,
-				success: function(dados){
-					dados = JSON.parse(dados);
-					SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
-				},
-				error: function(info){
-					var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-					var b = a.replace(/'/g, '');				
-				}
-			});
-		};
 		
 		
 		
@@ -667,11 +552,22 @@ $(document).ready (function(){
 			 */
 			
 			for (var i=0; i<listaDeEmprestimos.length; i++){
+				var validarData = false;
 				var  dataAtual = new Date();
-				var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
+				var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao).toISOString();
+
+				if (dataAtual>dataDevolucao){
+					day1 = dataAtual.getDate();
+					day2 = dataDevolucao.getDate();
+					
+					if(day1>day2){
+						validarData = true;
+					}
+				}
 				
-				if ((listaDeEmprestimos[i].status == 1) && (dataAtual>dataDevolucao)){
-										
+				
+				if ((listaDeEmprestimos[i].status == 1) && (dataAtual>dataDevolucao) && (validarData)){
+					
 					var emprestimo = new Object();
 					emprestimo.status = 0;
 					emprestimo.idEmprestimo = listaDeEmprestimos[i].idEmprestimo;
@@ -681,7 +577,7 @@ $(document).ready (function(){
 						url: SALAARCOIRIS.PATH + "emprestimo/alterarStatus",
 						data:JSON.stringify(emprestimo),
 						success: function(retorno){
-//							console.log("Status atrasado: " + retorno)	
+							console.log("Status atrasado: " + retorno)	
 							
 						},
 						error: function(info){
@@ -696,7 +592,7 @@ $(document).ready (function(){
 			
 			// ******************************************************
 			
-			SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada = function(listaDeEmprestimos){
+			SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada = function(){
 				
 				
 				var valorBusca = $("#buscaEmprestimo").val();
@@ -714,7 +610,8 @@ $(document).ready (function(){
 				if ((($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == true)) ||
 					(($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == false)))
 				{ 
-					console.log('Mostra TODOS os empréstimos') 
+//					console.log('Mostra TODOS os empréstimos') 
+//					dados = "";
 					// Busca todos
 					$.ajax({
 						type: "GET",
@@ -722,7 +619,6 @@ $(document).ready (function(){
 						data: "valorBusca="+valorBusca,
 						success: function(dados){
 							dados = JSON.parse(dados);
-							console.log(dados)
 							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
 						},
 						error: function(info){
@@ -732,6 +628,7 @@ $(document).ready (function(){
 					});
 				}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == false)){ 
 					console.log('Mostra empréstimos EM ANDAMENTO(1) e FINALIZADOS(2)')
+//					dados = "";
 					// Busca todos
 					$.ajax({
 						type: "GET",
@@ -739,7 +636,6 @@ $(document).ready (function(){
 						data: "valorBusca="+valorBusca,
 						success: function(dados){
 							dados = JSON.parse(dados);
-							console.log(dados)
 							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
 						},
 						error: function(info){
@@ -749,6 +645,7 @@ $(document).ready (function(){
 					});
 				}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == true)){ 
 					console.log('Mostra empréstimos EM ANDAMENTO(1) e ATRASADOS(0)')
+//					dados = "";
 					// Busca todos
 					$.ajax({
 						type: "GET",
@@ -756,7 +653,6 @@ $(document).ready (function(){
 						data: "valorBusca="+valorBusca,
 						success: function(dados){
 							dados = JSON.parse(dados);
-							console.log(dados)
 							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
 						},
 						error: function(info){
@@ -766,6 +662,7 @@ $(document).ready (function(){
 					});
 				}else if (($("#status1").is( ":checked" ) == true) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == false)){ 
 					console.log('Mostra empréstimos EM ANDAMENTO(1) apenas!')
+//					dados = "";
 					// Busca todos
 					$.ajax({
 						type: "GET",
@@ -773,7 +670,6 @@ $(document).ready (function(){
 						data: "valorBusca="+valorBusca,
 						success: function(dados){
 							dados = JSON.parse(dados);
-							console.log(dados)
 							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
 						},
 						error: function(info){
@@ -783,6 +679,7 @@ $(document).ready (function(){
 					});
 				}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == true)){ 
 					console.log('Mostra empréstimos FINALIZADOS(2) e ATRASADOS(0)')
+//					dados = "";
 					// Busca todos
 					$.ajax({
 						type: "GET",
@@ -790,7 +687,6 @@ $(document).ready (function(){
 						data: "valorBusca="+valorBusca,
 						success: function(dados){
 							dados = JSON.parse(dados);
-							console.log(dados)
 							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
 						},
 						error: function(info){
@@ -800,6 +696,7 @@ $(document).ready (function(){
 					});
 				}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == true) && ($("#status0").is( ":checked" ) == false)){ 
 					console.log('Mostra empréstimos FINALIZADOS(2) apenas!')
+					dados = "";
 					// Busca todos
 					$.ajax({
 						type: "GET",
@@ -807,7 +704,6 @@ $(document).ready (function(){
 						data: "valorBusca="+valorBusca,
 						success: function(dados){
 							dados = JSON.parse(dados);
-							console.log(dados)
 							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
 						},
 						error: function(info){
@@ -817,6 +713,7 @@ $(document).ready (function(){
 					});
 				}else if (($("#status1").is( ":checked" ) == false) && ($("#status2").is( ":checked" ) == false) && ($("#status0").is( ":checked" ) == true)){ 
 					console.log('Mostra empréstimos ATRASDOS(0) apenas!')
+//					dados = "";
 					// Busca todos
 					$.ajax({
 						type: "GET",
@@ -824,7 +721,6 @@ $(document).ready (function(){
 						data: "valorBusca="+valorBusca,
 						success: function(dados){
 							dados = JSON.parse(dados);
-							console.log(dados)
 							$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
 						},
 						error: function(info){
@@ -834,32 +730,9 @@ $(document).ready (function(){
 					});
 				};
 				
-//				var valorBusca = $("#buscaEmprestimo").val();
-//				
-//				if (!isNaN(parseFloat(valorBusca)) && isFinite(valorBusca) ) {
-//					$('#buscaEmprestimo').mask('999.999.999-99');
-//				}else if ((valorBusca == "") || (valorBusca == "..-")){
-//					$('#buscaEmprestimo').unmask();
-//				}
-//								
-//				$.ajax({
-//					type: "GET",
-//					url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
-//					data: "valorBusca="+valorBusca,
-//					success: function(dados){
-//						dados = JSON.parse(dados);
-//						$("#listaEmprestimos").html(SALAARCOIRIS.emprestimo.exibirEmprestimo(dados));
-//						
-//					},
-//					error: function(info){
-//						var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
-//						var b = a.replace(/'/g, '');				
-//					}
-//				});
-//				
 				SALAARCOIRIS.emprestimo.exibirEmprestimo = function(listaDeEmprestimos){
-					
-						var tabela = "<br>"+
+					var tabela = "";
+						tabela = "<br>"+
 							"<table class='table table-responsive-sm table-bordered'>"+
 								"<thead>"+
 									"<tr class='text-center'>"+	
@@ -898,14 +771,13 @@ $(document).ready (function(){
 								"</table>";
 												
 						var tamanhoPagina = 5;
-						
-						
+						var pagina = 0;
+						var tbody = "";
 							function paginar() {
 								$('table > tbody > tr').remove();
-								var tbody = $('table > tbody');
+								tbody = $('table > tbody');
 								for (var i = pagina * tamanhoPagina; i < listaDeEmprestimos.length && i < (pagina + 1) *  tamanhoPagina; i++){
 									const data = listaDeEmprestimos[i].dataEmprestimo.split('-').reverse().join('/');
-	
 									colunaDiasAtraso = 
 										'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-event" viewBox="0 0 16 16">'
 										+'<path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>'
@@ -932,7 +804,17 @@ $(document).ready (function(){
 									if ((dataAtual>dataDevolucao) && (listaDeEmprestimos[i].status != 2)){
 									
 										colunaDiasAtraso = (dateDiffInDays(dataAtual, dataDevolucao)+2)* (-1);
-										colunaDiasAtrasoParam = colunaDiasAtraso;
+										if (colunaDiasAtraso == -1){
+											colunaDiasAtraso = 
+												'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-event" viewBox="0 0 16 16">'
+												+'<path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>'
+												+'<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>'
+												+'<path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>'
+												+'</svg>';
+										}else {											
+											colunaDiasAtrasoParam = colunaDiasAtraso;
+										}
+											
 										
 									}else if (listaDeEmprestimos[i].status == 2) {
 										colunaDiasAtraso = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-calendar-check-fill" viewBox="0 0 16 16">'
@@ -1000,9 +882,7 @@ $(document).ready (function(){
 	
 				                		}
 								}								
-								$('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeEmprestimos.length / tamanhoPagina));
-	//							console.log("identificando página " + pagina)
-	
+								$('#numeracao2').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(listaDeEmprestimos.length / tamanhoPagina));
 							}
 							
 							$(function() {
@@ -1025,8 +905,8 @@ $(document).ready (function(){
 							});
 							
 							function ajustarBotoes() {
-								$('#proximo').prop('disabled', listaDeEmprestimos.length <= tamanhoPagina || pagina > listaDeEmprestimos.length / tamanhoPagina - 1);
-								$('#anterior').prop('disabled', listaDeEmprestimos.length <= tamanhoPagina || pagina == 0);
+								$('#proximo').addClass('btn btn-outline-secondary').prop('disabled', listaDeEmprestimos.length <= tamanhoPagina || pagina > listaDeEmprestimos.length / tamanhoPagina - 1);
+								$('#anterior').addClass('btn btn-outline-secondary').prop('disabled', listaDeEmprestimos.length <= tamanhoPagina || pagina == 0);
 							}
 						tabela +="</tbody" +
 								"</table>";
@@ -1034,6 +914,7 @@ $(document).ready (function(){
 							return tabela;
 				
 						$("#listaEmprestimos").html(tabela);
+						listaDeEmprestimo = "";
 					}
 					
 				
@@ -1055,7 +936,6 @@ $(document).ready (function(){
 					data: "valorBusca="+valorBusca,
 					success: function(emprestimo){
 						emprestimoDetalhado = JSON.parse(emprestimo);
-						console.log(emprestimoDetalhado)
 						$("#emprestimoEspecifico").html(SALAARCOIRIS.emprestimo.exibirEmprestimoEspecifico(emprestimoDetalhado, colunaDiasAtrasoParam));
 						//						document.frmEditaAluno.idAluno.value = aluno.idAluno;
 					},
@@ -1150,7 +1030,6 @@ $(document).ready (function(){
 					break;
 				default: prorrogar = false;
 			}
-//			console.log(prorrogar)
 				if (colunaDiasAtrasoParam != 0){
 					alertError('Seu empréstimo está atrasado! Por favor, cancele a operação ou finalize seu empréstimo.')
 		        }else if (!prorrogar){
@@ -1190,17 +1069,16 @@ $(document).ready (function(){
 		}
 		
 		SALAARCOIRIS.emprestimo.verificarMulta = function(idEmprestimo, colunaDiasAtrasoParam){
-			console.log('entrando e : '+ colunaDiasAtrasoParam)
+			
 			idEmprestimo = idEmprestimo;
 			let valorMulta = 0;
 			if (colunaDiasAtrasoParam > 0){
 				idModal = 'id03';				
 				valorMulta = colunaDiasAtrasoParam * 0.50;
-				valorMultaMensagem = valorMulta.toString().replace(".", ",")
+				valorMultaMensagem = valorMulta.toString().replace(".", ",");
 				
-				let modalMulta = 
-//				+"<form id='modalMulta' class='row g-3 mt-2'>"
-					+"<div class='col-md-12 col-lg-12'>"
+				var modalMulta = 
+					"<div class='col-md-12 col-lg-12'>"
 						+"<label for='labelNome' class='form-label'>Valor multa:</label>"
 						+"<input type='text' class='form-control' id='nomeAluno' value='R$ "+valorMultaMensagem+"' disabled>"
 						+"<label for='labelNome' class='form-label'>Deseja quitar a multa?</label>"
@@ -1214,15 +1092,10 @@ $(document).ready (function(){
 						+"onclick=\"SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado('"+idEmprestimo+"' , '"+valorMulta+"')\">Finalizar</button>"
 					+"</div>"
 					+"</div>";
-//				+"</form>";
-				
-//				return modalMulta;
+
 				$("#modalMulta").html(modalMulta);
 				abrirModal(idModal);
-//				
-//				document.frmQuitarEmprestimo.valorMulta.value = "R$ "+ valorMulta;
-//				
-//				console.log(idEmprestimo +" / " + colunaDiasAtrasoParam)
+
 			}else {
 				SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado(idEmprestimo, valorMulta)
 			}
@@ -1236,12 +1109,21 @@ $(document).ready (function(){
 			// Update Livros:
 			SALAARCOIRIS.emprestimo.buscarEstoqueLivros(idEmprestimo);
 			
-
+			var d = new Date();
+			var month = d.getMonth()+1;
+			var day = d.getDate();
+			var year = d.getFullYear();
+			
+			var dataAtual = year + '/' +
+			(month<10 ? '0' : '') + month + '/' +
+			(day<10 ? '0' : '') + day;
+			
 			// Update Status Empréstimo
 			var emprestimo = new Object();
 			emprestimo.idEmprestimo = idEmprestimo;
 			emprestimo.valorMulta = valorMulta;
-			console.log('quitarEmprestimoConfirmado()' + idEmprestimo + ' / ' + valorMulta)
+			emprestimo.dataDevolvido = dataAtual;
+			
 			$.ajax({
 				type:"PUT",
 				url: SALAARCOIRIS.PATH + "emprestimo/quitarE",
@@ -1315,6 +1197,7 @@ $(document).ready (function(){
 	function fecharModal(){
 		document.getElementById(id).style.display='none';
 	}
+	
 	
 
 	

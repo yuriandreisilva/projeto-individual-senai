@@ -188,6 +188,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 			comando += "WHERE aluno.nomeAluno LIKE '%" + valorBusca + "%' AND emprestimo_livro.status=0 OR "
 					+ "aluno.cpfAluno LIKE '%" + valorBusca + "%' AND emprestimo_livro.status=0";
 		}
+		
 		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
 		
 		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
@@ -482,7 +483,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 	
 	public boolean quitarE(Emprestimo emprestimo) {
 		
- 		String comando = "UPDATE emprestimo_livro SET status=?, valorMulta=? WHERE idEmprestimo=?";
+ 		String comando = "UPDATE emprestimo_livro SET status=?, valorMulta=?, dataDevolvido=? WHERE idEmprestimo=?";
 	
  		PreparedStatement p;
  		try {
@@ -491,7 +492,8 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 
  			p.setInt(1, 2);
  			p.setFloat(2, emprestimo.getValorMulta());
- 			p.setInt(3, emprestimo.getIdEmprestimo());
+ 			p.setString(3, emprestimo.getDataDevolvido());
+ 			p.setInt(4, emprestimo.getIdEmprestimo());
  			
  			p.executeUpdate();
 

@@ -9,6 +9,7 @@ public class Emprestimo implements Serializable {
 	private int idEmprestimo;
 	private String dataEmprestimo;
 	private String dataDevolucao;
+	private String dataDevolvido;
 	private int status;
 	private float valorMulta;
 	private int idAluno;
@@ -115,5 +116,13 @@ public class Emprestimo implements Serializable {
 
 	public void setProrrogacoes(int prorrogacoes) {
 		this.prorrogacoes = prorrogacoes;
+	}
+
+	public String getDataDevolvido() {
+		return dataDevolvido;
+	}
+
+	public void setDataDevolvido(String dataDevolvido) {
+		this.dataDevolvido = dataDevolvido;
 	}
 }

@@ -33,23 +33,30 @@
 		
 		
 		<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-		  <input type="checkbox" class="btn-check" id="status1" autocomplete="off" onclick="SALAARCOIRIS.emprestimo.buscarE()">
+		  <input type="checkbox" class="btn-check" id="status1" autocomplete="off" onclick="SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada()">
 		  <label class="btn btn-outline-primary" for="status1">Em andamento</label>
 		
-		  <input type="checkbox" class="btn-check" id="status0" autocomplete="off" onclick="SALAARCOIRIS.emprestimo.buscarE()">
+		  <input type="checkbox" class="btn-check" id="status0" autocomplete="off" onclick="SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada()">
 		  <label class="btn btn-outline-primary" for="status0">Atrasados</label>
 		
-		  <input type="checkbox" class="btn-check" id="status2" autocomplete="off" onclick="SALAARCOIRIS.emprestimo.buscarE()">
+		  <input type="checkbox" class="btn-check" id="status2" autocomplete="off" onclick="SALAARCOIRIS.emprestimo.buscarListaEmpAtualizada()">
 		  <label class="btn btn-outline-primary" for="status2">Finalizados</label>
 		</div>
 		<!-- Importação lista de empmréstimos -->
 		<div class="container-fluid" id="listaEmprestimos"></div>
 		<!-- /FIM - Importação lista de empréstimos -->
-		<div class="text-center mb-3">
-		    <button type="button" class="btn btn-link" id="anterior" disabled>&lsaquo; Anterior</button>
-		    <span id="numeracao"></span>
-		    <button type="button" class="btn btn-link"id="proximo" disabled>Próximo &rsaquo;</button>
-		</div>
+		
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination justify-content-center">
+		    <li class="page-item">
+		      <button type="button" class="page-link" id="anterior" disabled>&lsaquo; Anterior</button>
+		    </li>
+		    <li class="page-item"><span class="page-link text-secondary" id="numeracao2"></span></li>
+		    <li class="page-item">
+		      <button type="button" class="page-link" id="proximo" disabled>Próximo &rsaquo;</button>
+		    </li>
+		  </ul>
+		</nav>
 	</div>
 </main>
 
@@ -80,12 +87,14 @@
 
 <div id="id03" class="w3-modal">
 	<div class="w3-modal-content col-6 d-flex justify-content-center">
-		<div class="w3-container col-12">
+		<div class="w3-container mt-4 col-12">
 			<span
 				onclick="document.getElementById('id03').style.display='none'"
 				class="w3-button w3-display-topright">&times;
 			</span>
-			<div class="container-fluid" id="modalMulta"></div>
+			<div class="container-fluid" id="modalMulta">
+			
+			</div>
 		</div>
 	</div>
 </div>

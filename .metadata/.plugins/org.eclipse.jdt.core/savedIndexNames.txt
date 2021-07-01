@@ -29,9 +29,9 @@ INDEX VERSION 1.131+C:\Users\Yuri Andrei da Silva\Documents\Senai\ProjetoIndivid
 3174336143.index
 3855650244.index
 2987396980.index
-27311597.index
-2980762343.index
 2167310551.index
+2980762343.index
+27311597.index
 789697227.index
 2538486415.index
 3487968985.index
