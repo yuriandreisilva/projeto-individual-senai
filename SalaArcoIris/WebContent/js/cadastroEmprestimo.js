@@ -554,7 +554,9 @@ $(document).ready (function(){
 			for (var i=0; i<listaDeEmprestimos.length; i++){
 				var validarData = false;
 				var  dataAtual = new Date();
-				var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao).toISOString();
+				var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
+				
+				dataAtual.setDate(dataAtual.getDate() - 1);
 
 				if (dataAtual>dataDevolucao){
 					day1 = dataAtual.getDate();
@@ -563,9 +565,8 @@ $(document).ready (function(){
 					if(day1>day2){
 						validarData = true;
 					}
+
 				}
-				
-				
 				if ((listaDeEmprestimos[i].status == 1) && (dataAtual>dataDevolucao) && (validarData)){
 					
 					var emprestimo = new Object();
@@ -801,10 +802,24 @@ $(document).ready (function(){
 									}
 								    
 									colunaDiasAtrasoParam = 0;
-									if ((dataAtual>dataDevolucao) && (listaDeEmprestimos[i].status != 2)){
 									
-										colunaDiasAtraso = (dateDiffInDays(dataAtual, dataDevolucao)+2)* (-1);
-										if (colunaDiasAtraso == -1){
+									dataAtual.setDate(dataAtual.getDate() - 1);
+									
+									if (listaDeEmprestimos[i].status == 0){
+										console.log(dataAtual);
+										console.log(dataDevolucao);
+										console.log(listaDeEmprestimos[i].idEmprestimo)
+									}
+									
+
+									if ((dataAtual>dataDevolucao) && (listaDeEmprestimos[i].status == 0)){
+									
+										var diff = moment(dataAtual,"DD/MM/YYYY HH:mm:ss").diff(moment(dataDevolucao
+												,"DD/MM/YYYY HH:mm:ss"));
+										var dias = moment.duration(diff).asDays();
+										colunaDiasAtraso = Math.trunc(moment.duration(diff).asDays());
+										
+										if (colunaDiasAtraso <= 0){
 											colunaDiasAtraso = 
 												'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-event" viewBox="0 0 16 16">'
 												+'<path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>'

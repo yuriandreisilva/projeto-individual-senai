@@ -1,4 +1,6 @@
 console.log('carregando páginas fixas')
+
+
 $(document).ready(function(){
 	$("head").load("../fixo/head.html")
 });
@@ -10,6 +12,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 	$("footer").load("../fixo/footer.html")
 });
+
 
 
 
