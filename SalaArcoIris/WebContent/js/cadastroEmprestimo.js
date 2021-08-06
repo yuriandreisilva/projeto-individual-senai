@@ -13,6 +13,7 @@ function exibirMsgSuccessRedirecionar(msg){
 	}
 }
 
+
 function msgSuccessSimple(msg){
 	// Um tipo de alert estilzado, importado para ficar mais interativo
 	Swal.fire({
@@ -804,13 +805,7 @@ $(document).ready (function(){
 									colunaDiasAtrasoParam = 0;
 									
 									dataAtual.setDate(dataAtual.getDate() - 1);
-									
-									if (listaDeEmprestimos[i].status == 0){
-										console.log(dataAtual);
-										console.log(dataDevolucao);
-										console.log(listaDeEmprestimos[i].idEmprestimo)
-									}
-									
+																	
 
 									if ((dataAtual>dataDevolucao) && (listaDeEmprestimos[i].status == 0)){
 									
@@ -1120,7 +1115,6 @@ $(document).ready (function(){
 		
 		SALAARCOIRIS.emprestimo.quitarEmprestimoConfirmado = function(idEmprestimo, valorMulta){
 			
-
 			// Update Livros:
 			SALAARCOIRIS.emprestimo.buscarEstoqueLivros(idEmprestimo);
 			

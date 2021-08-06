@@ -1,1 +1,56 @@
-consultar > finalizados
+<!DOCTYPE html> 
+<html lang="pt-br">
+	
+<head>
+<meta charset="UTF-8">
+	<div class="head">    
+		<!-- importa head -->
+	</div>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+</head>
+
+<header>
+    <!-- importa header -->
+</header>
+<body>    
+<div class="container text-center">
+      <div class="badge badge-primary text-wrap mt-4 " style="width: 15rem; height: 5rem; font-size: 2rem;">
+        Empréstimos finalizados 
+      </div>
+  	</div>
+<div class="container text-center">
+	<div class="container-fluid">
+		<div class="mt-4 mr-1">
+		
+			<div class="input-group mb-3">
+				<input type="hidden" class="form-control mx-1" placeholder="Pesquisar" aria-label="Pesquisar username" aria-describedby="button-addon2" id="buscaEmprestimo" onkeyup="SALAARCOIRIS.emprestimo.buscarE()">					
+			</div>
+		</div>
+	</div>
+		
+<div class="container-fluid" id="listaEmprestimos"></div>
+
+	<nav aria-label="Page navigation example">
+	  <ul class="pagination justify-content-center">
+	    <li class="page-item">
+	      <button type="button" class="page-link" id="anterior" disabled>&lsaquo; Anterior</button>
+	    </li>
+	    <li class="page-item"><span class="page-link text-secondary" id="numeracao2"></span></li>
+	    <li class="page-item">
+	      <button type="button" class="page-link" id="proximo" disabled>Próximo &rsaquo;</button>
+	    </li>
+	  </ul>
+	</nav>
+</div>
+<footer>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+	
+	<script src="../../js/fixo.js"></script>
+	
+	<script src="../../js/consulta.js"></script>	
+  <!-- importa footer que importa scripts + bootstrap -->
+</footer>
+</body>
+</html>

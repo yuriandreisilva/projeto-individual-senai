@@ -93,6 +93,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				int idEmprestimo = rs.getInt("idEmprestimo");
 				String dataEmprestimo = rs.getString("dataEmprestimo");
 				String dataDevolucao = rs.getString("dataDevolucao");
+				String dataDevolvido = rs.getString("dataDevolvido");
 				int status = rs.getInt("status");
 				float valorMulta = rs.getFloat("valorMulta");
 				int idAluno = rs.getInt("aluno_idAluno");
@@ -106,6 +107,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				emprestimo.addProperty("idEmprestimo", idEmprestimo);
 				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
 				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("dataDevolvido", dataDevolvido);
 				emprestimo.addProperty("status", status);
 				emprestimo.addProperty("valorMulta", valorMulta);
 				emprestimo.addProperty("idAluno", idAluno);

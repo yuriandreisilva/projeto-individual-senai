@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="alterarStatusParaAtrasado"/>
+		<item key="selection" value="split"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="buscaEmprestimo"/>
+			<item value="SALAARCOIRIS.emprestimo.buscar"/>
+			<item value="listaEmprestimos"/>
+			<item value="&quot;get&quot;"/>
 			<item value="dropdown"/>
 			<item value="colunaDiasAtraso"/>
 			<item value="alterarStatusParaAtrasado"/>
 			<item value="dataDevolucao"/>
-			<item value="modalMulta"/>
-			<item value="numeracaoLivro"/>
-			<item value="numeracao"/>
-			<item value="próximo"/>
 		</list>
 		<list key="replacehistory">
 			<item value="table-responsive-sm "/>
