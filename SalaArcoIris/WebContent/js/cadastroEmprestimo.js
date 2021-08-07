@@ -531,6 +531,7 @@ $(document).ready (function(){
 			success: function(dados){
 				dados = JSON.parse(dados);
 				SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado(dados)
+				// verifica se está atrasado antes (dentro da função)
 			},
 			error: function(info){
 				var a="Erro ao consultar os cadastros de emprestimo: "+info.status+" - "+info.statusText;
@@ -544,8 +545,23 @@ $(document).ready (function(){
 		
 		
 		
+		SALAARCOIRIS.emprestimo.alterarStatus = function(emprestimo){
+			
+			$.ajax({
+				type: "PUT",
+				url: SALAARCOIRIS.PATH + "emprestimo/alterarStatus",
+				data:JSON.stringify(emprestimo),
+				success: function(retorno){
+					console.log("Status alterado: " + emprestimo.status)
+//					here1
+				},
+				error: function(info){
+					var a="Erro ao atualizar status de emprestimo: "+info.status+" - "+info.statusText;
+					var b = a.replace(/'/g, '');				
+				}
+			});
+		}
 		
-	
 		SALAARCOIRIS.emprestimo.alterarStatusParaAtrasado = function(listaDeEmprestimos){
 			/* 
 			 * UPDATE Status
@@ -554,42 +570,52 @@ $(document).ready (function(){
 			
 			for (var i=0; i<listaDeEmprestimos.length; i++){
 				var validarData = false;
-				var  dataAtual = new Date();
+				var dataAtual = new Date();
 				var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
 				
 				dataAtual.setDate(dataAtual.getDate() - 1);
+				
+				var diaAtual = dataAtual.getDate();
+				var diaDevolucao = dataDevolucao.getDate();
+				
+				var mesAtual = String(dataAtual.getMonth() + 1).padStart(2, '0');
+				var mesDevolucao = String(dataDevolucao.getMonth() + 1).padStart(2, '0');
+				
+				var anoAtual = dataAtual.getFullYear();
+				var anoDevolucao = dataDevolucao.getFullYear();
 
-				if (dataAtual>dataDevolucao){
-					day1 = dataAtual.getDate();
-					day2 = dataDevolucao.getDate();
-					
-					if(day1>day2){
-						validarData = true;
-					}
-
-				}
-				if ((listaDeEmprestimos[i].status == 1) && (dataAtual>dataDevolucao) && (validarData)){
-					
-					var emprestimo = new Object();
-					emprestimo.status = 0;
-					emprestimo.idEmprestimo = listaDeEmprestimos[i].idEmprestimo;
-					
-					$.ajax({
-						type: "PUT",
-						url: SALAARCOIRIS.PATH + "emprestimo/alterarStatus",
-						data:JSON.stringify(emprestimo),
-						success: function(retorno){
-							console.log("Status atrasado: " + retorno)	
-							
-						},
-						error: function(info){
-							var a="Erro ao atualizar status de emprestimo: "+info.status+" - "+info.statusText;
-							var b = a.replace(/'/g, '');				
+				if (anoAtual>=anoDevolucao){
+//					console.log("ano atual maior ou igual")
+					if (mesAtual>=mesDevolucao){
+//						console.log("mês atual maior ou igual")
+						if (diaAtual>diaDevolucao){
+							console.log("data atual maior")
+//							validarData = true;
+						}else if (diaAtual==diaDevolucao){
+							console.log("data atual igual");
+							listaDeEmprestimos[i].idEmprestimo;
+						}else {
+//							console.log("data atual menor")
 						}
-					});
+					}
+				}
+				
+				if (listaDeEmprestimos[i].status == 1){
 					
+					if (dataAtual>dataDevolucao){
+											if (validarData){
+							
+							var emprestimo = new Object();
+							emprestimo.status = 0;
+							emprestimo.idEmprestimo = listaDeEmprestimos[i].idEmprestimo;
+							
+							SALAARCOIRIS.emprestimo.alterarStatus(emprestimo)
+							console.log("status alterado para 0 ")
+						}
+					}
 				}
 			}
+			
 			
 			
 			// ******************************************************
@@ -772,7 +798,7 @@ $(document).ready (function(){
 						tabela +="</tbody" +
 								"</table>";
 												
-						var tamanhoPagina = 5;
+						var tamanhoPagina = 10;
 						var pagina = 0;
 						var tbody = "";
 							function paginar() {
@@ -868,7 +894,7 @@ $(document).ready (function(){
 										  +'</svg>';
 									}
 									
-								
+									
 									tbody.append(
 											$('<tr>')
 												.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].nomeAluno+'">').append(listaDeEmprestimos[i].nomeAluno))
@@ -886,6 +912,7 @@ $(document).ready (function(){
 								                		
 	
 										)
+										
 										if (listaDeEmprestimos[i].status == 2){		
 				                			$('#button-quit-'+listaDeEmprestimos[i].idEmprestimo+'').attr('disabled', 'true');
 				                			$('#button-quit-'+listaDeEmprestimos[i].idEmprestimo+'').removeClass( "btn-danger" ).addClass('btn-secondary');
@@ -1157,14 +1184,14 @@ $(document).ready (function(){
 				data: "valorBusca="+idEmprestimo,
 				success: function(qtdLivroDevolvida){
 					qtd = JSON.parse(qtdLivroDevolvida);
-					SALAARCOIRIS.emprestimo.atualizarEstoqueLivros(qtd)
+					SALAARCOIRIS.emprestimo.atualizarEstoqueLivros(qtd, idEmprestimo)
 				},
 				error: function(info){
 					console.log("Erro ao buscar cadastro para responsável: "+info.status+" - "+info.statusText);
 				}
 				
 			});
-			SALAARCOIRIS.emprestimo.atualizarEstoqueLivros = function(qtdEstoqueLivros){
+			SALAARCOIRIS.emprestimo.atualizarEstoqueLivros = function(qtdEstoqueLivros, idEmprestimo){
 				
 				let livros = [];
 				qtdEstoqueLivros.map(item => {
@@ -1173,13 +1200,20 @@ $(document).ready (function(){
 					    'qtdEstoque': item.qtdLivro
 					  });
 					});
-
+				
+				var emprestimo = new Object();
+				emprestimo.status = 2;
+				emprestimo.idEmprestimo = idEmprestimo;
+				
 				$.ajax({
 					type:"PUT",
 					url: SALAARCOIRIS.PATH + "livro/alterarEstoque",
 					data:JSON.stringify(livros),
 					success: function(msg){
 						console.log('alterado estoque')
+						SALAARCOIRIS.emprestimo.alterarStatus(emprestimo)
+						
+//						here2
 					},
 					error: function(info){
 						console.log("Erro ao editar cadastro: "+ info.status+" - "+info.statusText);

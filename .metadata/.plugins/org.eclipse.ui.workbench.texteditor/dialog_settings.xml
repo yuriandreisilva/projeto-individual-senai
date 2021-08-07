@@ -4,20 +4,21 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="split"/>
+		<item key="selection" value="day1"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
-			<item value="buscaEmprestimo"/>
-			<item value="SALAARCOIRIS.emprestimo.buscar"/>
-			<item value="listaEmprestimos"/>
-			<item value="&quot;get&quot;"/>
-			<item value="dropdown"/>
-			<item value="colunaDiasAtraso"/>
-			<item value="alterarStatusParaAtrasado"/>
-			<item value="dataDevolucao"/>
+			<item value="day1"/>
+			<item value="SALAARCOIRIS.emprestimo.alterarStatus("/>
+			<item value="emprestimo.status = 0"/>
+			<item value="status"/>
+			<item value="alterarStatus ="/>
+			<item value="here"/>
+			<item value="alterar"/>
+			<item value="buscarEmp"/>
 		</list>
 		<list key="replacehistory">
+			<item value="paginaImprimir"/>
 			<item value="table-responsive-sm "/>
 			<item value="alterarL"/>
 			<item value="buscarL"/>

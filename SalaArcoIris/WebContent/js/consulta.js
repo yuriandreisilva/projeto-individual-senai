@@ -12,7 +12,7 @@ $(document).ready (function(){
 		    
 			$.ajax({
 				type: "GET",
-				url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
+				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAtrasado",
 				data: "valorBusca="+valorBusca,
 				success: function(dados){
 					dados = JSON.parse(dados);
@@ -65,6 +65,7 @@ $(document).ready (function(){
 							for (var i = pagina * tamanhoPagina; i < listaDeEmprestimos.length && i < (pagina + 1) *  tamanhoPagina; i++){
 								const data = listaDeEmprestimos[i].dataDevolvido.split('-').reverse().join('/');
 								valorMultaMensagem = listaDeEmprestimos[i].valorMulta.toString().replace(".", ",");
+								
 								tbody.append(
 										$('<tr>')
 											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].nomeAluno+'">').append(listaDeEmprestimos[i].nomeAluno))

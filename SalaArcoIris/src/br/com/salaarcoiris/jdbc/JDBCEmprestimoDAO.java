@@ -150,6 +150,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				int idEmprestimo = rs.getInt("idEmprestimo");
 				String dataEmprestimo = rs.getString("dataEmprestimo");
 				String dataDevolucao = rs.getString("dataDevolucao");
+				String dataDevolvido = rs.getString("dataDevolvido");
 				int status = rs.getInt("status");
 				float valorMulta = rs.getFloat("valorMulta");
 				int idAluno = rs.getInt("aluno_idAluno");
@@ -163,6 +164,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				emprestimo.addProperty("idEmprestimo", idEmprestimo);
 				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
 				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("dataDevolvido", dataDevolvido);
 				emprestimo.addProperty("status", status);
 				emprestimo.addProperty("valorMulta", valorMulta);
 				emprestimo.addProperty("idAluno", idAluno);
@@ -206,6 +208,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				int idEmprestimo = rs.getInt("idEmprestimo");
 				String dataEmprestimo = rs.getString("dataEmprestimo");
 				String dataDevolucao = rs.getString("dataDevolucao");
+				String dataDevolvido = rs.getString("dataDevolvido");
 				int status = rs.getInt("status");
 				float valorMulta = rs.getFloat("valorMulta");
 				int idAluno = rs.getInt("aluno_idAluno");
@@ -214,11 +217,11 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				String nomeAluno = rs.getString("nomeAluno");
 				String cpfAluno = rs.getString("cpfAluno");
 				
-				
 				emprestimo = new JsonObject();
 				emprestimo.addProperty("idEmprestimo", idEmprestimo);
 				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
 				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("dataDevolvido", dataDevolvido);
 				emprestimo.addProperty("status", status);
 				emprestimo.addProperty("valorMulta", valorMulta);
 				emprestimo.addProperty("idAluno", idAluno);
@@ -260,6 +263,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				int idEmprestimo = rs.getInt("idEmprestimo");
 				String dataEmprestimo = rs.getString("dataEmprestimo");
 				String dataDevolucao = rs.getString("dataDevolucao");
+				String dataDevolvido = rs.getString("dataDevolvido");
 				int status = rs.getInt("status");
 				float valorMulta = rs.getFloat("valorMulta");
 				int idAluno = rs.getInt("aluno_idAluno");
@@ -273,6 +277,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 				emprestimo.addProperty("idEmprestimo", idEmprestimo);
 				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
 				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("dataDevolvido", dataDevolvido);
 				emprestimo.addProperty("status", status);
 				emprestimo.addProperty("valorMulta", valorMulta);
 				emprestimo.addProperty("idAluno", idAluno);
@@ -469,8 +474,8 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
  		PreparedStatement p;
  		try {
 
+ 			System.out.println("emprestimo.getStatus(): " + emprestimo.getStatus());
  			p = this.conexao.prepareStatement(comando);
-
  			p.setInt(1, emprestimo.getStatus());
  			p.setInt(2, emprestimo.getIdEmprestimo());
  			
@@ -484,6 +489,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
  	}
 	
 	public boolean quitarE(Emprestimo emprestimo) {
+		
 		
  		String comando = "UPDATE emprestimo_livro SET status=?, valorMulta=?, dataDevolvido=? WHERE idEmprestimo=?";
 	
@@ -584,86 +590,4 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		}
 		return dadosEmprestimo;
 	}
-
-
-// 	// DELETE - emprestimo
-
-// 	public boolean deletarE(int idEmprestimo) {
-// 		String comando = "DELETE FROM emprestimo_livro WHERE idEmprestimo = ?";
-// 		PreparedStatement p;
-// 		try {
-// 			p = this.conexao.prepareStatement(comando);
-// 			p.setInt(1, idEmprestimo);
-// 			p.execute();
-// 		} catch (SQLException e) {
-// 			e.printStackTrace();
-// 			return false;
-// 		}
-// 		return true;
-// 	}
-
-// 	// UPDATE - emprestimo
-
-// 	public Emprestimo checkIdE(int idEmprestimo) {
-// 		String comando = "select * from emprestimo_livro " + "where emprestimo_livro.idEmprestimo = ?";
-// 		Emprestimo emprestimo = new Emprestimo();
-// 		try {
-// 			PreparedStatement p = this.conexao.prepareStatement(comando);
-// 			p.setInt(1, idEmprestimo);
-// 			ResultSet rs = p.executeQuery();
-// 			while (rs.next()) {
-// 				int id = rs.getInt("idEmprestimo");
-// 				String cpfEmprestimo = rs.getString("cpfEmprestimo");
-// 				String idEmprestimo = rs.getString("idEmprestimo");
-// 				String dataNasc = rs.getString("dataNasc");
-// 				String email = rs.getString("email");
-// 				int senha = rs.getInt("senha");
-// 				String statusResp = rs.getString("statusResp");
-// 				String nomeResp = rs.getString("nomeResp");
-// 				String dataNascResp = rs.getString("dataNascResp");
-
-// 				emprestimo.setCpfEmprestimo(cpfEmprestimo);
-// 				emprestimo.setNomeEmprestimo(idEmprestimo);
-// 				emprestimo.setNascEmprestimo(dataNasc);
-// 				emprestimo.setEmail(email);
-// 				emprestimo.setSenha(senha);
-// 				emprestimo.setStatusResp(statusResp);
-// 				emprestimo.setNomeResp(nomeResp);
-// 				emprestimo.setDataNascResp(dataNascResp);
-
-// 				emprestimo.setIdEmprestimo(id);
-
-// 			}
-// 		} catch (Exception e) {
-// 			e.printStackTrace();
-// 		}
-// 		return emprestimo;
-// 	}
-
-// 	public boolean alterarE(Emprestimo emprestimo) {
-// 		String comando = "UPDATE emprestimo_livro " + "SET cpfEmprestimo=?, idEmprestimo=?, dataNasc=?, email=?, statusResp=?, nomeResp=?, dataNascResp=? "
-// 				+ " WHERE idEmprestimo=?";
-// 		PreparedStatement p;
-// 		try {
-
-// 			p = this.conexao.prepareStatement(comando);
-
-// 			p.setString(1, emprestimo.getCpfEmprestimo());
-// 			p.setString(2, emprestimo.getNomeEmprestimo());
-// 			p.setString(3, emprestimo.getNascEmprestimo());
-// 			p.setString(4, emprestimo.getEmail());
-// 			p.setString(5, emprestimo.getStatusResp());
-// 			p.setString(6, emprestimo.getNomeResp());
-// 			p.setString(7, emprestimo.getDataNascResp());
-
-// 			p.setInt(8, emprestimo.getIdEmprestimo());
-
-// 			p.executeUpdate();
-
-// 		} catch (SQLException e) {
-// 			e.printStackTrace();
-// 			return false;
-// 		}
-// 		return true;
-// 	}
 }
