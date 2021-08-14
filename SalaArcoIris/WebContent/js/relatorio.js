@@ -36,7 +36,7 @@ $(document).ready (function(){
 		    
 			$.ajax({
 				type: "GET",
-				url: SALAARCOIRIS.PATH + "emprestimo/buscarE",
+				url: SALAARCOIRIS.PATH + "emprestimo/buscarEmprestimoAtrasado",
 				data: "valorBusca="+valorBusca,
 				success: function(dados){
 					dados = JSON.parse(dados);
@@ -65,8 +65,8 @@ $(document).ready (function(){
 								"<tr class='text-center'>"+	
 									"<th scope='col-lg-3'> Nome</th>"+
 									"<th scope='col-lg-2'> CPF</th>"+
+									"<th scope='col-lg-2'> Data Devolução</th>"+
 									"<th scope='col-lg-2'> Dias Atrasado</th>"+
-									"<th scope='col-lg-2'> Valor Multa</th>"+
 								"</tr>"+
 							"</thead>"+
 							"<tbody>";
@@ -78,7 +78,7 @@ $(document).ready (function(){
 							tabela+="<tr>"+
 							"<th scope='row'>"+listaDeEmprestimos[i].nomeAluno+"</th>"+
 							"<td>"+listaDeEmprestimos[i].cpfAluno+"</td>"+
-							"<td>"+listaDeEmprestimos[i].dataDevolvido+"</td>"+
+							"<td>"+listaDeEmprestimos[i].dataDevolucao+"</td>"+
 							"<td>"+listaDeEmprestimos[i].valorMulta+"</td>"+
 						"</tr>";
 						}
@@ -88,6 +88,7 @@ $(document).ready (function(){
 					}
 					tabela +="</tbody" +
 							"</table>";
+					
 											
 					var tamanhoPagina = 10;
 					var pagina = 0;
@@ -96,14 +97,28 @@ $(document).ready (function(){
 							$('table > tbody > tr').remove();
 							tbody = $('table > tbody');
 							for (var i = pagina * tamanhoPagina; i < listaDeEmprestimos.length && i < (pagina + 1) *  tamanhoPagina; i++){
-								const data = listaDeEmprestimos[i].dataDevolvido.split('-').reverse().join('/');
-								valorMultaMensagem = listaDeEmprestimos[i].valorMulta.toString().replace(".", ",");
+								const data = listaDeEmprestimos[i].dataDevolucao.split('-').reverse().join('/');
+								
+								var  dataAtual = new Date();
+								var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
+								
+								dataAtual.setDate(dataAtual.getDate() - 1);
+								
+								var diff = moment(dataAtual,"DD/MM/YYYY HH:mm:ss").diff(moment(dataDevolucao
+										,"DD/MM/YYYY HH:mm:ss"));
+								var dias = moment.duration(diff).asDays();
+								colunaDiasAtraso = Math.trunc(moment.duration(diff).asDays());
+								
+								if (dias < 1){											
+									colunaDiasAtraso = 1;
+								}
+								
 								tbody.append(
 										$('<tr>')
 											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].nomeAluno+'">').append(listaDeEmprestimos[i].nomeAluno))
 											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].cpfAluno+'">').append(listaDeEmprestimos[i].cpfAluno))
-											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].dataDevolvido+'">').append(data))
-											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].valorMulta+'">').append('R$ ' + valorMultaMensagem))
+											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].dataDevolucao+'">').append(data))
+											.append($('<td class="text-center" id="nome'+listaDeEmprestimos[i].idEmprestimo+'">').append(colunaDiasAtraso))
 									)
 									if (listaDeEmprestimos[i].status == 2){		
 			                			$('#button-quit-'+listaDeEmprestimos[i].idEmprestimo+'').attr('disabled', 'true');

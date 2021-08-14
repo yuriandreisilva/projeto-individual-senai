@@ -568,55 +568,45 @@ $(document).ready (function(){
 			 * Verifica se empréstimo está atrasado e atualiza no BD
 			 */
 			
-			for (var i=0; i<listaDeEmprestimos.length; i++){
-				var validarData = false;
-				var dataAtual = new Date();
-				var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
-				
-				dataAtual.setDate(dataAtual.getDate() - 1);
-				
-				var diaAtual = dataAtual.getDate();
-				var diaDevolucao = dataDevolucao.getDate();
-				
-				var mesAtual = String(dataAtual.getMonth() + 1).padStart(2, '0');
-				var mesDevolucao = String(dataDevolucao.getMonth() + 1).padStart(2, '0');
-				
-				var anoAtual = dataAtual.getFullYear();
-				var anoDevolucao = dataDevolucao.getFullYear();
-
-				if (anoAtual>=anoDevolucao){
-//					console.log("ano atual maior ou igual")
-					if (mesAtual>=mesDevolucao){
-//						console.log("mês atual maior ou igual")
-						if (diaAtual>diaDevolucao){
-							console.log("data atual maior")
-//							validarData = true;
-						}else if (diaAtual==diaDevolucao){
-							console.log("data atual igual");
-							listaDeEmprestimos[i].idEmprestimo;
-						}else {
-//							console.log("data atual menor")
-						}
-					}
-				}
-				
-				if (listaDeEmprestimos[i].status == 1){
+				for (var i=0; i<listaDeEmprestimos.length; i++){
+					var validarData = true;
+					var dataAtual = new Date();
+					var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
 					
-					if (dataAtual>dataDevolucao){
-											if (validarData){
-							
-							var emprestimo = new Object();
-							emprestimo.status = 0;
-							emprestimo.idEmprestimo = listaDeEmprestimos[i].idEmprestimo;
-							
-							SALAARCOIRIS.emprestimo.alterarStatus(emprestimo)
-							console.log("status alterado para 0 ")
+					dataAtual.setDate(dataAtual.getDate() - 1);
+					
+					var diaAtual = dataAtual.getDate();
+					var diaDevolucao = dataDevolucao.getDate();
+					
+					var mesAtual = String(dataAtual.getMonth() + 1).padStart(2, '0');
+					var mesDevolucao = String(dataDevolucao.getMonth() + 1).padStart(2, '0');
+					
+					var anoAtual = dataAtual.getFullYear();
+					var anoDevolucao = dataDevolucao.getFullYear();
+	
+					if ((listaDeEmprestimos[i].status == 1) && (dataAtual>dataDevolucao)){				
+						if (anoAtual>=anoDevolucao){
+							if (mesAtual>=mesDevolucao){
+								if (diaAtual!=diaDevolucao){
+								validarData = false;
+								}else {
+									alertError('Houve algum erro')
+								}
+							}
 						}
 					}
-				}
+					
+					if (!validarData){
+						
+						var emprestimo = new Object();
+						emprestimo.status = 0;
+						emprestimo.idEmprestimo = listaDeEmprestimos[i].idEmprestimo;
+						
+						SALAARCOIRIS.emprestimo.alterarStatus(emprestimo)
+						SALAARCOIRIS.emprestimo.buscarE();
+					}
 			}
-			
-			
+		
 			
 			// ******************************************************
 			
@@ -815,18 +805,18 @@ $(document).ready (function(){
 									var  dataAtual = new Date();
 									var dataDevolucao = new Date(listaDeEmprestimos[i].dataDevolucao);
 									
-									var diffDays = 0;
-									
-									const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-	
-									// a and b are javascript Date objects
-									function dateDiffInDays(a, b) {
-									  // Discard the time and time-zone information.
-									  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-									  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-	
-									  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-									}
+//									var diffDays = 0;
+//									
+//									const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+//	
+//									// a and b are javascript Date objects
+//									function dateDiffInDays(a, b) {
+//									  // Discard the time and time-zone information.
+//									  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+//									  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+//	
+//									  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+//									}
 								    
 									colunaDiasAtrasoParam = 0;
 									
@@ -834,20 +824,22 @@ $(document).ready (function(){
 																	
 
 									if ((dataAtual>dataDevolucao) && (listaDeEmprestimos[i].status == 0)){
-									
 										var diff = moment(dataAtual,"DD/MM/YYYY HH:mm:ss").diff(moment(dataDevolucao
 												,"DD/MM/YYYY HH:mm:ss"));
 										var dias = moment.duration(diff).asDays();
 										colunaDiasAtraso = Math.trunc(moment.duration(diff).asDays());
 										
-										if (colunaDiasAtraso <= 0){
+										if (dias < 0.1){
 											colunaDiasAtraso = 
 												'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-event" viewBox="0 0 16 16">'
 												+'<path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>'
 												+'<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>'
 												+'<path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>'
 												+'</svg>';
-										}else {											
+										}else if (dias < 0.99){											
+											colunaDiasAtraso = 1;
+											colunaDiasAtrasoParam = 1;
+										}else {
 											colunaDiasAtrasoParam = colunaDiasAtraso;
 										}
 											
