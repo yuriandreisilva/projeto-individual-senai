@@ -240,6 +240,66 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		}
 		return listaEmprestimos;
 	}
+	public List<JsonObject>buscarEmprestimoAtrasadoFiltrando(String dataInicio, String dataFinal) {
+
+		String comando = "SELECT emprestimo_livro.*, aluno.nomeAluno AS nomeAluno, aluno.cpfAluno AS cpfAluno FROM emprestimo_livro "+ 
+		"INNER JOIN aluno ON aluno.idAluno = emprestimo_livro.aluno_idAluno ";
+//		if (dataInicio != " " && dataFinal != " ") {
+			comando += "WHERE emprestimo_livro.dataDevolucao BETWEEN '"+dataInicio+"' AND '"+dataFinal+"' AND emprestimo_livro.status=0;" ;
+			
+//		}else {
+//			System.out.println("else");
+//			comando += "WHERE emprestimo_livro.status = 0";
+			// Status 0 == Atrasado (Ou seja, pegar todos)
+//		}
+		
+//		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
+		
+		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+		JsonObject emprestimo = null;
+
+		try {
+
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+
+			while (rs.next()) {
+
+				int idEmprestimo = rs.getInt("idEmprestimo");
+				String dataEmprestimo = rs.getString("dataEmprestimo");
+				String dataDevolucao = rs.getString("dataDevolucao");
+				String dataDevolvido = rs.getString("dataDevolvido");
+				int status = rs.getInt("status");
+				float valorMulta = rs.getFloat("valorMulta");
+				int idAluno = rs.getInt("aluno_idAluno");
+				int idUsuario = rs.getInt("adm_usuario_idUsuario");
+				int prorrogacoes = rs.getInt("prorrogacoes");
+				String nomeAluno = rs.getString("nomeAluno");
+				String cpfAluno = rs.getString("cpfAluno");
+				
+				emprestimo = new JsonObject();
+				emprestimo.addProperty("idEmprestimo", idEmprestimo);
+				emprestimo.addProperty("dataEmprestimo", dataEmprestimo);
+				emprestimo.addProperty("dataDevolucao", dataDevolucao);
+				emprestimo.addProperty("dataDevolvido", dataDevolvido);
+				emprestimo.addProperty("status", status);
+				emprestimo.addProperty("valorMulta", valorMulta);
+				emprestimo.addProperty("idAluno", idAluno);
+				emprestimo.addProperty("idUsuario", idUsuario);
+				emprestimo.addProperty("prorrogacoes", prorrogacoes);
+				emprestimo.addProperty("nomeAluno", nomeAluno);
+				emprestimo.addProperty("cpfAluno", cpfAluno);
+				
+
+				listaEmprestimos.add(emprestimo);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaEmprestimos;
+	}
 	/* ************************************************************* */ 
 	public List<JsonObject>buscarEmprestimoFinalizado(String valorBusca) {
 

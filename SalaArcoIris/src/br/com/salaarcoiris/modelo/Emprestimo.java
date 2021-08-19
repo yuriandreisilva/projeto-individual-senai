@@ -10,6 +10,8 @@ public class Emprestimo implements Serializable {
 	private String dataEmprestimo;
 	private String dataDevolucao;
 	private String dataDevolvido;
+	private String dataInicial;
+	private String dataFinal;
 	private int status;
 	private float valorMulta;
 	private int idAluno;
@@ -124,5 +126,21 @@ public class Emprestimo implements Serializable {
 
 	public void setDataDevolvido(String dataDevolvido) {
 		this.dataDevolvido = dataDevolvido;
+	}
+
+	public String getDataFinal() {
+		return dataFinal;
+	}
+
+	public void setDataFinal(String dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+
+	public String getDataInicial() {
+		return dataInicial;
+	}
+
+	public void setDataInicial(String dataInicial) {
+		this.dataInicial = dataInicial;
 	}
 }

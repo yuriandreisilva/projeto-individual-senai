@@ -14,6 +14,7 @@ public interface EmprestimoDAO {
 	public List<JsonObject>buscarEmprestimoFinalizado(String valorBusca);
 	
 	public List<JsonObject>buscarEmprestimoAndamentoAtrasado(String valorBusca);
+	public List<JsonObject>buscarEmprestimoAtrasadoFiltrando(String dataInicio, String dataFinal);
 	public List<JsonObject>buscarEmprestimoAndamentoFinalizado(String valorBusca);
 	public List<JsonObject>buscarEmprestimoAtrasadoFinalizado(String valorBusca);
 	
