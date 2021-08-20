@@ -43,6 +43,8 @@ $(document).ready (function(){
 		
 		var dataFinal = $("#date-end").val();
 		
+		 
+		
 		if (!dataInicio){
 //			var d = new Date();
 //			d.setDate(d.getDate()-90);
@@ -57,6 +59,17 @@ $(document).ready (function(){
 			dataFinal = converterData(d);
 		}
 		
+		var emissao = "";
+		
+		if (!$("#date-start").val() && !$("#date-end").val()){
+			emissao = "completa";
+		}else{
+			
+			emissao = "de: " + converterDataFront(dataInicio) + " até " + converterDataFront(dataFinal);
+			
+			
+		}
+		
 		function converterData(d){
 			var day = d.getDate();
 			var month = d.getMonth()+1;
@@ -68,10 +81,13 @@ $(document).ready (function(){
 			
 			return date;
 		}
-				
-		console.log("dataIncio: " + dataInicio);
 		
-		console.log("dataFinal: " + dataFinal);
+		function converterDataFront(d){
+			
+			const date = d.split('-').reverse().join('/');
+			
+			return date;
+		}
 					
 		var valorBusca = $("#buscaEmprestimo").val();
 		    
@@ -94,7 +110,7 @@ $(document).ready (function(){
 					console.log(listaDeEmprestimos)
 					var tabela = "";
 						tabela =
-						"<div class='alert alert-dark text-center mt-4' role='alert'>Listagem</div>"+
+						"<div class='alert alert-dark text-center mt-4' role='alert'>Listagem "+emissao+"</div>"+
 	
 							"<table class='table table-responsive-sm table-bordered'>"+
 								"<thead>"+
@@ -228,12 +244,8 @@ $(document).ready (function(){
 				paginaImprimir.document.write('<h5>EMPRÉSTIMOS ATRASADOS</h5>')
 				paginaImprimir.document.write('</div>')
 				paginaImprimir.document.write('<div class="col-sm d-flex align-items-center  justify-content-end">')
-				paginaImprimir.document.write('<div class="col">')
 				paginaImprimir.document.write('Emissão: ' + dataHoje)
 				paginaImprimir.document.write('</div>')
-//				paginaImprimir.document.write('<div class="col">')
-//				paginaImprimir.document.write('De: ' + dataInicio +' até '+ dataFinal +'.')
-//				paginaImprimir.document.write('</div>')
 				paginaImprimir.document.write('</div>')
 				paginaImprimir.document.write('</div>')
 				paginaImprimir.document.write('</div>')
