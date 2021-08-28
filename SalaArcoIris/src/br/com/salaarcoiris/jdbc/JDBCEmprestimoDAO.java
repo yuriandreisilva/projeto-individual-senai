@@ -310,6 +310,9 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 		}
 		comando += " ORDER BY emprestimo_livro.dataEmprestimo DESC;";
 		
+		// SELECT sum(1), date_format(dataDevolvido, '%M') from emprestimo_livro 
+		// where emprestimo_livro.status = 2 group by date_format(dataDevolvido, '%M') ;
+		
 		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
 		JsonObject emprestimo = null;
 
