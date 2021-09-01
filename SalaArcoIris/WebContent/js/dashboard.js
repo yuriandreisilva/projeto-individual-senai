@@ -43,20 +43,58 @@ $(document).ready (function(){
 
 function graficoLine(dados){
 	qtd = [];
+	mes = []
 	
 	for (var i=0; i<dados.length; i++){
 		qtd[i] = dados[i].qtd;
+		switch(dados[i].mes){
+		case 'January':
+			mes[i] =  'Janeiro'
+			break;
+		case 'February':
+            mes[i] =  'Fevereiro'
+            break;
+		case 'March':
+            mes[i] =  'Março'
+            break;
+		case 'April':
+            mes[i] =  'Abril'
+            break;
+		case 'May':
+            mes[i] =  'Maio'
+            break;
+		case 'June':
+            mes[i] =  'Junho'
+            break;
+		case 'July':
+            mes[i] =  'Julho'
+            break;
+		case 'August':
+            mes[i] =  'Agosto'
+            break;
+		case 'September':
+            mes[i] =  'Setembro'
+            break;
+		case 'October':
+            mes[i] =  'Outubro'
+            break;
+		case 'November':
+            mes[i] =  'Novembro'
+            break;
+		case 'December':
+            mes[i] =  'Dezembro'
+            break;
+		}
 	}
 	
 	var ctx = document.getElementById('myChart');
 	var myChart = new Chart(ctx, {
 	    type: 'line',
 	    data: {
-	        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto','Setembro',
-	        	'Outubro','Novembro','Dezembro'],
+	        labels: mes,
 	        datasets: [{
 	            label: 'Empréstimos no mês',
-	            data: qtd,
+	            data:  qtd,
 	            backgroundColor: '#007bff',
 	            borderColor: '#007bff',
 	            color: '#007bff',
