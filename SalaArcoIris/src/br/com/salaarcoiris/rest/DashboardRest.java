@@ -42,4 +42,27 @@ public class DashboardRest extends UtilRest {
 			return this.buildErrorResponse(e.getMessage());
 		}
 	}
+	
+	@GET
+	@Path("/buscarQtdEmprestimoGeral")
+	@Consumes("application/*")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarQtdEmprestimoGeral() {
+		try {
+			List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCDashboardDAO jdbcEmprestimo = new JDBCDashboardDAO(conexao);
+			listaEmprestimos = jdbcEmprestimo.buscarQtdEmprestimoGeral();
+			
+			conec.fecharConexao();
+
+			String json = new Gson().toJson(listaEmprestimos);
+			return this.buildResponse(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
 }
+

@@ -4,5 +4,6 @@ import java.util.List;
 import com.google.gson.JsonObject;
 
 public interface DashboardDAO {
-	public List<JsonObject>buscarQtdEmprestimoFinalizado();	
+	public List<JsonObject>buscarQtdEmprestimoFinalizado();
+	public List<JsonObject>buscarQtdEmprestimoGeral();	
 }

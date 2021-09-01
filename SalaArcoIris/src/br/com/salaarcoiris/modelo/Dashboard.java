@@ -6,7 +6,9 @@ public class Dashboard implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int qtd_emprestimo;
+	private int status_emprestimo;
 	private String mes_emprestimo;
+	
 	
 	public int getQtd_emprestimo() {
 		return qtd_emprestimo;
@@ -19,6 +21,12 @@ public class Dashboard implements Serializable {
 	}
 	public void setMes_emprestimo(String mes_emprestimo) {
 		this.mes_emprestimo = mes_emprestimo;
+	}
+	public int getStatus_emprestimo() {
+		return status_emprestimo;
+	}
+	public void setStatus_emprestimo(int status_emprestimo) {
+		this.status_emprestimo = status_emprestimo;
 	}
 	
 
