@@ -19,12 +19,12 @@ public class JDBCDashboardDAO implements DashboardDAO {
 	public List<JsonObject>buscarQtdEmprestimoFinalizado() {
 
 		String comando = 
-				"SELECT count(idEmprestimo), date_format(dataDevolvido, '%M') "
+				"SELECT count(idEmprestimo) as qtd, monthname(dataDevolvido) as mes "
 				+ "from emprestimo_livro "
 				+ "where emprestimo_livro.status = 2 "
 				+ "and "
 				+ "year(dataDevolvido) = YEAR(NOW()) "
-				+ "group by date_format(dataDevolvido, '%M');";
+				+ "group by mes order by month(dataDevolvido);";
 		
 		
 		List<JsonObject> listaEmprestimos = new ArrayList<JsonObject>();
@@ -37,8 +37,8 @@ public class JDBCDashboardDAO implements DashboardDAO {
 
 			while (rs.next()) {
 
-				int qtd_emprestimo = rs.getInt("count(idEmprestimo)");
-				String mes_emprestimo = rs.getString("date_format(dataDevolvido, '%M')");
+				int qtd_emprestimo = rs.getInt("qtd");
+				String mes_emprestimo = rs.getString("mes");
 				
 				emprestimo = new JsonObject();
 				emprestimo.addProperty("qtd", qtd_emprestimo);
