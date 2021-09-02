@@ -8,7 +8,7 @@ $(document).ready (function(){
 	SALAARCOIRIS.PATH = "/SalaArcoIris/rest/"
 
 		SALAARCOIRIS.emprestimo.buscarEmprestimos = function(){
-		    var valorBusca = ''; // Todos
+		    
 		    $.ajax({
 				type: "GET",
 				url: SALAARCOIRIS.PATH + "emprestimo/buscarQtdEmprestimoFinalizado",
@@ -23,7 +23,7 @@ $(document).ready (function(){
 		    });
 		}
 		SALAARCOIRIS.emprestimo.buscarEmprestimosGeral = function(){
-		    var valorBusca = ''; // Todos
+		    
 		    $.ajax({
 				type: "GET",
 				url: SALAARCOIRIS.PATH + "emprestimo/buscarQtdEmprestimoGeral",
@@ -37,11 +37,12 @@ $(document).ready (function(){
 				}
 		    });
 		}
-	SALAARCOIRIS.emprestimo.buscarEmprestimos(dados);
-	SALAARCOIRIS.emprestimo.buscarEmprestimosGeral(dados);
+	SALAARCOIRIS.emprestimo.buscarEmprestimos();
+	SALAARCOIRIS.emprestimo.buscarEmprestimosGeral();
 });
 
 function graficoLine(dados){
+
 	qtd = [];
 	mes = []
 	
@@ -110,22 +111,41 @@ function graficoLine(dados){
 	    }
 	});
 }
+
 function graficoDoughnut(dadosGerais){
 	console.log(dadosGerais)
 	
 	qtd = [];
+	labels = []
+	colors = []
 	
 	for (var i=0; i<dadosGerais.length; i++){
 		qtd[i] = dadosGerais[i].qtd;
+		switch(dadosGerais[i].status){
+		case 2:
+			labels[i] =  'Finalizados'
+			colors[i] =  'Green'
+			break;
+		case 1:
+			labels[i] =  'Em Andamento'
+			colors[i] =  'Orange'
+			break;
+		case 0:
+			labels[i] =  'Atrasados'
+			colors[i] =  'Red'
+			break;
+		}
 	}
+	
+	
 
 	const data = {
-			labels: ['Finalizados', 'Em Andamento', 'Atrasados'],
+			labels: labels,
 			datasets: [
 				{
 					label: 'Dataset 1',
 					data: qtd,
-					backgroundColor: ['green', 'orange', 'red'],
+					backgroundColor: colors,
 				}
 				]
 	};

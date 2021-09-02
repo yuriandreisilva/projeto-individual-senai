@@ -11,29 +11,6 @@ function verificarSelectResponsavel(){
 	
 };
 
-function exibirMsgSuccessRedirecionar(msg){
-	// Um tipo de alert estilzado, importado para ficar mais interativo
-	Swal.fire({
-		  icon: 'success',
-		  title: 'Processo realizado com sucesso!',
-		  showConfirmButton: false,
-		  timer: 1500
-		})
-	// Função para atrasar o window.location (redirecionamento para listagem de cadastros)		
-	setTimeout(func, 1500);
-	function func() {
-		location.href="editar.html";
-	}
-}
-
-alertError = function(text){
-	Swal.fire({
-		icon: 'error',
-		title: 'Oops...',
-		text: text,
-	  })
-}
-
 SALAARCOIRIS = new Object();
 
 SALAARCOIRIS.aluno = new Object();
@@ -44,50 +21,47 @@ $(document).ready (function(){
 		// INSERT - Aluno
 		SALAARCOIRIS.aluno.cadastrarAluno = function(){
 
-//		var codigoResp = 0;
-
-		var aluno = new Object();
-		
-		aluno.nomeAluno = document.frmAluno.nomeAluno.value;
-		aluno.cpfAluno = document.frmAluno.cpfAluno.value;
-		aluno.email = document.frmAluno.email.value;
-		aluno.nascAluno = document.frmAluno.nascAluno.value;
-		aluno.senha = document.frmAluno.senha.value;
-		
-		aluno.statusResp = document.frmAluno.statusResp.value;
-		aluno.nomeResp = document.frmAluno.nomeResp.value;
-		aluno.dataNascResp = document.frmAluno.dataNascResp.value;
-		
-		
-		
-		
-		// Converte Nome para primeira letra maiúscula
-		aluno.nomeAluno = aluno.nomeAluno.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
-		aluno.nomeResp = aluno.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
-
-		if (document.frmAluno.statusResp.value == 'inativo'){
-			aluno.nomeResp = document.frmAluno.nomeResp.value = "null";
-			aluno.dataNascResp = document.frmAluno.dataNascResp.value = "0000-00-00";
-		}
-		
-		if (validarCampos()){	
-		$.ajax({
-			type: "POST",
-			url: SALAARCOIRIS.PATH + "aluno/inserirA",
-			data:JSON.stringify(aluno),
-			success:function(retorno){
-				if(retorno === "true"){
-					exibirMsgSuccessRedirecionar();
-				}else {
-					alertError('Provavelmente este e-mail ou CPF já foi cadastrado!')
-				}
-			},
-			error:function(info){
-				alertError('Erro ao cadastrar!')
-				console.log("Erro ao cadastrar um novo aluno: "+ info.status + " - "+ info.statusText);	
+	//		var codigoResp = 0;
+	
+			var aluno = new Object();
+			
+			aluno.nomeAluno = document.frmAluno.nomeAluno.value;
+			aluno.cpfAluno = document.frmAluno.cpfAluno.value;
+			aluno.email = document.frmAluno.email.value;
+			aluno.nascAluno = document.frmAluno.nascAluno.value;
+			aluno.senha = document.frmAluno.senha.value;
+			
+			aluno.statusResp = document.frmAluno.statusResp.value;
+			aluno.nomeResp = document.frmAluno.nomeResp.value;
+			aluno.dataNascResp = document.frmAluno.dataNascResp.value;
+						
+			// Converte Nome para primeira letra maiúscula
+			aluno.nomeAluno = aluno.nomeAluno.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
+			aluno.nomeResp = aluno.nomeResp.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase(); });
+	
+			if (document.frmAluno.statusResp.value == 'inativo'){
+				aluno.nomeResp = document.frmAluno.nomeResp.value = "null";
+				aluno.dataNascResp = document.frmAluno.dataNascResp.value = "0000-00-00";
 			}
-		});
-		}
+			
+			if (validarCampos()){	
+				$.ajax({
+					type: "POST",
+					url: SALAARCOIRIS.PATH + "aluno/inserirA",
+					data:JSON.stringify(aluno),
+					success:function(retorno){
+						if(retorno === "true"){
+							exibirMsgSuccessRedirecionar();
+						}else {
+							alertError('Provavelmente este e-mail ou CPF já foi cadastrado!')
+						}
+					},
+					error:function(info){
+						alertError('Erro ao cadastrar!')
+						console.log("Erro ao cadastrar um novo aluno: "+ info.status + " - "+ info.statusText);	
+					}
+				});
+			}
 	}
 	
 	validarCpf = function(){
@@ -193,7 +167,8 @@ $(document).ready (function(){
 		
 		if (!expRegNome.test(nomeAluno)){
 			alertError('Nome inválido!')
-			document.frmAluno.nomeAluno.focus();
+			//document.frmAluno.nomeAluno.focus();
+			
 			validacao = false;
 	
 		}else if (!validarCpf()){
@@ -382,10 +357,17 @@ $(document).ready (function(){
 				type:"DELETE",
 				url: SALAARCOIRIS.PATH +"aluno/excluir/"+idAluno,
 				success: function(msg){
-					SALAARCOIRIS.aluno.buscarAluno();
+					console.log(msg);
+					if (msg === '"Erro ao excluir Aluno!"'){
+						alertError('Não é possível remover este aluno!')
+					}else{
+						msgSuccessSimple('Aluno removido')
+						SALAARCOIRIS.aluno.buscarAluno();
+					}
 				},
 				error: function(info){
 					console.log("Erro ao excluir livro: " + info.status + " - " + info.statusText);
+					alertError('Não é possível remover este aluno!')
 				}
 			});
 		}

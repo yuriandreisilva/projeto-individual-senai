@@ -56,11 +56,24 @@
 						</div>
 					</div>
                   	<div class="container-fluid" id="listaAlunos"></div>
+                  	<!-- 
                   	<div class="text-center">
 					    <button type="button" class="btn btn-link" id="anterior" disabled>&lsaquo; Anterior</button>
 					    <span id="numeracao"></span>
 					    <button type="button" class="btn btn-link"id="proximo" disabled>Próximo &rsaquo;</button>
 					</div>
+					 -->
+					<nav aria-label="Page navigation example">
+					  <ul class="pagination justify-content-center">
+					    <li class="page-item">
+					      <button type="button" class="page-link" id="anterior" disabled>&lsaquo; Anterior</button>
+					    </li>
+					    <li class="page-item"><span class="page-link text-secondary" id="numeracao"></span></li>
+					    <li class="page-item">
+					      <button type="button" class="page-link" id="proximo" disabled>Próximo &rsaquo;</button>
+					    </li>
+					  </ul>
+					</nav>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -93,11 +106,18 @@
 						</div>
 					</div>
                   	<div class="container-fluid" id="listaLivros"></div>
-                  	<div class="text-center">
-					    <button type="button" class="btn btn-link" id="anteriorLivro" disabled>&lsaquo; Anterior</button>
-					    <span id="numeracaoLivro"></span>
-					    <button type="button" class="btn btn-link"id="proximoLivro" disabled>Próximo &rsaquo;</button>
-					</div>
+                  	<nav aria-label="Page navigation example">
+					  <ul class="pagination justify-content-center">
+					    <li class="page-item">
+					      <button type="button" class="page-link" id="anteriorLivro" disabled>&lsaquo; Anterior</button>
+					    </li>
+					    <li class="page-item"><span class="page-link text-secondary" id="numeracaoLivro"></span></li>
+					    <li class="page-item">
+					      <button type="button" class="page-link" id="proximoLivro" disabled>Próximo &rsaquo;</button>
+					    </li>
+					  </ul>
+					</nav>
+					
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -146,6 +166,7 @@
 <footer>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="../../js/fixo.js"></script>
+  <script src="../../js/alert.js"></script>
   <script src="../../js/cadastroEmprestimo.js"></script>
   
   <!-- importa footer que importa scripts + bootstrap -->

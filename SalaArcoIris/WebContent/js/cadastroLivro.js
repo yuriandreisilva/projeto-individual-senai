@@ -1,26 +1,3 @@
-function exibirMsgSuccessRedirecionar(){
-	// Um tipo de alert estilzado, importado para ficar mais interativo
-	Swal.fire({
-		icon: 'success',
-		title: 'Processo concluído com sucesso',
-		showConfirmButton: false,
-		timer: 1500
-	})
-	// Função para atrasar o window.location (redirecionamento para listagem de cadastros)		
-	setTimeout(func, 1500);
-	function func() {
-		location.href="editar.html";
-	}
-}
-
-alertError = function(text) {
-	Swal.fire({
-		icon: 'error',
-		title: 'Oops...',
-		text: text,
-		// footer: 'Tente novamente'
-	})
-}
 function mostrarData(){
 	var data = document.getElementById('validaPublicacao').value; // pega o valor do input
 	console.log(data);
@@ -258,7 +235,13 @@ $(document).ready (function(){
 			type:"DELETE",
 			url: SALAARCOIRIS.PATH +"livro/excluir/"+idLivro,
 			success: function(msg){
-				SALAARCOIRIS.livro.buscarLivro();
+				console.log(msg)				
+				if (msg === '"Erro ao excluir Livro!"'){
+					alertError('Não é possível remover este Livro!')
+				}else{
+					msgSuccessSimple('Livro removido')
+					SALAARCOIRIS.livro.buscarLivro();
+				}
 			},
 			error: function(info){
 				console.log("Erro ao excluir livro: " + info.status + " - " + info.statusText);

@@ -64,10 +64,7 @@ $(document).ready (function(){
 		if (!$("#date-start").val() && !$("#date-end").val()){
 			emissao = "completa";
 		}else{
-			
 			emissao = "de: " + converterDataFront(dataInicio) + " até " + converterDataFront(dataFinal);
-			
-			
 		}
 		
 		function converterData(d){
@@ -88,7 +85,8 @@ $(document).ready (function(){
 			
 			return date;
 		}
-					
+		
+		
 		var valorBusca = $("#buscaEmprestimo").val();
 		    
 			$.ajax({
@@ -225,42 +223,47 @@ $(document).ready (function(){
 						$("#listaEmprestimos").html(aviso);
 					}
 				}
+			
 			SALAARCOIRIS.emprestimo.imprimir = function(tabela){
 				
-			var paginaImprimir = window.open('', 'Impressão');
-	        paginaImprimir.document.write('<html><head><title>Impressão</title>');
-	        paginaImprimir.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">');
-	        paginaImprimir.document.write('<input type="hidden" onkeyup="exibirWaiting()">');
-	        paginaImprimir.document.write();
-
-	        setTimeout(function(){
-		        paginaImprimir.document.write('</head><body >');
-				paginaImprimir.document.write('<div class="container-fluid border p-4">')
-				paginaImprimir.document.write('<div class="row">')
-				paginaImprimir.document.write('<div class="col-sm justify-content-center">')
-				paginaImprimir.document.write('<img src="../../imgs/logo2.png" width="100" height="80" class="rounded mr-5" alt="">')
-				paginaImprimir.document.write('</div>')
-				paginaImprimir.document.write('<div class="col-sm d-flex align-items-center  justify-content-center">')
-				paginaImprimir.document.write('<h5>EMPRÉSTIMOS ATRASADOS</h5>')
-				paginaImprimir.document.write('</div>')
-				paginaImprimir.document.write('<div class="col-sm d-flex align-items-center  justify-content-end">')
-				paginaImprimir.document.write('Emissão: ' + dataHoje)
-				paginaImprimir.document.write('</div>')
-				paginaImprimir.document.write('</div>')
-				paginaImprimir.document.write('</div>')
-				paginaImprimir.document.write('</div>')
-				paginaImprimir.document.write($("#listaEmprestimos").html());		        
-				paginaImprimir.document.write('<div class="container-fluid border p-4 text-center my-auto">')
-				paginaImprimir.document.write('<p>Desenvolvedor - Yuri Andrei da Silva</p>')
-				paginaImprimir.document.write('</div>')
-		        paginaImprimir.document.write('</body></html>');
+				if ($("#date-start").val() && $("#date-end").val()){	
+					var paginaImprimir = window.open('', 'Impressão');
+			        paginaImprimir.document.write('<html><head><title>Impressão</title>');
+			        paginaImprimir.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">');
+			        paginaImprimir.document.write('<input type="hidden" onkeyup="exibirWaiting()">');
+			        paginaImprimir.document.write();
 		
-		        paginaImprimir.print();
-		        paginaImprimir.close();
-
-		        return true;	            
-	        },500);
-	        
+			        setTimeout(function(){
+				        paginaImprimir.document.write('</head><body >');
+						paginaImprimir.document.write('<div class="container-fluid border p-4">')
+						paginaImprimir.document.write('<div class="row">')
+						paginaImprimir.document.write('<div class="col-sm justify-content-center">')
+						paginaImprimir.document.write('<img src="../../imgs/logo2.png" width="100" height="80" class="rounded mr-5" alt="">')
+						paginaImprimir.document.write('</div>')
+						paginaImprimir.document.write('<div class="col-sm d-flex align-items-center  justify-content-center">')
+						paginaImprimir.document.write('<h5>EMPRÉSTIMOS ATRASADOS</h5>')
+						paginaImprimir.document.write('</div>')
+						paginaImprimir.document.write('<div class="col-sm d-flex align-items-center  justify-content-end">')
+						paginaImprimir.document.write('Emissão: ' + dataHoje)
+						paginaImprimir.document.write('</div>')
+						paginaImprimir.document.write('</div>')
+						paginaImprimir.document.write('</div>')
+						paginaImprimir.document.write('</div>')
+						paginaImprimir.document.write($("#listaEmprestimos").html());		        
+						paginaImprimir.document.write('<div class="container-fluid border p-4 text-center my-auto">')
+						paginaImprimir.document.write('<p>Desenvolvedor - Yuri Andrei da Silva</p>')
+						paginaImprimir.document.write('</div>')
+				        paginaImprimir.document.write('</body></html>');
+				
+				        paginaImprimir.print();
+				        paginaImprimir.close();
+		
+				        return true;	            
+			        },500);
+		        
+				}else{
+					alertError('Preencha as duas datas, inicial e final!')
+				}
 			}
 		}
 	SALAARCOIRIS.emprestimo.buscarFiltrando = function(){

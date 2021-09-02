@@ -32,11 +32,17 @@
 			</div>
 			<!-- Importação lista de livros -->
 			<div class="container-fluid" id="listaLivros"></div>
-			<div class="text-center mb-3">
-			    <button type="button" class="btn btn-link" id="anterior" disabled>&lsaquo; Anterior</button>
-			    <span id="numeracao"></span>
-			    <button type="button" class="btn btn-link"id="proximo" disabled>Próximo &rsaquo;</button>
-			</div>
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination justify-content-center">
+			    <li class="page-item">
+			      <button type="button" class="page-link" id="anterior" disabled>&lsaquo; Anterior</button>
+			    </li>
+			    <li class="page-item"><span class="page-link text-secondary" id="numeracao"></span></li>
+			    <li class="page-item">
+			      <button type="button" class="page-link" id="proximo" disabled>Próximo &rsaquo;</button>
+			    </li>
+			  </ul>
+			</nav>
 			<!-- /FIM - Importação lista de livros -->
 		</div>
 	</main>
@@ -52,37 +58,36 @@
 			<!-- MODAL FORM EDITAR-->
 			
 			<form class="mt-4 mb-4" name="frmEditaLivro" method="POST">
-            <div class="form-row">
-                <input type="hidden" id="idLivro">
-                <div class="form-group col-md-8">
-                    <label for="nomeLivro">Nome</label>
-                    <input name="nomeLivro" type="text" class="form-control" id="validaNome" placeholder="Nome completo" required>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="codigoLivro">Código</label>
-                    <input name="codigoLivro" type="text" class="form-control" id="validaCodigo" placeholder="Código (SKU)" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="publicacao">Publicação</label>
-                    <input name="publicacao" type="date" class="form-control" id="validaPublicacao" placeholder="Ano publicação" required>
-            </div>
-	            <div class="form-group col-md-6">
-	                <label for="qtdEstoque">Estoque</label>
-	                <input name="qtdEstoque" type="number" class="form-control" id="validaEstoqueInicial" placeholder="Estoque inical" disabled>
+	            <div class="form-row">
+	                <input type="hidden" id="idLivro">
+	                <div class="form-group col-md-8">
+	                    <label for="nomeLivro">Nome</label>
+	                    <input name="nomeLivro" type="text" class="form-control" id="validaNome" placeholder="Nome completo" required>
+	                </div>
+	                <div class="form-group col-md-4">
+	                    <label for="codigoLivro">Código</label>
+	                    <input name="codigoLivro" type="text" class="form-control" id="validaCodigo" placeholder="Código (SKU)" required>
+	                </div>
+	                <div class="form-group col-md-6">
+	                    <label for="publicacao">Publicação</label>
+	                    <input name="publicacao" type="date" class="form-control" id="validaPublicacao" placeholder="Ano publicação" required>
 	            </div>
-            </div>
-            <div class="form-group">
-                <label for="statusLivro">Status livro</label>
-                <select name="statusLivro" class="custom-select" id="validaStatus" required>
-                    <option value="1">Selecione uma opção</option>
-                    <option value="2">Ativo</option>
-                    <option value="3">Inativo</option>
-                </select>
-            </div>
-            <a type="button" href="editar.html" class="btn btn-secondary mr-2">Cancelar</a>
-            <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.livro.alterarL())>Salvar</a>    
-        </div>
-    </form>
+		            <div class="form-group col-md-6">
+		                <label for="qtdEstoque">Estoque</label>
+		                <input name="qtdEstoque" type="number" class="form-control" id="validaEstoqueInicial" placeholder="Estoque inical" disabled>
+		            </div>
+	            </div>
+	            <div class="form-group">
+	                <label for="statusLivro">Status livro</label>
+	                <select name="statusLivro" class="custom-select" id="validaStatus" required>
+	                    <option value="1">Selecione uma opção</option>
+	                    <option value="2">Ativo</option>
+	                    <option value="3">Inativo</option>
+	                </select>
+	            </div>
+	            <a type="button" href="editar.html" class="btn btn-secondary mr-2">Cancelar</a>
+	            <a type="submit" class="btn btn-primary" onclick=(SALAARCOIRIS.livro.alterarL())>Salvar</a>
+    		</form>
 		</div>
 	</div>
 </div>
@@ -90,6 +95,7 @@
 <footer>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../../js/fixo.js"></script>
+	<script src="../../js/alert.js"></script>
 	<script src="../../js/cadastroLivro.js"></script>	
   <!-- importa footer que importa scripts + bootstrap -->
 </footer>

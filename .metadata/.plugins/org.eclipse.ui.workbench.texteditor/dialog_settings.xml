@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="buscarEmprestimoFinalizado"/>
+		<item key="selection" value="graficoDoughnut"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="graficoDoughnut"/>
+			<item value="graficoLine"/>
+			<item value="myChart"/>
+			<item value="ctx"/>
 			<item value="dfs"/>
 			<item value="emprestimo"/>
 			<item value="buscarEmprestimoFinalizado"/>
 			<item value="EmprestimoDAO"/>
-			<item value="Finalizado"/>
-			<item value="valorBusca"/>
-			<item value="Listagem"/>
-			<item value="emissao ="/>
 		</list>
 		<list key="replacehistory">
 			<item value="DashboardDAO"/>
