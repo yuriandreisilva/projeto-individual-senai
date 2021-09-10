@@ -94,7 +94,7 @@ function graficoLine(dados){
 	    data: {
 	        labels: mes,
 	        datasets: [{
-	            label: 'Empréstimos no mês',
+	            label: 'Empréstimos finalizados por mês',
 	            data:  qtd,
 	            backgroundColor: '#007bff',
 	            borderColor: '#007bff',
@@ -162,7 +162,7 @@ function graficoDoughnut(dadosGerais){
 			      },
 			      title: {
 			        display: true,
-			        text: 'Empréstimos de todos os tempos'
+			        text: 'Histórico de empréstimos na atualidade'
 			      }
 			    }
 			  },

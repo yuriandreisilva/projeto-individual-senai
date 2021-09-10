@@ -4,18 +4,18 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="graficoDoughnut"/>
+		<item key="selection" value="mt-sm-4"/>
 		<item key="wrap" value="true"/>
 		<item key="incremental" value="false"/>
 		<list key="findhistory">
+			<item value="mt-sm-4"/>
+			<item value="table"/>
+			<item value="d-flex"/>
 			<item value="graficoDoughnut"/>
 			<item value="graficoLine"/>
 			<item value="myChart"/>
 			<item value="ctx"/>
 			<item value="dfs"/>
-			<item value="emprestimo"/>
-			<item value="buscarEmprestimoFinalizado"/>
-			<item value="EmprestimoDAO"/>
 		</list>
 		<list key="replacehistory">
 			<item value="DashboardDAO"/>

@@ -1,19 +1,3 @@
-
-function exibirMsgSuccessRedirecionar(){
-	// Um tipo de alert estilzado, importado para ficar mais interativo
-	Swal.fire({
-		  icon: 'success',
-		  title: 'Processo concluído com sucesso',
-		  showConfirmButton: false,
-		  timer: 1500
-		})
-	// Função para atrasar o window.location (redirecionamento para listagem de cadastros)		
-	setTimeout(func, 1500);
-	function func() {
-		location.href="editar.html";
-	}
-}
-
 function mostrarData(){
 	var data = document.getElementById('validaPublicacao').value; // pega o valor do input
 	console.log(data);
@@ -110,7 +94,7 @@ $(document).ready (function(){
 		SALAARCOIRIS.usuario.exibir = function(listaDeUsuarios){
 			var tabela = 
 				"<br>"+
-				"<table class='table'>"+
+				"<table class='table table-responsive'>"+
 					"<thead>"+
 						"<tr>"+	
 							"<th scope='col'> E-mail</th>"+

@@ -132,7 +132,7 @@ $(document).ready (function(){
 		SALAARCOIRIS.livro.exibir = function(listaDeLivros){
 			var tabela = 
 				"<br>"+
-				"<table class='table'>"+
+				"<table class='table table-responsive'>"+
 					"<thead>"+
 						"<tr>"+	
 							"<th scope='col'> Nome</th>"+
